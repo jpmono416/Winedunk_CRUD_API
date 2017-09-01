@@ -21,7 +21,6 @@ public class tblUserEmails {
     @Id
     private Integer id;
     public Integer getId() { return this.id; }
-    
     public void setId(Integer id) { this.id = id; }
 
 
@@ -37,7 +36,7 @@ public class tblUserEmails {
     public tblUsers getUserId() { return userId; }
     public void setUserId(tblUsers userId) { this.userId = userId; }
     
-    @Transient
+    @Column(name = "numericUserId")
     private Integer numericUserId;
     public Integer getNumericUserId() { return numericUserId; }
 	public void setNumericUserId(Integer numericUserId) { this.numericUserId = numericUserId; }

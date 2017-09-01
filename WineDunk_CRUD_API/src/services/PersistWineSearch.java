@@ -228,7 +228,7 @@ public class PersistWineSearch {
 	private void buildQuerySelect()
 	{
 		if(!merchantId.equals("")) 	{ querySelect += "`viewWinesbyMerchants` AS `w`"; }
-		else 					{ querySelect += "`viewWines` AS `w`"; } 
+		else 						{ querySelect += "`viewWines` AS `w`"; } 
 		
 		querySelect += " LEFT JOIN `tblWinesWineTypes` AS `wt` ON `wt`.`wineId` = `w`.`wineId`"
 		+ " LEFT JOIN `tblWineTypes` AS `t` ON `t`.`id`=`wt`.`typeId`"

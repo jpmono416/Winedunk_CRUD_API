@@ -113,6 +113,11 @@ public class tblUsers {
     public String getRecoveringPassToken() { return recoveringPassToken; }
 	public void setRecoveringPassToken(String recoveringPassToken) { this.recoveringPassToken = recoveringPassToken; }
 
+	@Column(name = "isAdmin")
+	private Boolean isAdmin;
+	public Boolean getIsAdmin() { return isAdmin; }
+	public void setIsAdmin(Boolean isAdmin) { this.isAdmin = isAdmin; }
+
 	@Column(name= "deleted")
     private Boolean deleted;
     public Boolean isDeleted() {return deleted;}
@@ -221,6 +226,7 @@ public class tblUsers {
         this.preferredPhoneNumber = null;
         this.DoB = null;
         this.recoveringPassEmail = null;
+        this.isAdmin = false;
         this.deleted = false;
         this.loginEmail = null;
         this.loginPassword = null;
@@ -241,19 +247,23 @@ public class tblUsers {
 	
     @Override
 	public String toString() {
-		return "{ \"id\" : \"" + id + "\", countryId\" : \"" + countryId + "\", preferredCurrencyId\" : \""
-				+ preferredCurrencyId + "\", preferredTimeZoneId\" : \"" + preferredTimeZoneId
-				+ "\", preferredLanguageId\" : \"" + preferredLanguageId + "\", name\" : \"" + name
-				+ "\", preferredEmail\" : \"" + preferredEmail + "\", preferredPhoneNumber\" : \""
-				+ preferredPhoneNumber + "\", DoB\" : \"" + DoB + "\", loginEmail\" : \"" + loginEmail
-				+ "\", loginPassword\" : \"" + loginPassword + "\", loginToken\" : \"" + loginToken
-				+ "\", recoveringPassEmail\" : \"" + recoveringPassEmail + "\", recoveringPassToken\" : \""
-				+ recoveringPassToken + "\", deleted\" : \"" + deleted + "\", phoneNumbers\" : \"" + phoneNumbers
-				+ "\", emailAddresses\" : \"" + emailAddresses + "\", platforms\" : \"" + platforms
-				+ "\", devices\" : \"" + devices + "\", searches\" : \"" + searches + "\", savedSearches\" : \""
-				+ savedSearches + "\", favouriteWines\" : \"" + favouriteWines + "\", wineRatings\" : \"" + wineRatings
-				+ "\", reviews\" : \"" + reviews + "\", winesViewed\" : \"" + winesViewed + "\", clicks\" : \"" + clicks
-				+ "\", userSubscriptions\" : \"" + userSubscriptions + "\", facebookAccounts\" : \"" + facebookAccounts
-				+ "\", googleAccounts\" : \"" + googleAccounts + "\", userPriceAlerts\" : \"" + userPriceAlerts + " }";
+		return "tblUsers { \"id\" : \"" + id + "\" , countryId\" : \"" + countryId + "\" , preferredCurrencyId\" : \""
+				+ preferredCurrencyId + "\" , preferredTimeZoneId\" : \"" + preferredTimeZoneId
+				+ "\" , preferredLanguageId\" : \"" + preferredLanguageId + "\" , name\" : \"" + name
+				+ "\" , preferredEmail\" : \"" + preferredEmail + "\" , preferredPhoneNumber\" : \""
+				+ preferredPhoneNumber + "\" , DoB\" : \"" + DoB + "\" , loginEmail\" : \"" + loginEmail
+				+ "\" , loginPassword\" : \"" + loginPassword + "\" , loginToken\" : \"" + loginToken
+				+ "\" , recoveringPassEmail\" : \"" + recoveringPassEmail + "\" , recoveringPassToken\" : \""
+				+ recoveringPassToken + "\" , isAdmin\" : \"" + isAdmin + "\" , deleted\" : \"" + deleted
+				+ "\" , phoneNumbers\" : \"" + phoneNumbers + "\" , emailAddresses\" : \"" + emailAddresses
+				+ "\" , platforms\" : \"" + platforms + "\" , devices\" : \"" + devices + "\" , searches\" : \""
+				+ searches + "\" , savedSearches\" : \"" + savedSearches + "\" , favouriteWines\" : \"" + favouriteWines
+				+ "\" , wineRatings\" : \"" + wineRatings + "\" , reviews\" : \"" + reviews + "\" , winesViewed\" : \""
+				+ winesViewed + "\" , clicks\" : \"" + clicks + "\" , userSubscriptions\" : \"" + userSubscriptions
+				+ "\" , facebookAccounts\" : \"" + facebookAccounts + "\" , googleAccounts\" : \"" + googleAccounts
+				+ "\" , userPriceAlerts\" : \"" + userPriceAlerts + " }";
 	}
+
+    
+    
 }
