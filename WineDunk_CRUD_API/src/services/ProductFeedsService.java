@@ -12,7 +12,7 @@ public class ProductFeedsService {
 	@PersistenceContext(unitName = "Winedunk")
 	EntityManager em;
 	
-	public List<Tblpf> getProductFeeds()
+	public List<Tblpf> getAllProductFeeds()
 	{
 		try {
 			return em.createNamedQuery("Tblpf.findAll", Tblpf.class).getResultList();
