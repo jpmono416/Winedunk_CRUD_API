@@ -20,7 +20,6 @@ public class UsersService extends DefaultServiceClass {
 	
     @SuppressWarnings("unchecked")
 	public List<tblUsers> getUsers() 
-	
     {
         Query query	= em.createQuery("SELECT b FROM tblUsers b");
         try { return (List<tblUsers>) query.getResultList(); }
