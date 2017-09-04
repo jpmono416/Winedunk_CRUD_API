@@ -35,7 +35,10 @@ public class ProductFeeds extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action"))
-			return;
+		{
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action");
+    		return;
+		}
 
 		switch(request.getParameter("action"))
 		{
