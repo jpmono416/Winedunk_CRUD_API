@@ -139,11 +139,11 @@ public class tblWines {
     public List<tblUserFavouriteWines> getFavouriteWines() { return favouriteWines; }
     public void setFavouriteWines(List<tblUserFavouriteWines> favouriteWines) { this.favouriteWines = favouriteWines; }
 
-    @OneToMany(mappedBy = "wineId", targetEntity = tblUsers_wines_ratings.class)
+    @OneToMany(mappedBy = "wineId", targetEntity = tblUserWinesRatings.class)
     @JsonBackReference("wine_wineRatings")
-    private List<tblUsers_wines_ratings> wineRatings;
-    public List<tblUsers_wines_ratings> getWineRatings() { return wineRatings; }
-    public void setWineRatings(List<tblUsers_wines_ratings> wineRatings) { this.wineRatings = wineRatings; }
+    private List<tblUserWinesRatings> wineRatings;
+    public List<tblUserWinesRatings> getWineRatings() { return wineRatings; }
+    public void setWineRatings(List<tblUserWinesRatings> wineRatings) { this.wineRatings = wineRatings; }
 
     @OneToMany(mappedBy = "wineId", targetEntity = tblUserWineReviews.class)
     @JsonBackReference("wine_wineReviews")
