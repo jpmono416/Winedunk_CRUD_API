@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -28,6 +30,20 @@ public class tblWineries {
     private String name;
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    @ManyToOne
+    @JoinColumn(name="countryId")
+    private tblCountries tblCountry;
+    public tblCountries getTblCountries() { return this.tblCountry; }
+    public void setTblCountries(tblCountries tblCountries) { this.tblCountry = tblCountries; }
+
+    private Integer regionId;
+    public Integer getRegionId() { return this.regionId; }
+    public void setRegionId(Integer regionId) { this.regionId = regionId; }
+
+    private Integer appellationId;
+    public Integer getAppellationId() { return this.appellationId; }
+    public void setAppellationId(Integer appellationId) { this.appellationId = appellationId; }
 
     @Column(name= "deleted")
     private Boolean deleted;

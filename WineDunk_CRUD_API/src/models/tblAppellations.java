@@ -47,7 +47,13 @@ public class tblAppellations {
     private tblCountries countryId;
     public tblCountries getCountryId() { return countryId; }
 	public void setCountryId(tblCountries countryId) { this.countryId = countryId; }
-	
+
+	@ManyToOne
+    @JoinColumn(name = "regionId")
+    private tblRegions regionId;
+    public tblRegions getRegionId() { return regionId; }
+	public void setRegionId(tblRegions regionId) { this.regionId = regionId; }
+
     public tblAppellations(Integer id) { this.id = id; }
     public tblAppellations(String name) { this.name = name; }
     public tblAppellations()

@@ -43,12 +43,17 @@ public class tblRegions {
     public List<tblWines> getWines() { return wines; }
     public void setWines(List<tblWines> wines) { this.wines = wines; }
 
+    @OneToMany(mappedBy = "regionId")
+    @JsonBackReference("appellation_region")
+    private List<tblAppellations> appellations;
+    public List<tblAppellations> getAppellations() { return appellations; }
+    public void setAppellations(List<tblAppellations> appellations) { this.appellations = appellations; }
+
     @ManyToOne
     @JoinColumn(name = "countryId")
     private tblCountries countryId;
     public tblCountries getCountryId() { return countryId; }
 	public void setCountryId(tblCountries countryId) { this.countryId = countryId; }
-	
 	
 	public tblRegions(Integer id) { this.id = id; }
     public tblRegions()

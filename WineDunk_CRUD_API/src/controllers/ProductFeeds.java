@@ -4,6 +4,7 @@ import java.util.List;
 import java.io.IOException;
 import java.sql.Time;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,11 +23,11 @@ import services.ProductFeedsService;
 public class ProductFeeds extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	final ProductFeedsService pfService;
+	@EJB
+	ProductFeedsService pfService;
 
     public ProductFeeds() {
         super();
-		this.pfService = new ProductFeedsService();
     }
 
 	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -95,12 +95,18 @@ public class tblCountries {
     public List<tblCountriesWithWines> getCountriesWithWines() { return countriesWithWines; }
 	public void setCountriesWithWines(List<tblCountriesWithWines> countriesWithWines) { this.countriesWithWines = countriesWithWines; }
 	
+	@OneToMany(mappedBy = "tblCountry", targetEntity = tblWineries.class)
+    @JsonBackReference("winery_coutry")
+    private List<tblWineries> tblWineries;
+    public List<tblWineries> getTblWineries() { return tblWineries; }
+	public void setTblWineries(List<tblWineries> tblWineries) { this.tblWineries = tblWineries; }
+
 	@OneToMany(mappedBy = "countryId", targetEntity = tblAppellations.class)
     @JsonBackReference("appellation_country")
     private List<tblAppellations> appellations;
     public List<tblAppellations> getappellations() { return appellations; }
 	public void setappellations(List<tblAppellations> appellations) { this.appellations = appellations; }
-	
+
 	public tblCountries(Integer id) { this.id = id; }
     public tblCountries()
     {
