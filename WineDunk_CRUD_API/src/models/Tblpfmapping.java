@@ -9,7 +9,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Tblpfmapping.findAll", query="SELECT t FROM Tblpfmapping t")
+@NamedQueries({
+	@NamedQuery(name="Tblpfmapping.findAll", query="SELECT t FROM Tblpfmapping t"),
+	@NamedQuery(name="Tblpfmapping.findByPFId", query="SELECT t FROM Tblpfmapping t WHERE t.tblpf = :tblpf")
+})
 public class Tblpfmapping implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +32,7 @@ public class Tblpfmapping implements Serializable {
 
 	private int nameColumn;
 
-	private int partnerProductDescriotionColumn;
+	private int partnerProductDescriptionColumn;
 
 	private int partnerProductIdColumn;
 
@@ -101,12 +104,12 @@ public class Tblpfmapping implements Serializable {
 		this.nameColumn = nameColumn;
 	}
 
-	public int getPartnerProductDescriotionColumn() {
-		return this.partnerProductDescriotionColumn;
+	public int getPartnerProductDescriptionColumn() {
+		return this.partnerProductDescriptionColumn;
 	}
 
-	public void setPartnerProductDescriotionColumn(int partnerProductDescriotionColumn) {
-		this.partnerProductDescriotionColumn = partnerProductDescriotionColumn;
+	public void setPartnerProductDescriptionColumn(int partnerProductDescriptionColumn) {
+		this.partnerProductDescriptionColumn = partnerProductDescriptionColumn;
 	}
 
 	public int getPartnerProductIdColumn() {

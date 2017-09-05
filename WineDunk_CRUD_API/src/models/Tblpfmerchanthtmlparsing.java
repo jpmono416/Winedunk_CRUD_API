@@ -9,7 +9,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Tblpfmerchanthtmlparsing.findAll", query="SELECT t FROM Tblpfmerchanthtmlparsing t")
+@NamedQueries({
+	@NamedQuery(name="Tblpfmerchanthtmlparsing.findAll", query="SELECT t FROM Tblpfmerchanthtmlparsing t"),
+	@NamedQuery(name="Tblpfmerchanthtmlparsing.findByTblShops", query="SELECT t FROM Tblpfmerchanthtmlparsing t WHERE t.tblShops = :tblShops")
+})
 public class Tblpfmerchanthtmlparsing implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -17,7 +20,9 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	private int merchantId;
+	@ManyToOne
+	@JoinColumn(name="merchantId")
+	private tblShops tblShops;
 
 	private String nameInWeb;
 
@@ -31,8 +36,7 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@JoinColumn(name="extractionColumnsId")
 	private Tblpfextractioncolumn tblpfextractioncolumn;
 
-	public Tblpfmerchanthtmlparsing() {
-	}
+	public Tblpfmerchanthtmlparsing() {}
 
 	public int getId() {
 		return this.id;
@@ -42,12 +46,12 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 		this.id = id;
 	}
 
-	public int getMerchantId() {
-		return this.merchantId;
+	public tblShops getTblShops() {
+		return this.tblShops;
 	}
 
-	public void setMerchantId(int merchantId) {
-		this.merchantId = merchantId;
+	public void setTblShops(tblShops tblShops) {
+		this.tblShops = tblShops;
 	}
 
 	public String getNameInWeb() {

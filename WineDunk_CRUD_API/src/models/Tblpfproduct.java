@@ -10,7 +10,15 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="tblpfproducts")
-@NamedQuery(name="Tblpfproduct.findAll", query="SELECT t FROM Tblpfproduct t")
+@NamedQueries({
+	@NamedQuery(name="Tblpfproduct.findAll", query="SELECT t FROM Tblpfproduct t ORDER BY t.merchantName"),
+	@NamedQuery(name="Tblpfproduct.findByTblpf", query="SELECT t FROM Tblpfproduct t WHERE t.tblpf = :tblpf ORDER BY t.merchantName"),
+	@NamedQuery(name="Tblpfproduct.findByPartnerIdAndMerchantId", query="SELECT t FROM Tblpfproduct t "
+																	  + "WHERE t.merchantProductId = :merchantProductId "
+																	  	+ "AND t.partnerProductId = :partnerProductId "
+																	  + "ORDER BY t.merchantName")
+})
+
 public class Tblpfproduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 

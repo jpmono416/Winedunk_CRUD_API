@@ -48,17 +48,17 @@ public class Tblpf implements Serializable {
 	//bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name="latestStatus")
-	private Tblpfstatus tblpfstatus1;
+	private Tblpfstatus latestStatus;
 
 	//bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name="standardisationStatus")
-	private Tblpfstatus tblpfstatus2;
+	private Tblpfstatus standardisationStatus;
 
 	//bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name="importationStatus")
-	private Tblpfstatus tblpfstatus3;
+	private Tblpfstatus importationStatus;
 
 	//bi-directional many-to-one association to Tblpfstatuschangelog
 	@OneToMany(mappedBy="tblpf")
@@ -183,28 +183,28 @@ public class Tblpf implements Serializable {
 		return tblpfproduct;
 	}
 
-	public Tblpfstatus getTblpfstatus1() {
-		return this.tblpfstatus1;
+	public Tblpfstatus getLatestStatus() {
+		return this.latestStatus;
 	}
 
-	public void setTblpfstatus1(Tblpfstatus tblpfstatus1) {
-		this.tblpfstatus1 = tblpfstatus1;
+	public void setLatestStatus(Tblpfstatus latestStatus) {
+		this.latestStatus = latestStatus;
 	}
 
-	public Tblpfstatus getTblpfstatus2() {
-		return this.tblpfstatus2;
+	public Tblpfstatus getStandardisationStatus() {
+		return this.standardisationStatus;
 	}
 
-	public void setTblpfstatus2(Tblpfstatus tblpfstatus2) {
-		this.tblpfstatus2 = tblpfstatus2;
+	public void setStandardisationStatus(Tblpfstatus standardisationStatus) {
+		this.standardisationStatus = standardisationStatus;
 	}
 
-	public Tblpfstatus getTblpfstatus3() {
-		return this.tblpfstatus3;
+	public Tblpfstatus getImportationStatus() {
+		return this.importationStatus;
 	}
 
-	public void setTblpfstatus3(Tblpfstatus tblpfstatus3) {
-		this.tblpfstatus3 = tblpfstatus3;
+	public void setImportationStatus(Tblpfstatus importationStatus) {
+		this.importationStatus = importationStatus;
 	}
 
 	public List<Tblpfstatuschangelog> getTblpfstatuschangelogs() {
@@ -229,4 +229,22 @@ public class Tblpf implements Serializable {
 		return tblpfstatuschangelog;
 	}
 
+	@Override
+	public String toString() {
+		return "Tblpf [id=" + id + ", description=" + description + ", downloadURL=" + downloadURL + ", importPriority="
+				+ importPriority + ", lastImportation=" + lastImportation + ", lastStandardisation="
+				+ lastStandardisation + ", partnerId=" + partnerId + ", startTime=" + startTime + ", timePeriod="
+				+ timePeriod + ", tblpfmappings=" + tblpfmappings + ", tblpfproducts=" + tblpfproducts
+				+ ", latestStatus=" + latestStatus + ", standardisationStatus=" + standardisationStatus
+				+ ", importationStatus=" + importationStatus + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs + "]";
+	}
+
+	public String toBodyRequest() {
+		return "id=" + id + ", description=" + description + ", downloadURL=" + downloadURL + ", importPriority="
+				+ importPriority + ", lastImportation=" + lastImportation + ", lastStandardisation="
+				+ lastStandardisation + ", partnerId=" + partnerId + ", startTime=" + startTime + ", timePeriod="
+				+ timePeriod + ", tblpfmappings=" + tblpfmappings + ", tblpfproducts=" + tblpfproducts
+				+ ", latestStatus=" + latestStatus + ", standardisationStatus=" + standardisationStatus
+				+ ", importationStatus=" + importationStatus + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs;
+	}
 }

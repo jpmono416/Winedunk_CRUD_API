@@ -10,7 +10,10 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Tblpfstatus.findAll", query="SELECT t FROM Tblpfstatus t")
+@NamedQueries(value = {
+		@NamedQuery(name="Tblpfstatus.findAll", query="SELECT t FROM Tblpfstatus t"),
+		@NamedQuery(name="Tblpfstatus.findByName", query="SELECT t FROM Tblpfstatus t WHERE t.name = :name")
+})
 public class Tblpfstatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,16 +24,16 @@ public class Tblpfstatus implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to Tblpf
-	@OneToMany(mappedBy="tblpfstatus1")
-	private List<Tblpf> tblpfs1;
+	@OneToMany(mappedBy="latestStatus")
+	private List<Tblpf> latestStatusList;
 
 	//bi-directional many-to-one association to Tblpf
-	@OneToMany(mappedBy="tblpfstatus2")
-	private List<Tblpf> tblpfs2;
+	@OneToMany(mappedBy="standardisationStatus")
+	private List<Tblpf> standardisationStatusList;
 
 	//bi-directional many-to-one association to Tblpf
-	@OneToMany(mappedBy="tblpfstatus3")
-	private List<Tblpf> tblpfs3;
+	@OneToMany(mappedBy="importationStatus")
+	private List<Tblpf> importationStatusList;
 
 	//bi-directional many-to-one association to Tblpfstatuschangelog
 	@OneToMany(mappedBy="tblpfstatus")
@@ -55,70 +58,70 @@ public class Tblpfstatus implements Serializable {
 		this.name = name;
 	}
 
-	public List<Tblpf> getTblpfs1() {
-		return this.tblpfs1;
+	public List<Tblpf> getLatestStatusList() {
+		return this.latestStatusList;
 	}
 
-	public void setTblpfs1(List<Tblpf> tblpfs1) {
-		this.tblpfs1 = tblpfs1;
+	public void setLatestStatusList(List<Tblpf> latestStatusList) {
+		this.latestStatusList = latestStatusList;
 	}
 
 	public Tblpf addTblpfs1(Tblpf tblpfs1) {
-		getTblpfs1().add(tblpfs1);
-		tblpfs1.setTblpfstatus1(this);
+		getLatestStatusList().add(tblpfs1);
+		tblpfs1.setLatestStatus(this);
 
 		return tblpfs1;
 	}
 
 	public Tblpf removeTblpfs1(Tblpf tblpfs1) {
-		getTblpfs1().remove(tblpfs1);
-		tblpfs1.setTblpfstatus1(null);
+		getLatestStatusList().remove(tblpfs1);
+		tblpfs1.setLatestStatus(null);
 
 		return tblpfs1;
 	}
 
-	public List<Tblpf> getTblpfs2() {
-		return this.tblpfs2;
+	public List<Tblpf> getStandardisationStatusList() {
+		return this.standardisationStatusList;
 	}
 
-	public void setTblpfs2(List<Tblpf> tblpfs2) {
-		this.tblpfs2 = tblpfs2;
+	public void setStandardisationStatusList(List<Tblpf> standardisationStatusList) {
+		this.standardisationStatusList = standardisationStatusList;
 	}
 
-	public Tblpf addTblpfs2(Tblpf tblpfs2) {
-		getTblpfs2().add(tblpfs2);
-		tblpfs2.setTblpfstatus2(this);
+	public Tblpf addStandardisationStatusList(Tblpf standardisationStatusList) {
+		getStandardisationStatusList().add(standardisationStatusList);
+		standardisationStatusList.setStandardisationStatus(this);
 
-		return tblpfs2;
+		return standardisationStatusList;
 	}
 
-	public Tblpf removeTblpfs2(Tblpf tblpfs2) {
-		getTblpfs2().remove(tblpfs2);
-		tblpfs2.setTblpfstatus2(null);
+	public Tblpf removeStandardisationStatusList(Tblpf standardisationStatusList) {
+		getStandardisationStatusList().remove(standardisationStatusList);
+		standardisationStatusList.setStandardisationStatus(null);
 
-		return tblpfs2;
+		return standardisationStatusList;
 	}
 
-	public List<Tblpf> getTblpfs3() {
-		return this.tblpfs3;
+	public List<Tblpf> getImportationStatus() {
+		return this.importationStatusList;
 	}
 
-	public void setTblpfs3(List<Tblpf> tblpfs3) {
-		this.tblpfs3 = tblpfs3;
+	public void setImportationStatus(List<Tblpf> importationStatusList) {
+		this.importationStatusList = importationStatusList;
 	}
 
-	public Tblpf addTblpfs3(Tblpf tblpfs3) {
-		getTblpfs3().add(tblpfs3);
-		tblpfs3.setTblpfstatus3(this);
+	public Tblpf addImportationStatus(Tblpf importationStatusList) {
+		getImportationStatus().add(importationStatusList);
+		importationStatusList.setImportationStatus(this);
 
-		return tblpfs3;
+		return importationStatusList;
 	}
 
-	public Tblpf removeTblpfs3(Tblpf tblpfs3) {
-		getTblpfs3().remove(tblpfs3);
-		tblpfs3.setTblpfstatus3(null);
+	public Tblpf removeImportationStatus(Tblpf importationStatus) {
+		getImportationStatus().remove(importationStatus);
+		importationStatus.setImportationStatus(null);
 
-		return tblpfs3;
+		return importationStatus;
 	}
 
 	public List<Tblpfstatuschangelog> getTblpfstatuschangelogs() {

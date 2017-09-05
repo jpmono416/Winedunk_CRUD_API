@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -57,5 +58,17 @@ public class PartnersProductsService {
             return true;
         }
         return false;
+    }
+    
+    public tblPartnersProducts getByPartnerProductIdAndMerchantProductId(Integer partnerProductId, Integer merchantProductId)
+    {
+    	try {
+    		return em.createNamedQuery("tblPartnersProducts.findByPartProdIdAndMercProdId", tblPartnersProducts.class)
+    				 .setParameter(0, partnerProductId)
+    				 .setParameter(1, merchantProductId)
+    				 .getSingleResult();
+    	} catch (NoResultException noResExc) {
+    		return null;
+    	}
     }
 }

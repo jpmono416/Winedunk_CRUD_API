@@ -93,7 +93,6 @@ public class PartnersProducts extends HttpServlet {
 		switch (action) 
 		{
 			case "addPartnersProducts" :
-			{
 				try
 				{
 					tblPartnersProducts partnersProducts = new tblPartnersProducts();
@@ -103,10 +102,8 @@ public class PartnersProducts extends HttpServlet {
 					if(partnersProductsService.addPartnersProduct(partnersProducts)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
 				break;
-			}
 			
 			case "updatePartnersProducts" :
-			{
 				try
 				{
 					tblPartnersProducts partnersProducts = new tblPartnersProducts();
@@ -116,17 +113,27 @@ public class PartnersProducts extends HttpServlet {
 					if(partnersProductsService.updatePartnersProduct(partnersProducts)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
 				break;
-			}
 			
 			case "deletePartnersProducts" :
-			{
 				try
 				{
 					Integer id = Integer.parseInt(content);
 					if(partnersProductsService.deletePartnersProduct(id)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
-			}
+				
+			case "getByPartnerProductIdAndMerchantProductId":
+				for(String parameter : new String[] {"partnerProductId", "merchantProductId"})
+				{
+					if(request.getParameterMap().containsKey(parameter))
+					{
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing "+parameter);
+						return;
+					}
+				}
+				
+				partnersProductsService.getByPartnerProductIdAndMerchantProductId(Integer.valueOf(request.getParameter("partnerProductId")), Integer.valueOf(request.getParameter("merchanProductId")));
+				break;
 		}
 	}
 
