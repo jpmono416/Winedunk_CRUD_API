@@ -53,6 +53,16 @@ public class tblUserWinesRatings {
     private Integer rating;
     public Integer getRating() { return rating; }
     public void setRating(Integer rating) { this.rating = rating; }
+    
+    @Transient
+    private Integer numericWineId;
+	public Integer getNumericWineId() { return numericWineId; }
+	public void setNumericWineId(Integer numericWineId) { this.numericWineId = numericWineId; }
+	
+	@Transient
+	private Integer numericUserId;
+    public Integer getNumericUserId() { return numericUserId; } 
+    public void setNumericUserId(Integer numericUserId) { this.numericUserId = numericUserId; }
 
     public tblUserWinesRatings(tblUsers id) {this.userId = id;}
     public tblUserWinesRatings()
@@ -63,6 +73,8 @@ public class tblUserWinesRatings {
         this.addedDate = null;
         this.addedTimestamp = null;
         this.rating = null;
+        this.numericUserId = null;
+        this.numericWineId = null;
     }
     
 	@Override

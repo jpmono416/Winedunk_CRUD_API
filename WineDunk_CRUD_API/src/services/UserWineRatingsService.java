@@ -61,8 +61,13 @@ public class UserWineRatingsService {
     	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Ratings WHERE `userId` = ?1 AND `wineId` = ?2 LIMIT 1", tblUserWinesRatings.class);
     	query.setParameter(1, userId).setParameter(2, wineId);
     	
-    	tblUserWinesRatings rating = (tblUserWinesRatings) query.getSingleResult();
-    	if(rating != null) { return true; }
+    	tblUserWinesRatings rating = new tblUserWinesRatings();
+    	try
+    	{
+    		rating = (tblUserWinesRatings) query.getSingleResult();
+    		if(rating.getId() != null) { return true; }
+    	} catch(Exception e) { return false;}
+    	
     	
     	return false;
     }

@@ -61,8 +61,12 @@ public class UserWineReviewsService {
     	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `userId` = ?1 AND `wineId` = ?2 LIMIT 1", tblUserWineReviews.class);
     	query.setParameter(1, userId).setParameter(2, wineId);
     	
-    	tblUserWineReviews review = (tblUserWineReviews) query.getSingleResult();
-    	if(review != null) { return true; }
+    	tblUserWineReviews review = new tblUserWineReviews();
+    	try
+    	{
+    		review = (tblUserWineReviews) query.getSingleResult();
+    		if(review.getId() != null) { return true; }
+    	}catch(Exception e) { return false; }
     	
     	return false;
     }
@@ -77,5 +81,26 @@ public class UserWineReviewsService {
     	if(reviews != null) { return reviews; }
 		
     	return null;
+    }
+    
+    public List<tblUserWineReviews> getReviewsForUser(Integer userId)
+    {
+    	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `userId` = ?1", tblUserWineReviews.class);
+    	query.setParameter(1, userId);
+    	
+    	@SuppressWarnings("unchecked")
+		List<tblUserWineReviews> reviews = query.getResultList();
+    	if(reviews != null) { return reviews; }
+		
+    	return null;
+    }
+    
+    public Long getCountOfReviewsForWine(Integer wineId)
+    {
+    	Query query = em.createNativeQuery("SELECT count(`id`) FROM tblUsers_Wines_Reviews WHERE `wineId` = " + wineId);
+    	System.out.println(query.toString()); //TODO DELETE
+    	Long amount = (Long) query.getSingleResult();
+    	System.out.println("Amount: " + amount); //TODO DELETE
+    	return amount;
     }
 }
