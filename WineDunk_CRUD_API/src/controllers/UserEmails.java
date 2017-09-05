@@ -145,10 +145,9 @@ public class UserEmails extends HttpServlet {
 					String jsonResult = "{ \"EmailAddresses\" : " + mapper.writeValueAsString(emails) + " }";
 					
 					response.getWriter().write(jsonResult);
-				} catch (Exception e) { e.printStackTrace() ;return; }
+				} catch (Exception e) { e.printStackTrace(); return; }
 				break;	
 			}
 		}
 	}
-
 }

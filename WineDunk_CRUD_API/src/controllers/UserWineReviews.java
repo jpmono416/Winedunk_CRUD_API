@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -100,7 +102,7 @@ public class UserWineReviews extends HttpServlet {
 					tblUserWineReviews userWineReview = new tblUserWineReviews();
 					ObjectMapper mapper = new ObjectMapper();
 					userWineReview = mapper.readValue(content, tblUserWineReviews.class);
-					
+					System.out.println("Arriving and mapped : " + userWineReview.toString()); //TODO DELETE
 					if(userWineReviewService.addUserWineReview(userWineReview)) { response.getWriter().println("True"); }
 				} catch (Exception e) { e.printStackTrace();return;}
 				break;
@@ -127,6 +129,35 @@ public class UserWineReviews extends HttpServlet {
 					if(userWineReviewService.deleteUserWineReview(id)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
+			}
+			
+			case "checkUserHasReviewed" :
+			{
+				try
+				{
+					List<String> splittedContent;					
+					splittedContent = new ArrayList<String>(Arrays.asList(content.split(",")));
+					
+					Integer userId = Integer.parseInt(splittedContent.get(0));
+					Integer wineId = Integer.parseInt(splittedContent.get(1));
+					
+					if(userWineReviewService.userHasReviewed(userId, wineId)) { response.getWriter().println("True"); }
+				} catch (Exception e) { return; }
+				break;
+			}
+			
+			case "getReviewsForWine" :
+			{
+				try
+				{
+					Integer id = Integer.parseInt(content);
+					List<tblUserWineReviews> reviews = userWineReviewService.getReviewsForWine(id);
+					
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonResult = "{ \"Reviews\" : " + mapper.writeValueAsString(reviews) + " }";
+					
+					response.getWriter().write(jsonResult);
+				} catch (Exception e) { return; }
 			}
 		}
 	}

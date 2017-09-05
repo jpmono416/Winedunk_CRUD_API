@@ -55,4 +55,27 @@ public class UserWineReviewsService {
         }
         return false;
     }
+    
+    public Boolean userHasReviewed(Integer userId, Integer wineId)
+    {
+    	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `userId` = ?1 AND `wineId` = ?2 LIMIT 1", tblUserWineReviews.class);
+    	query.setParameter(1, userId).setParameter(2, wineId);
+    	
+    	tblUserWineReviews review = (tblUserWineReviews) query.getSingleResult();
+    	if(review != null) { return true; }
+    	
+    	return false;
+    }
+    
+    public List<tblUserWineReviews> getReviewsForWine(Integer wineId)
+    {
+    	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `wineId` = ?1", tblUserWineReviews.class);
+    	query.setParameter(1, wineId);
+    	
+    	@SuppressWarnings("unchecked")
+		List<tblUserWineReviews> reviews = query.getResultList();
+    	if(reviews != null) { return reviews; }
+		
+    	return null;
+    }
 }

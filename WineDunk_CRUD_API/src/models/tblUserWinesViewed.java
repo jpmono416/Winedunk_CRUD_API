@@ -58,4 +58,11 @@ public class tblUserWinesViewed {
         this.date = null;
         this.timestamp = null;
     }
+	@Override
+	public String toString() {
+		return "{ \"id\" : \"" + id + "\" , \"userId\" : \"" + userId + "\" , \"wineId\" : \"" + wineId
+				+ "\" , \"date\" : \"" + date + "\" , \"timestamp\" : \"" + timestamp + "\" }";
+	}
+    
+    
 }

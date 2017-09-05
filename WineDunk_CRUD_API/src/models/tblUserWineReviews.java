@@ -55,6 +55,11 @@ public class tblUserWineReviews {
     public String getComments() { return comments; }
     public void setComments(String comments) { this.comments = comments; }
 
+    @Transient
+    private Integer numericWineId;
+	public Integer getNumericWineId() { return numericWineId; }
+	public void setNumericWineId(Integer numericWineId) { this.numericWineId = numericWineId; }
+	
     public tblUserWineReviews(tblUsers id) {this.userId = id;}
     public tblUserWineReviews()
     {
@@ -65,4 +70,11 @@ public class tblUserWineReviews {
         this.addedTimestamp = null;
         this.comments = null;
     }
+    
+	@Override
+	public String toString() {
+		return "{ \"id\" : " + id + " , \"userId\" : " + userId + " , \"wineId\" : " + wineId
+				+ " , \"addedDate\" : \"" + addedDate + "\" , \"addedTimestamp\" : \"" + addedTimestamp
+				+ "\" , \"comments\" : \"" + comments + "\" , \"numericWineId\" : " + numericWineId + " }";
+	}
 }

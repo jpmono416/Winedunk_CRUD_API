@@ -162,7 +162,6 @@ public class Users extends HttpServlet {
 				{
 					
 					String auth = content;
-					System.out.println("auth " + auth); //TODO
 					viewUsers user = userService.getUserByAuth(auth);
 					
 					ObjectMapper objectMapper = new ObjectMapper();

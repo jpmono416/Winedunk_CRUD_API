@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import models.tblUsers_wines_ratings;
+import models.tblUserWinesRatings;
 import services.UserWineRatingsService;
 
 /**
@@ -44,7 +46,7 @@ public class UserWineRatings extends HttpServlet {
 			    	//Set pretty printing of json
 			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
-					List<tblUsers_wines_ratings> userWineRatings = userWineRatingService.getUserWineRatings();
+					List<tblUserWinesRatings> userWineRatings = userWineRatingService.getUserWineRatings();
 					String arrayToJson = objectMapper.writeValueAsString(userWineRatings);
 					
 					response.setStatus(200);
@@ -65,7 +67,7 @@ public class UserWineRatings extends HttpServlet {
 			    	//Set pretty printing of json
 			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
-					tblUsers_wines_ratings userWineRating = userWineRatingService.getUserWineRatingById(id);
+					tblUserWinesRatings userWineRating = userWineRatingService.getUserWineRatingById(id);
 					String arrayToJson = objectMapper.writeValueAsString(userWineRating);
 					
 					response.setStatus(200);
@@ -97,10 +99,10 @@ public class UserWineRatings extends HttpServlet {
 			{
 				try
 				{
-					tblUsers_wines_ratings userWineRating = new tblUsers_wines_ratings();
+					tblUserWinesRatings userWineRating = new tblUserWinesRatings();
 					ObjectMapper mapper = new ObjectMapper();
-					userWineRating = mapper.readValue(content, tblUsers_wines_ratings.class);
-					
+					userWineRating = mapper.readValue(content, tblUserWinesRatings.class);
+					System.out.println("Arriving and mapped : " + userWineRating.toString()); //TODO DELETE
 					if(userWineRatingService.addUserWineRating(userWineRating)) { response.getWriter().println("True"); }
 				} catch (Exception e) { e.printStackTrace();return;}
 				break;
@@ -110,9 +112,9 @@ public class UserWineRatings extends HttpServlet {
 			{
 				try
 				{
-					tblUsers_wines_ratings userWineRating = new tblUsers_wines_ratings();
+					tblUserWinesRatings userWineRating = new tblUserWinesRatings();
 					ObjectMapper mapper = new ObjectMapper();
-					userWineRating = mapper.readValue(content, tblUsers_wines_ratings.class);
+					userWineRating = mapper.readValue(content, tblUserWinesRatings.class);
 					
 					if(userWineRatingService.updateUserWineRating(userWineRating)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return;}
@@ -125,6 +127,21 @@ public class UserWineRatings extends HttpServlet {
 				{
 					Integer id = Integer.parseInt(content);
 					if(userWineRatingService.deleteUserWineRating(id)) { response.getWriter().println("True"); }
+				} catch (Exception e) { return; }
+				break;
+			}
+			
+			case "checkUserHasReviewed" :
+			{
+				try
+				{
+					List<String> splittedContent;					
+					splittedContent = new ArrayList<String>(Arrays.asList(content.split(",")));
+					
+					Integer userId = Integer.parseInt(splittedContent.get(0));
+					Integer wineId = Integer.parseInt(splittedContent.get(1));
+					
+					if(userWineRatingService.userHasReviewed(userId, wineId)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}
