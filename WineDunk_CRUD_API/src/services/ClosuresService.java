@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -30,6 +31,17 @@ public class ClosuresService extends DefaultServiceClass {
     {
     	try { return em.find(tblClosures.class, id); }
     	catch (Exception e) { e.printStackTrace(); return null; }
+    }
+
+    public tblClosures getByName(String name)
+    {
+    	try {
+    		return em.createNamedQuery("tblClosures.findByName", tblClosures.class)
+    				 .setParameter(0, name)
+    				 .getSingleResult();
+    	} catch (NoResultException noResExc) {
+    		return null;
+    	}
     }
 
     public Boolean addClosure(tblClosures closure) {

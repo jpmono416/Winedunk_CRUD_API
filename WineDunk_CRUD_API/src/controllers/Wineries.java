@@ -23,6 +23,7 @@ import services.WineriesService;
 @WebServlet("/wineries")
 public class Wineries extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	ObjectMapper mapper = new ObjectMapper();
 	
 	@EJB
 	WineriesService wineryService = new WineriesService();
@@ -40,12 +41,11 @@ public class Wineries extends HttpServlet {
 			{
 				try 
 				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					//Set pretty printing of json
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblWineries> wineries = wineryService.getWineries();
-					String arrayToJson = objectMapper.writeValueAsString(wineries);
+					String arrayToJson = this.mapper.writeValueAsString(wineries);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -61,18 +61,27 @@ public class Wineries extends HttpServlet {
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
 					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					//Set pretty printing of json
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblWineries winery = wineryService.getWineryById(id);
-					String arrayToJson = objectMapper.writeValueAsString(winery);
+					String arrayToJson = this.mapper.writeValueAsString(winery);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				break;
+			}
+			case "getByName":
+			{
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+
+				tblWineries winery = this.wineryService.getByName(request.getParameter("name"));
+				
+				response.getWriter().write(this.mapper.writeValueAsString(winery));
+				return;
 			}
 		}
 	}
@@ -99,10 +108,9 @@ public class Wineries extends HttpServlet {
 				{
 					System.out.println("Started");
 					tblWineries winery = new tblWineries();
-					ObjectMapper mapper = new ObjectMapper();
-					winery = mapper.readValue(content, tblWineries.class);
+					winery = this.mapper.readValue(content, tblWineries.class);
 					
-					if(wineryService.addWinery(winery)) { response.getWriter().println("True"); }
+					response.getWriter().println(wineryService.addWinery(winery));
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -112,8 +120,7 @@ public class Wineries extends HttpServlet {
 				try
 				{
 					tblWineries winery = new tblWineries();
-					ObjectMapper mapper = new ObjectMapper();
-					winery = mapper.readValue(content, tblWineries.class);
+					winery = this.mapper.readValue(content, tblWineries.class);
 					
 					if(wineryService.updateWinery(winery)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}

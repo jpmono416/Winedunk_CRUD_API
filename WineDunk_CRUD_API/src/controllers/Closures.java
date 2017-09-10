@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import models.tblClosures;
+import models.tblWineries;
 import services.ClosuresService;
 import services.DefaultServiceClass;
 
@@ -17,10 +21,10 @@ import services.DefaultServiceClass;
 @WebServlet("/closures")
 public class Closures extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private ObjectMapper mapper = new ObjectMapper();
+
 	@EJB
 	ClosuresService closureService = new ClosuresService();
-	
 	@EJB
 	DefaultServiceClass defaultService = new DefaultServiceClass();
 	
@@ -29,6 +33,22 @@ public class Closures extends HttpServlet {
     String className = "tblClosures";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameterMap().containsKey("action")) { return; }
+		
+		String action = request.getParameter("action");
+		switch(action) 
+		{
+			case "getByName":
+			{
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+	
+				tblClosures closure = this.closureService.getByName(request.getParameter("name"));
+				
+				response.getWriter().write(this.mapper.writeValueAsString(closure));
+				return;
+			}
+		}
 		//TODO 
 		/*
 		if(!request.getParameterMap().containsKey("action")) { return; }
@@ -132,4 +152,5 @@ public class Closures extends HttpServlet {
 				break;
 			}
 		}*/
-	}}
+	}
+}

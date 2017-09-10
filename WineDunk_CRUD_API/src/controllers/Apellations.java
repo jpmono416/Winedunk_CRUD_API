@@ -24,6 +24,7 @@ import services.DefaultServiceClass;
 @WebServlet("/appellations")
 public class Apellations extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	ObjectMapper mapper = new ObjectMapper();
 	
 	@EJB
 	ApellationsService apellationService = new ApellationsService();
@@ -45,18 +46,17 @@ public class Apellations extends HttpServlet {
 			{
 				try 
 				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					//Set pretty printing of json
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblAppellations> apellations = apellationService.getApellations();
-					String arrayToJson = objectMapper.writeValueAsString(apellations);
+					String arrayToJson = this.mapper.writeValueAsString(apellations);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				} 
 				catch (Exception e) { e.printStackTrace(); }
-				break;
+				return;
 			}
 			
 			case "getAppellation" :
@@ -66,19 +66,26 @@ public class Apellations extends HttpServlet {
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
 					
-					ObjectMapper objectMapper = new ObjectMapper();
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblAppellations apellation = apellationService.getApellationById(id);
-					String arrayToJson = objectMapper.writeValueAsString(apellation);
+					String arrayToJson = this.mapper.writeValueAsString(apellation);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
-				break;
+				return;
 			}
+			case "getByName":
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+
+				tblAppellations appellation = this.apellationService.getApellationByName(request.getParameter("name"));
+				response.getWriter().write(this.mapper.writeValueAsString(appellation));
+				
+				return;
 		}
 	}
 
@@ -102,23 +109,14 @@ public class Apellations extends HttpServlet {
 			{
 				try
 				{
-					/*
-					tblAppellations appellation = new tblAppellations();
-					StringBuilder sb = new StringBuilder();
-				    BufferedReader reader = request.getReader();
-				    String line;
-			        
-				    while ((line = reader.readLine()) != null) 
-			        { sb.append(line).append('\n'); }
-				    reader.close();
-				    
-					defaultService.addRecord("tblAppellations", sb.toString()); //TODO 
-					
-					if(apellationService.addApellation(appellation)) { response.getWriter().println("True"); }
-					*/
-				} catch (Exception e) {return;}
+					tblAppellations apellation = this.mapper.readValue(content, tblAppellations.class);
+
+					response.getWriter().write(this.apellationService.addApellation(apellation));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 					 
-				break;
+				return;
 			}
 			
 			case "updateAppellation" :
@@ -126,9 +124,8 @@ public class Apellations extends HttpServlet {
 				try
 				{
 					tblAppellations apellation = new tblAppellations();
-					ObjectMapper mapper = new ObjectMapper();
 
-					apellation = mapper.readValue(content, tblAppellations.class);
+					apellation = this.mapper.readValue(content, tblAppellations.class);
 					
 					if(apellationService.updateApellation(apellation)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}

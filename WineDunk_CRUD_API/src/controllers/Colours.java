@@ -23,7 +23,8 @@ import services.ColoursService;
 @WebServlet("/colours")
 public class Colours extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	ObjectMapper mapper = new ObjectMapper();
+
 	@EJB
 	ColoursService colourService = new ColoursService();
     public Colours() { super(); }
@@ -40,12 +41,11 @@ public class Colours extends HttpServlet {
 			{
 				try 
 				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					//Set pretty printing of json
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblColours> colours = colourService.getColours();
-					String arrayToJson = objectMapper.writeValueAsString(colours);
+					String arrayToJson = this.mapper.writeValueAsString(colours);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -61,18 +61,27 @@ public class Colours extends HttpServlet {
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
 					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					//Set pretty printing of json
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblColours colour = colourService.getColourById(id);
-					String arrayToJson = objectMapper.writeValueAsString(colour);
+					String arrayToJson = this.mapper.writeValueAsString(colour);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				break;
+			}
+			case "getByName":
+			{
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+
+				tblColours colour= this.colourService.getByName(request.getParameter("name"));
+				
+				response.getWriter().write(this.mapper.writeValueAsString(colour));
+				return;
 			}
 		}
 	}
@@ -98,8 +107,7 @@ public class Colours extends HttpServlet {
 				try
 				{
 					tblColours colour = new tblColours();
-					ObjectMapper mapper = new ObjectMapper();
-					colour = mapper.readValue(content, tblColours.class);
+					colour = this.mapper.readValue(content, tblColours.class);
 					
 					if(colourService.addColour(colour)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
@@ -111,8 +119,7 @@ public class Colours extends HttpServlet {
 				try
 				{
 					tblColours colour = new tblColours();
-					ObjectMapper mapper = new ObjectMapper();
-					colour = mapper.readValue(content, tblColours.class);
+					colour = this.mapper.readValue(content, tblColours.class);
 					
 					if(colourService.updateColour(colour)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
