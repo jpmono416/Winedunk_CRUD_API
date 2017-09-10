@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblUserWineReviews;
+import models.tblUsers;
+import models.tblWines;
 import services.UserWineReviewsService;
 
 /**
@@ -96,20 +98,33 @@ public class UserWineReviews extends HttpServlet {
 		switch (action) 
 		{
 			case "addUserWineReview" :
-			{
 				try
 				{
 					tblUserWineReviews userWineReview = new tblUserWineReviews();
 					ObjectMapper mapper = new ObjectMapper();
 					userWineReview = mapper.readValue(content, tblUserWineReviews.class);
-					System.out.println("Arriving and mapped : " + userWineReview.toString()); //TODO DELETE
+					
+					tblUsers userIdObject = new tblUsers();
+					tblWines wineIdObject = new tblWines();
+					
+					// Check for numericXId and assign to XId - if request comes from PriceComparison REST API
+					if(userWineReview.getUserId() == null) 
+					{ 
+						userIdObject.setId(userWineReview.getNumericUserId());
+						userWineReview.setUserId(userIdObject);
+					}
+
+					if(userWineReview.getWineId()== null) 
+					{ 
+						wineIdObject.setId(userWineReview.getNumericWineId());
+						userWineReview.setWineId(wineIdObject);
+					}
+					
 					if(userWineReviewService.addUserWineReview(userWineReview)) { response.getWriter().println("True"); }
 				} catch (Exception e) { e.printStackTrace();return;}
 				break;
-			}
 			
 			case "updateUserWineReview" :
-			{
 				try
 				{
 					tblUserWineReviews userWineReview = new tblUserWineReviews();
@@ -118,21 +133,17 @@ public class UserWineReviews extends HttpServlet {
 					
 					if(userWineReviewService.updateUserWineReview(userWineReview)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return;}
-				break;
-			}
+			break;
 			
 			case "deleteUserWineReview" :
-			{
 				try
 				{
 					Integer id = Integer.parseInt(content);
 					if(userWineReviewService.deleteUserWineReview(id)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
-				break;
-			}
+			break;
 			
 			case "checkUserHasReviewed" :
-			{
 				try
 				{
 					List<String> splittedContent;					
@@ -143,11 +154,9 @@ public class UserWineReviews extends HttpServlet {
 					
 					if(userWineReviewService.userHasReviewed(userId, wineId)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
-				break;
-			}
+			break;
 			
 			case "getReviewsForWine" :
-			{
 				try
 				{
 					Integer id = Integer.parseInt(content);
@@ -158,7 +167,30 @@ public class UserWineReviews extends HttpServlet {
 					
 					response.getWriter().write(jsonResult);
 				} catch (Exception e) { return; }
-			}
+			break;
+			
+			case "getReviewsForUser" :
+				try
+				{
+					Integer id = Integer.parseInt(content);
+					List<tblUserWineReviews> reviews = userWineReviewService.getReviewsForUser(id);
+					
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonResult = "{ \"Reviews\" : " + mapper.writeValueAsString(reviews) + " }";
+					
+					response.getWriter().write(jsonResult);
+				} catch (Exception e) { return; }
+			break;
+			
+			case "getAmountOfReviewsForWine" :
+				try
+				{
+					Integer id = Integer.parseInt(content);
+					System.out.println("ID received: " + id); // TODO DELETE
+					Long amountOfReviews = userWineReviewService.getCountOfReviewsForWine(id);
+					response.getWriter().write(amountOfReviews.toString());
+				} catch (Exception e) { return; }
+			break;
 		}
 	}
 

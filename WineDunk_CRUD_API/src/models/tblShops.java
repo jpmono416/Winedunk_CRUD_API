@@ -66,7 +66,8 @@ public class tblShops {
 	public List<tblWinesbyMerchants> getWinesByMerchant() { return winesByMerchant; }
 	public void setWinesByMerchant(List<tblWinesbyMerchants> winesByMerchant) { this.winesByMerchant = winesByMerchant; }
 	
-	@OneToMany(mappedBy="tblShops", targetEntity = Tblpfmerchanthtmlparsing.class)
+	//@OneToMany(mappedBy="tblShops", targetEntity = Tblpfmerchanthtmlparsing.class)
+	@Transient
 	private List<Tblpfmerchanthtmlparsing> parsingByMerchant;
 	public List<Tblpfmerchanthtmlparsing> getTblpfmerchanthtmlparsing() { return parsingByMerchant; }
 	public void setTblpfmerchanthtmlparsing(List<Tblpfmerchanthtmlparsing> parsingByMerchant) { this.parsingByMerchant = parsingByMerchant; }

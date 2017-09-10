@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblUserWinesRatings;
+import models.tblUsers;
+import models.tblWines;
 import services.UserWineRatingsService;
 
 /**
@@ -102,7 +104,23 @@ public class UserWineRatings extends HttpServlet {
 					tblUserWinesRatings userWineRating = new tblUserWinesRatings();
 					ObjectMapper mapper = new ObjectMapper();
 					userWineRating = mapper.readValue(content, tblUserWinesRatings.class);
-					System.out.println("Arriving and mapped : " + userWineRating.toString()); //TODO DELETE
+					
+					tblUsers userIdObject = new tblUsers();
+					tblWines wineIdObject = new tblWines();
+					
+					// Check for numericXId and assign to XId - if request comes from PriceComparison REST API 
+					if(userWineRating.getUserId() == null)
+					{
+						userIdObject.setId(userWineRating.getNumericUserId());
+						userWineRating.setUserId(userIdObject);
+					}
+					
+					if(userWineRating.getWineId() == null)
+					{
+						wineIdObject.setId(userWineRating.getNumericWineId());
+						userWineRating.setWineId(wineIdObject);
+					}
+					
 					if(userWineRatingService.addUserWineRating(userWineRating)) { response.getWriter().println("True"); }
 				} catch (Exception e) { e.printStackTrace();return;}
 				break;
@@ -131,7 +149,7 @@ public class UserWineRatings extends HttpServlet {
 				break;
 			}
 			
-			case "checkUserHasReviewed" :
+			case "checkUserHasRated" :
 			{
 				try
 				{

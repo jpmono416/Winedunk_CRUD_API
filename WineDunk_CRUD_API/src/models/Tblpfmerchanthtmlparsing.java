@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Tblpfmerchanthtmlparsing.findAll", query="SELECT t FROM Tblpfmerchanthtmlparsing t"),
-	@NamedQuery(name="Tblpfmerchanthtmlparsing.findByTblShops", query="SELECT t FROM Tblpfmerchanthtmlparsing t WHERE t.tblShops = :tblShops")
+	//@NamedQuery(name="Tblpfmerchanthtmlparsing.findByTblShops", query="SELECT t FROM Tblpfmerchanthtmlparsing t WHERE t.tblShops = :tblShops") TODO UNCOMMENT ONCE TABLE EXISTS
 })
 public class Tblpfmerchanthtmlparsing implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,8 +20,9 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne
-	@JoinColumn(name="merchantId")
+	//@ManyToOne
+	//@JoinColumn(name="merchantId")
+	@Transient
 	private tblShops tblShops;
 
 	private String nameInWeb;

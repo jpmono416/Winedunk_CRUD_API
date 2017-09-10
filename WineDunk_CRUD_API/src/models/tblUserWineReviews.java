@@ -49,6 +49,11 @@ public class tblUserWineReviews {
     private Date addedTimestamp;
     public Date getAddedTimestamp() { return addedTimestamp; }
     public void setAddedTimestamp(Date addedTimestamp) { this.addedTimestamp = addedTimestamp; }
+    
+    @Column(name = "title")
+    private String title;
+    public String getTitle() { return title; }
+	public void setTitle(String title) { this.title = title; }
 
     @Column(name = "comments")
     private String comments;
@@ -60,7 +65,12 @@ public class tblUserWineReviews {
 	public Integer getNumericWineId() { return numericWineId; }
 	public void setNumericWineId(Integer numericWineId) { this.numericWineId = numericWineId; }
 	
-    public tblUserWineReviews(tblUsers id) {this.userId = id;}
+	@Transient
+	private Integer numericUserId;
+    public Integer getNumericUserId() { return numericUserId; } 
+    public void setNumericUserId(Integer numericUserId) { this.numericUserId = numericUserId; }
+    
+	public tblUserWineReviews(tblUsers id) {this.userId = id;}
     public tblUserWineReviews()
     {
         this.id = null;
@@ -68,13 +78,16 @@ public class tblUserWineReviews {
         this.wineId = null;
         this.addedDate = null;
         this.addedTimestamp = null;
+        this.title = null;
         this.comments = null;
+        this.numericUserId = null;
+        this.numericWineId = null;
     }
-    
 	@Override
 	public String toString() {
-		return "{ \"id\" : " + id + " , \"userId\" : " + userId + " , \"wineId\" : " + wineId
-				+ " , \"addedDate\" : \"" + addedDate + "\" , \"addedTimestamp\" : \"" + addedTimestamp
-				+ "\" , \"comments\" : \"" + comments + "\" , \"numericWineId\" : " + numericWineId + " }";
+		return "{ \"id\" : " + id + " , \"userId\" : \"" + userId + "\" , \"wineId\" : \"" + wineId
+				+ "\" , \"addedDate\" : \"" + addedDate + "\" , \"addedTimestamp\" : \"" + addedTimestamp
+				+ "\" , \"comments\" : \"" + comments + "\" , \"numericWineId\" : " + numericWineId
+				+ " , \"numericUserId\" : " + numericUserId + ", \"title\" : \"" + title + "\" }";
 	}
 }
