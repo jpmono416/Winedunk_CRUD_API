@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -19,6 +21,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblWines")
+@NamedQueries({
+	@NamedQuery(name="tblWines.FindByGtin", query="SELECT t FROM tblWines t WHERE t.gtin = :gtin"),
+	@NamedQuery(name="tblWines.FindByNameBottleAndVintage", query="SELECT t FROM tblWines t "
+																+ "WHERE t.name = :name "
+																	+ "AND t.bottleSize = :bottleSize "
+																	+ "AND t.vintage = :vintage")
+})
 public class tblWines {
 
     @Transient
@@ -101,6 +110,11 @@ public class tblWines {
     private Float bottleSize;
     public Float getBottleSize() { return bottleSize; }
 	public void setBottleSize(Float bottleSize) { this.bottleSize = bottleSize; }
+
+	@Column(name = "vintage")
+    private Integer vintage;
+    public Integer getVintage() { return vintage; }
+	public void setVintage(Integer vintage) { this.vintage = vintage; }
 	
     @Column(name = "abv")
     private Float abv;

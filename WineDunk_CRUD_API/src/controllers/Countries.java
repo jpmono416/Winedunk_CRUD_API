@@ -74,6 +74,15 @@ public class Countries extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			case "getByName":
+				if(!request.getParameterMap().containsKey("name"))
+				{
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing name");
+					return;
+				}
+
+				countryService.getCountryByName(request.getParameter("name"));
+				break;
 		}
 	}
 

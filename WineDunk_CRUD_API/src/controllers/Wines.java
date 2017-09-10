@@ -74,6 +74,34 @@ public class Wines extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			case "getByGtin":
+			{
+				if(!request.getParameterMap().containsKey("gtin")) 
+				{
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing Gtin");
+					return;
+				}
+
+				tblWines wine = wineService.getWineByGtin(request.getParameter("gtin"));
+
+				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
+				break;
+			}
+			case "getByNameBottleAndVintage":
+			{
+				for(String parameter : new String[] {"name", "bottleSize", "vintage"})
+				{
+					if(!request.getParameterMap().containsKey(parameter))
+					{
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing "+parameter);
+					}
+				}
+
+				tblWines wine = wineService.getWineByNameBottleAndVintage(request.getParameter("name"), Float.valueOf(request.getParameter("bottleSize")), Integer.valueOf(request.getParameter("vintage")));
+				
+				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
+				break;
+			}
 		}
 	}
 

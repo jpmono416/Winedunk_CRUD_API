@@ -5,10 +5,17 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import models.tblWines;
+
+/**
+ * 
+ * 
+ *
+ */
 @Stateless
 @LocalBean
 public class WinesService {
@@ -23,12 +30,56 @@ public class WinesService {
         catch (Exception e) { e.printStackTrace(); return null; }
     }
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
     public tblWines getWineById(Integer id)
     {
     	try { return em.find(tblWines.class, id); }
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
+    /**
+     * 
+     * @param gtin
+     * @return
+     */
+    public tblWines getWineByGtin(String gtin)
+    {
+    	try {
+    		return em.createNamedQuery("tblWines.findByGtin", tblWines.class).setParameter(0, gtin).getSingleResult();
+    	} catch(NoResultException noResExc) {
+    		return null;
+    	}
+    }
+
+    /**
+     * 
+     * @param name
+     * @param bottleSize
+     * @param vintage
+     * @return
+     */
+    public tblWines getWineByNameBottleAndVintage(String name, Float bottleSize, Integer vintage)
+    {
+    	try {
+    		return em.createNamedQuery("tblWines.findByNameBottleAndVintage", tblWines.class)
+    			 .setParameter(0, name)
+    			 .setParameter(1, bottleSize)
+    			 .setParameter(2, vintage)
+    			 .getSingleResult();
+    	} catch(NoResultException noResExc) {
+    		return null;
+    	}
+    }
+
+    /**
+     * 
+     * @param wine
+     * @return
+     */
     public Boolean addWine(tblWines wine) {
         try
         {
@@ -38,6 +89,11 @@ public class WinesService {
         } catch (Exception e) { return false; }
     }
 
+    /**
+     * 
+     * @param wine
+     * @return
+     */
     public Boolean updateWine(tblWines wine)
     {
     	if(wine == null || wine.getId() == null) { return false; }
@@ -45,6 +101,11 @@ public class WinesService {
         return true;
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public Boolean deleteWine(Integer id)
     {
         tblWines wine = getWineById(id);

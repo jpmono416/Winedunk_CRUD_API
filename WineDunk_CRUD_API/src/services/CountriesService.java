@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -29,6 +30,15 @@ public class CountriesService {
     {
     	try { return em.find(tblCountries.class, id); }
     	catch (Exception e) { e.printStackTrace(); return null; }
+    }
+
+    public tblCountries getCountryByName(String name)
+    {
+    	try {
+    		return em.createNamedQuery("tblCountries.findByName", tblCountries.class).setParameter(0, name).getSingleResult();
+    	} catch (NoResultException noResExc) {
+    		return null;
+    	}
     }
 
     public Boolean addCountry(tblCountries country) {
