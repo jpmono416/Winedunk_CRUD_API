@@ -31,13 +31,13 @@ public class WineTypesService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public Boolean addWineType(tblWineTypes wineType) {
+    public tblWineTypes addWineType(tblWineTypes wineType) {
         try
         {
         	if(wineType.getId() != null) { wineType.setId(null); }
         	em.persist(wineType);
-        	return true;
-        } catch (Exception e) { return false; }
+        	return wineType;
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateWineType(tblWineTypes wineType)
@@ -58,4 +58,14 @@ public class WineTypesService {
         }
         return false;
     }
+
+	public tblWineTypes getByName(String wineTypeName) {
+		try {
+			return em.createNamedQuery("tblWineTypes.findByName", tblWineTypes.class)
+				     .setParameter(0, wineTypeName)
+				     .getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

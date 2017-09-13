@@ -142,6 +142,16 @@ public class tblCountries {
 		this.regions = regions;
 	}
 
+	@OneToMany(mappedBy = "tblCountries", targetEntity = TblPFCountryNameMappingTable.class)
+	@JsonBackReference("TblPFCountryNameMappingTable_country")
+	private List<TblPFCountryNameMappingTable> tblPFCountryNameMappingTables;
+	public List<TblPFCountryNameMappingTable> getTblPFCountryNameMappingTables() {
+		return this.tblPFCountryNameMappingTables;
+	}
+	public void seTblPFCountryNameMappingTable(List<TblPFCountryNameMappingTable> tblPFCountryNameMappingTables) {
+		this.tblPFCountryNameMappingTables = tblPFCountryNameMappingTables;
+	}
+
 	@OneToMany(mappedBy = "countryId", targetEntity = tblCountriesWithWines.class)
 	@JsonBackReference("countryWithWine")
 	private List<tblCountriesWithWines> countriesWithWines;

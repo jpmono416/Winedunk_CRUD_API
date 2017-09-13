@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import models.tblClosures;
-import models.tblWineries;
 import services.ClosuresService;
 import services.DefaultServiceClass;
 
