@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import models.tblCountries;
+import models.tblCurrencies;
+import models.tblLanguages;
+import models.tblTimeZones;
 import models.tblUsers;
 import services.UsersService;
 import views.viewUsers;
@@ -129,8 +133,36 @@ public class Users extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					user = mapper.readValue(content, tblUsers.class);
 					
+					if(user.getCountryId() == null) 
+					{ 
+						tblCountries country = new tblCountries();
+						country.setId(user.getNumericCountryId());
+						user.setCountryId(country);
+					}
+					
+					if(user.getPreferredTimeZoneId() == null) 
+					{ 
+						tblTimeZones timeZone = new tblTimeZones();
+						timeZone.setId(user.getNumericTimeZoneId());
+						user.setPreferredTimeZoneId(timeZone);
+					}
+					
+					if(user.getPreferredCurrencyId() == null) 
+					{
+						tblCurrencies currency = new tblCurrencies();
+						currency.setId(user.getNumericCurrencyId());
+						user.setPreferredCurrencyId(currency);
+					}
+					
+					if(user.getPreferredLanguageId() == null) 
+					{
+						tblLanguages language = new tblLanguages();
+						language.setId(user.getNumericLanguageId());
+						user.setPreferredLanguageId(language);
+					}
+					System.out.println("User: " + user); // TODO DELETE
 					if(userService.updateUser(user)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
+				} catch (Exception e) {e.printStackTrace();}
 			break;
 			
 			case "deleteUser" :
@@ -145,6 +177,7 @@ public class Users extends HttpServlet {
 			    try
 			    {
 					String email = content;
+					System.out.println("Content: " + email); //TODO DELETE
 			    	viewUsers user = userService.getUserByEmail(email);
 			    	
 			    	ObjectMapper objectMapper = new ObjectMapper();

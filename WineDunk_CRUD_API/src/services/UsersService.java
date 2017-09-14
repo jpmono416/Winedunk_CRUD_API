@@ -40,9 +40,7 @@ public class UsersService extends DefaultServiceClass {
     {
     	try 
     	{
-    		System.out.println("Email on class: " + email);
     		Query query = em.createQuery("SELECT u FROM viewUsers u WHERE u.loginEmail = :email", viewUsers.class).setParameter("email", email);
-    		System.out.println("Query: " + query.toString()); //TODO DEL
     		viewUsers user = (viewUsers) query.getSingleResult();
         	return user;
     	} catch (Exception e) { e.printStackTrace();  return null; } 
@@ -52,11 +50,8 @@ public class UsersService extends DefaultServiceClass {
     {
     	try
     	{
-    		System.out.println("Auth on class: " + auth);//TODO
     		String queryString = "SELECT * FROM viewUsers WHERE loginToken = \"" + auth + "\"";
-    		System.out.println("String: " + queryString); //TODO
     		Query query = em.createNativeQuery(queryString, viewUsers.class);
-    		System.out.println("Query: " + query.toString());
     		viewUsers user = (viewUsers) query.getSingleResult();
     		return user;
     	} catch (Exception e) { e.printStackTrace(); return null; }

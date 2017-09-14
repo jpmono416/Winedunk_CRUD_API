@@ -39,7 +39,6 @@ public class UserEmailsService {
     public Boolean addUserEmail(tblUserEmails userEmail) {
         try
         {
-        	System.out.println("UserEmail: " + userEmail.toString()); //TODO DELETE
         	if(userEmail.getId() != null) { userEmail.setId(null); }
         	em.persist(userEmail);
         	return true;

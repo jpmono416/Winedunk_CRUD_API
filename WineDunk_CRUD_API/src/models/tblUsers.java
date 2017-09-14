@@ -35,13 +35,11 @@ public class tblUsers {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
-
 	@ManyToOne
     @JoinColumn(name = "countryId")
     private tblCountries countryId;
     public tblCountries getCountryId() { return countryId; }
 	public void setCountryId(tblCountries countryId) { this.countryId = countryId; }
-
 
 	@ManyToOne
     @JoinColumn(name = "preferredCurrencyId")
@@ -77,12 +75,11 @@ public class tblUsers {
     public String getPreferredPhoneNumber() { return preferredPhoneNumber; }
 	public void setPreferredPhoneNumber(String preferredPhoneNumber) { this.preferredPhoneNumber = preferredPhoneNumber; }
 
-
 	@Column(name = "DOB")
     @Temporal(TemporalType.DATE)
     private Date DoB;
     public Date getDoB() { return DoB; }
-    public void setDoB(Date doB) { DoB = doB; }
+    public void setDoB(Date DoB) { this.DoB = DoB; }
 
     @Column(name = "loginEmail")
     @NotNull @Email
@@ -103,7 +100,6 @@ public class tblUsers {
 	public void setLoginToken(String loginToken) { this.loginToken = loginToken; }
 	
     @Column(name = "recoveringPassEmail")
-    @NotNull @Email
     private String recoveringPassEmail;
     public String getRecoveringPassEmail() { return recoveringPassEmail; }
     public void setRecoveringPassEmail(String recoveringPassEmail) { this.recoveringPassEmail = recoveringPassEmail; }
@@ -213,6 +209,26 @@ public class tblUsers {
     public List<tblUserPriceAlerts> getUserPriceAlerts() { return userPriceAlerts; }
 	public void setUserPriceAlerts(List<tblUserPriceAlerts> userPriceAlerts) { this.userPriceAlerts = userPriceAlerts; }
 	
+	@Transient
+	private Integer numericCountryId;
+	public Integer getNumericCountryId() { return numericCountryId; }
+	public void setNumericCountryId(Integer numericCountryId) { this.numericCountryId = numericCountryId; }
+	
+	@Transient
+	private Integer numericCurrencyId;
+	public Integer getNumericCurrencyId() { return numericCurrencyId; }
+	public void setNumericCurrencyId(Integer numericCurrencyId) { this.numericCurrencyId = numericCurrencyId; }
+	
+	@Transient
+	private Integer numericTimeZoneId;
+	public Integer getNumericTimeZoneId() { return numericTimeZoneId; }
+	public void setNumericTimeZoneId(Integer numericTimeZoneId) { this.numericTimeZoneId = numericTimeZoneId; }
+	
+	@Transient
+	private Integer numericLanguageId;
+	public Integer getNumericLanguageId() { return numericLanguageId; }
+	public void setNumericLanguageId(Integer numericLanguageId) { this.numericLanguageId = numericLanguageId; }
+
 	
     public tblUsers()
     {
@@ -242,28 +258,32 @@ public class tblUsers {
         this.googleAccounts = null;
         this.userPriceAlerts = null;
         this.recoveringPassToken = null;
+        this.numericCountryId = null;
+        this.numericCurrencyId = null;
+        this.numericLanguageId = null;
+        this.numericTimeZoneId = null;
     }
     public tblUsers(Integer id) { this.id = id; }
-	
-    @Override
+    
+	@Override
 	public String toString() {
-		return "tblUsers { \"id\" : \"" + id + "\" , countryId\" : \"" + countryId + "\" , preferredCurrencyId\" : \""
-				+ preferredCurrencyId + "\" , preferredTimeZoneId\" : \"" + preferredTimeZoneId
-				+ "\" , preferredLanguageId\" : \"" + preferredLanguageId + "\" , name\" : \"" + name
-				+ "\" , preferredEmail\" : \"" + preferredEmail + "\" , preferredPhoneNumber\" : \""
-				+ preferredPhoneNumber + "\" , DoB\" : \"" + DoB + "\" , loginEmail\" : \"" + loginEmail
-				+ "\" , loginPassword\" : \"" + loginPassword + "\" , loginToken\" : \"" + loginToken
-				+ "\" , recoveringPassEmail\" : \"" + recoveringPassEmail + "\" , recoveringPassToken\" : \""
-				+ recoveringPassToken + "\" , isAdmin\" : \"" + isAdmin + "\" , deleted\" : \"" + deleted
-				+ "\" , phoneNumbers\" : \"" + phoneNumbers + "\" , emailAddresses\" : \"" + emailAddresses
-				+ "\" , platforms\" : \"" + platforms + "\" , devices\" : \"" + devices + "\" , searches\" : \""
-				+ searches + "\" , savedSearches\" : \"" + savedSearches + "\" , favouriteWines\" : \"" + favouriteWines
-				+ "\" , wineRatings\" : \"" + wineRatings + "\" , reviews\" : \"" + reviews + "\" , winesViewed\" : \""
-				+ winesViewed + "\" , clicks\" : \"" + clicks + "\" , userSubscriptions\" : \"" + userSubscriptions
-				+ "\" , facebookAccounts\" : \"" + facebookAccounts + "\" , googleAccounts\" : \"" + googleAccounts
-				+ "\" , userPriceAlerts\" : \"" + userPriceAlerts + " }";
+		return "{ \"id\" : \"" + id + "\" , \"countryId\" : \"" + countryId + "\" , \"preferredCurrencyId\" : \""
+				+ preferredCurrencyId + "\" , \"preferredTimeZoneId\" : \"" + preferredTimeZoneId
+				+ "\" , \"preferredLanguageId\" : \"" + preferredLanguageId + "\" , \"name\" : \"" + name
+				+ "\" , \"preferredEmail\" : \"" + preferredEmail + "\" , \"preferredPhoneNumber\" : \""
+				+ preferredPhoneNumber + "\" , \"DoB\" : \"" + DoB + "\" , \"loginEmail\" : \"" + loginEmail
+				+ "\" , \"loginPassword\" : \"" + loginPassword + "\" , \"loginToken\" : \"" + loginToken
+				+ "\" , \"recoveringPassEmail\" : \"" + recoveringPassEmail + "\" , \"recoveringPassToken\" : \""
+				+ recoveringPassToken + "\" , \"isAdmin\" : \"" + isAdmin + "\" , \"deleted\" : \"" + deleted
+				+ "\" , \"phoneNumbers\" : \"" + phoneNumbers + "\" , \"emailAddresses\" : \"" + emailAddresses
+				+ "\" , \"platforms\" : \"" + platforms + "\" , \"devices\" : \"" + devices + "\" , \"searches\" : \""
+				+ searches + "\" , \"savedSearches\" : \"" + savedSearches + "\" , \"favouriteWines\" : \""
+				+ favouriteWines + "\" , \"wineRatings\" : \"" + wineRatings + "\" , \"reviews\" : \"" + reviews
+				+ "\" , \"winesViewed\" : \"" + winesViewed + "\" , \"clicks\" : \"" + clicks
+				+ "\" , \"userSubscriptions\" : \"" + userSubscriptions + "\" , \"facebookAccounts\" : \""
+				+ facebookAccounts + "\" , \"googleAccounts\" : \"" + googleAccounts + "\" , \"userPriceAlerts\" : \""
+				+ userPriceAlerts + "\" , \"numericCountryId\" : \"" + numericCountryId
+				+ "\" , \"numericCurrencyId\" : \"" + numericCurrencyId + "\" , \"numericTimeZoneId\" : \""
+				+ numericTimeZoneId + "\" , \"numericLanguageId\" : \"" + numericLanguageId + "\" }";
 	}
-
-    
-    
 }
