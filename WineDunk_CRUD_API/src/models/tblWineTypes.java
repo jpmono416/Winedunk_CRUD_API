@@ -5,10 +5,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -34,12 +37,21 @@ public class tblWineTypes {
     public Boolean isDeleted() {return deleted;}
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 
+
     @OneToMany(mappedBy = "tblWineTypes", targetEntity = TblWinesWineType.class)
+    @JsonBackReference("wine")
     private List<tblWines> wines;
     public List<tblWines> getWines() { return wines; }
 	public void setWines(List<tblWines> wines) { this.wines = wines; }
 
-    public tblWineTypes(Integer id) { this.id = id; }
+	@OneToMany(mappedBy = "winetypeId", targetEntity = tblBestOffersbyType.class)
+	@JsonBackReference("wineType")
+	private List<tblBestOffersbyType> bestOffersByType;
+    public List<tblBestOffersbyType> getBestOffersByType() { return bestOffersByType; }
+	public void setBestOffersByType(List<tblBestOffersbyType> bestOffersByType) { this.bestOffersByType = bestOffersByType; }
+	
+	
+	public tblWineTypes(Integer id) { this.id = id; }
     public tblWineTypes()
     {
         this.id = null;

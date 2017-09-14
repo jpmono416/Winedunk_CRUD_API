@@ -347,55 +347,51 @@ public class tblWines {
 	}
 
 	@OneToMany(mappedBy = "wineId", targetEntity = tblRecommendedWines.class)
-	@JsonBackReference("RecommendedWines")
-	private List<tblRecommendedWines> recommendedWines;
+    @JsonBackReference("RecommendedWines")
+    private List<tblRecommendedWines> recommendedWines;
+    public List<tblRecommendedWines> getRecommendedWines() { return recommendedWines; }
+    public void setRecommendedWines(List<tblRecommendedWines> recommendedWines) { this.recommendedWines = recommendedWines; }
+    
+    @OneToMany(mappedBy = "wineId", targetEntity = tblWinesbyMerchants.class)
+    @JsonBackReference("wine_winesByMerchant")
+    private List<tblWinesbyMerchants> winesByMerchant;
+	public List<tblWinesbyMerchants> getWinesByMerchant() { return winesByMerchant; }
+	public void setWinesByMerchant(List<tblWinesbyMerchants> winesByMerchant) { this.winesByMerchant = winesByMerchant; }
+	
+	@OneToMany(mappedBy = "wineId", targetEntity = tblBestOffersbyType.class)
+	@JsonBackReference("wine_bestOffersByType")
+	private List<tblBestOffersbyType> bestOffersByType;
+	public List<tblBestOffersbyType> getBestOffersByType() { return bestOffersByType; }
+	public void setBestOffersByType(List<tblBestOffersbyType> bestOffersByType) { this.bestOffersByType = bestOffersByType; }
 
-	public List<tblRecommendedWines> getRecommendedWines() {
-		return recommendedWines;
-	}
-
-	public void setRecommendedWines(List<tblRecommendedWines> recommendedWines) {
-		this.recommendedWines = recommendedWines;
-	}
-
-	@OneToMany(mappedBy = "wineId", targetEntity = tblWinesbyMerchants.class)
-	@JsonBackReference("wine_winesByMerchant")
-	private List<tblWinesbyMerchants> winesByMerchant;
-
-	public List<tblWinesbyMerchants> getWinesByMerchant() {
-		return winesByMerchant;
-	}
-
-	public void setWinesByMerchant(List<tblWinesbyMerchants> winesByMerchant) {
-		this.winesByMerchant = winesByMerchant;
-	}
-
-	public tblWines(Integer id) {
-		this.id = id;
-	}
-
-	public tblWines() {
-		this.id = null;
-		this.country = null;
-		this.name = null;
-		this.defaultDescription = null;
-		this.bottleSize = null;
-		this.abv = null;
-		this.gtin = null;
-		this.imageURL = null;
-		this.deleted = false;
-		this.favouriteWines = null;
-		this.recommendedWines = null;
-		this.reviews = null;
-		this.winesViewed = null;
-		this.clicks = null;
-		this.minimumPrice = null;
-		this.minimumPriceShopId = null;
-		this.userPriceAlerts = null;
-		this.winesByMerchant = null;
-	}
-
-	public tblWines(String name) {
-		this.name = name;
-	}
+	@Column(name = "avgRating")
+	private Float avgRating;
+	public Float getAvgRating() { return avgRating; }
+	public void setAvgRating(Float avgRating) { this.avgRating = avgRating; }
+	
+    public tblWines(Integer id) { this.id = id; }
+    public tblWines()
+    {
+        this.id = null;
+        this.country = null;
+        this.name = null;
+        this.defaultDescription = null;
+        this.bottleSize = null;
+        this.abv = null;
+        this.gtin = null;
+        this.imageURL = null;
+        this.deleted = false;
+        this.favouriteWines = null;
+        this.recommendedWines = null;
+        this.reviews = null;
+        this.winesViewed = null;
+        this.clicks = null;
+        this.minimumPrice = null;
+        this.minimumPriceShopId = null;
+        this.userPriceAlerts = null;
+        this.winesByMerchant = null;
+        this.bestOffersByType = null;
+        this.avgRating = null;
+    }
+    public tblWines(String name) { this.name = name; }
 }

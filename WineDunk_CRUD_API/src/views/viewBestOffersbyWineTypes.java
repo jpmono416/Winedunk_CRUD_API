@@ -8,18 +8,37 @@ import javax.persistence.Transient;
 
 
 @Entity
-@Table(name = "viewWines")
-public class viewWines extends Object {
+@Table(name = "viewBestOffersbyWineTypes")
+public class viewBestOffersbyWineTypes extends Object {
 
-	@Transient
+    @Transient
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "wineId")
-    private Integer wineId;
-    public Integer getWineId() { return wineId; }
-	public void setWineId(Integer id) { this.wineId = id; }
+    private Integer id;
+    public Integer getId() { return id; }
+	public void setId(Integer id) { this.id = id; }
 
+	@Column(name = "wineTypeId")
+	private Integer wineTypeId;
+	public Integer getWineTypeId() { return wineTypeId; }
+	public void setWineTypeId(Integer wineTypeId) { this.wineTypeId = wineTypeId; }	
+	
+	@Column(name = "wineId")
+	private Integer wineId;
+	public Integer getWineId() { return wineId; }
+	public void setWineId(Integer wineId) { this.wineId = wineId; }
+
+	@Column(name = "positionIndex")
+	private Integer positionIndex;
+	public Integer getPositionIndex() { return positionIndex; }
+	public void setPositionIndex(Integer positionIndex) { this.positionIndex = positionIndex; }
+	
+	@Column(name = "winetypeName")
+	private String winetypeName;
+	public String getWinetypeName() { return winetypeName; }
+	public void setWinetypeName(String winetypeName) { this.winetypeName = winetypeName; }
+	
 	@Column(name = "wineCountryId")
 	private Integer wineCountryId;
 	public Integer getWineCountryId() { return wineCountryId; }
@@ -130,16 +149,15 @@ public class viewWines extends Object {
 	public Boolean getWineDeleted() { return wineDeleted; }
 	public void setWineDeleted(Boolean wineDeleted) { this.wineDeleted = wineDeleted; }
 	
-	@Column(name = "avgRating")
-	private Float avgRating;
-	public Float getAvgRating() { return avgRating; }
-	public void setAvgRating(Float avgRating) { this.avgRating = avgRating; }
 	
-	
-	public viewWines(Integer id) { this.wineId = id; }
-	public viewWines() 
+	public viewBestOffersbyWineTypes(Integer id) { this.id = id; } 
+	public viewBestOffersbyWineTypes() 
 	{
-        this.wineId = null;
+        this.id = null;
+        this.wineTypeId = null;
+    	this.wineId = null;
+    	this.positionIndex = null;
+    	this.winetypeName = null;
         this.wineCountryId = null; 
         this.wineCountryName = null;
         this.wineRegionId = null;
@@ -161,24 +179,24 @@ public class viewWines extends Object {
         this.wineClosureName = null;
         this.wineGtin = null;
         this.wineMinimumPrice = null;
-        this.avgRating = null;
         this.wineDeleted = false;
     }
 	
 	@Override
 	public String toString() {
-		return "{ \"wineId\" : \"" + wineId + "\" , \"wineCountryId\" : \"" + wineCountryId
-				+ "\" , \"wineCountryName\" : \"" + wineCountryName + "\" , \"wineRegionId\" : \"" + wineRegionId
-				+ "\" , \"wineRegionName\" : \"" + wineRegionName + "\" , \"wineWineryId\" : \"" + wineWineryId
-				+ "\" , \"wineWineryName\" : \"" + wineWineryName + "\" , \"wineAppellationId\" : \""
-				+ wineAppellationId + "\" , \"wineAppellationName\" : \"" + wineAppellationName
-				+ "\" , \"wineColourId\" : \"" + wineColourId + "\" , \"wineColourName\" : \"" + wineColourName
-				+ "\" , \"wineVintage\" : \"" + wineVintage + "\" , \"wineName\" : \"" + wineName
+		return "{ \"id\" : \"" + id + "\" , \"wineTypeId\" : \"" + wineTypeId + "\" , \"wineId\" : \"" + wineId
+				+ "\" , \"positionIndex\" : \"" + positionIndex + "\" , \"winetypeName\" : \"" + winetypeName
+				+ "\" , \"wineCountryId\" : \"" + wineCountryId + "\" , \"wineCountryName\" : \"" + wineCountryName
+				+ "\" , \"wineRegionId\" : \"" + wineRegionId + "\" , \"wineRegionName\" : \"" + wineRegionName
+				+ "\" , \"wineWineryId\" : \"" + wineWineryId + "\" , \"wineWineryName\" : \"" + wineWineryName
+				+ "\" , \"wineAppellationId\" : \"" + wineAppellationId + "\" , \"wineAppellationName\" : \""
+				+ wineAppellationName + "\" , \"wineColourId\" : \"" + wineColourId + "\" , \"wineColourName\" : \""
+				+ wineColourName + "\" , \"wineVintage\" : \"" + wineVintage + "\" , \"wineName\" : \"" + wineName
 				+ "\" , \"wineShortDescription\" : \"" + wineShortDescription + "\" , \"wineDefaultDescription\" : \""
 				+ wineDefaultDescription + "\" , \"wineBottleSize\" : \"" + wineBottleSize + "\" , \"wineAbv\" : \""
 				+ wineAbv + "\" , \"wineImageURL\" : \"" + wineImageURL + "\" , \"wineClosureId\" : \"" + wineClosureId
 				+ "\" , \"wineClosureName\" : \"" + wineClosureName + "\" , \"wineGtin\" : \"" + wineGtin
 				+ "\" , \"wineMinimumPrice\" : \"" + wineMinimumPrice + "\" , \"wineDeleted\" : \"" + wineDeleted
-				+ "\" , \"avgRating\" : \"" + avgRating + "\" }";
-	}
+				+ "\" }";
+	}	
 }

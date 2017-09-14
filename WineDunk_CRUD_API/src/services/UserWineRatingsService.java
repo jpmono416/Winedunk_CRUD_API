@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import models.tblUserWinesRatings;
+import views.viewUsersWinesReviews;
 @Stateless
 @LocalBean
 public class UserWineRatingsService {
@@ -34,12 +35,16 @@ public class UserWineRatingsService {
         {
         	if(userWineRating.getId() != null) { userWineRating.setId(null); }
         	em.persist(userWineRating);
+        	
+        	// Make sure changes are visible immediately
+        	em.getEntityManagerFactory().getCache().evictAll();
         	return true;
         } catch (Exception e) { e.printStackTrace(); return false; }
     }
 
     public Boolean updateUserWineRating(tblUserWinesRatings userWineRating)
     {
+    	System.out.println("Entered update method"); //TODO DELETE
     	if(userWineRating == null || userWineRating.getId() == null) { return false; }
         em.merge(userWineRating);
         return true;
@@ -70,5 +75,24 @@ public class UserWineRatingsService {
     	
     	
     	return false;
+    }
+    
+    public Long getCountOfRatingsForWine(Integer wineId)
+    {
+    	Query query = em.createNativeQuery("SELECT count(`id`) FROM tblUsers_Wines_Ratings WHERE `wineId` = " + wineId);
+    	Long amount = (Long) query.getSingleResult();
+    	return amount;
+    }
+    
+    public List<tblUserWinesRatings> getRatingsForUser(Integer userId)
+    {
+    	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Ratings WHERE `userId` = ?1", tblUserWinesRatings.class);
+    	query.setParameter(1, userId);
+    	
+    	@SuppressWarnings("unchecked")
+    	List<tblUserWinesRatings> ratings = query.getResultList();
+    	if(ratings != null) { return ratings; }
+    	
+    	return null;
     }
 }
