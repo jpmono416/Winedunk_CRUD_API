@@ -65,7 +65,6 @@ public class tblUsers {
     public void setName(String name) { this.name = name; }
 
     @Column(name = "preferredEmail", nullable = false)
-    @NotNull @Email
     private String preferredEmail;
     public String getPreferredEmail() { return preferredEmail; }
 	public void setPreferredEmail(String preferredEmail) { this.preferredEmail = preferredEmail; }
@@ -82,19 +81,16 @@ public class tblUsers {
     public void setDoB(Date DoB) { this.DoB = DoB; }
 
     @Column(name = "loginEmail")
-    @NotNull @Email
     private String loginEmail;
     public String getLoginEmail() { return loginEmail; }
 	public void setLoginEmail(String loginEmail) { this.loginEmail = loginEmail; }
 	
 	@Column(name = "loginPassword")
-	@NotNull
 	private String loginPassword;
 	public String getLoginPassword() { return loginPassword; }
 	public void setLoginPassword(String loginPassword) { this.loginPassword = loginPassword; }
 	
 	@Column(name = "loginToken")
-	@NotNull
 	private String loginToken;
 	public String getLoginToken() { return loginToken; }
 	public void setLoginToken(String loginToken) { this.loginToken = loginToken; }

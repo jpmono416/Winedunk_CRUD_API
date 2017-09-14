@@ -133,34 +133,15 @@ public class Users extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					user = mapper.readValue(content, tblUsers.class);
 					
-					if(user.getCountryId() == null) 
-					{ 
-						tblCountries country = new tblCountries();
-						country.setId(user.getNumericCountryId());
-						user.setCountryId(country);
-					}
-					
-					if(user.getPreferredTimeZoneId() == null) 
-					{ 
-						tblTimeZones timeZone = new tblTimeZones();
-						timeZone.setId(user.getNumericTimeZoneId());
-						user.setPreferredTimeZoneId(timeZone);
-					}
-					
-					if(user.getPreferredCurrencyId() == null) 
+					// Edit only for the recover password method
+					if(user.getRecoveringPassToken() != null)
 					{
-						tblCurrencies currency = new tblCurrencies();
-						currency.setId(user.getNumericCurrencyId());
-						user.setPreferredCurrencyId(currency);
+						tblUsers previousUser = userService.getUserById(user.getId());
+						previousUser.setRecoveringPassToken(user.getRecoveringPassToken());
+						if(userService.updateUser(user)) { response.getWriter().println("True"); }
+						return;
 					}
 					
-					if(user.getPreferredLanguageId() == null) 
-					{
-						tblLanguages language = new tblLanguages();
-						language.setId(user.getNumericLanguageId());
-						user.setPreferredLanguageId(language);
-					}
-					System.out.println("User: " + user); // TODO DELETE
 					if(userService.updateUser(user)) { response.getWriter().println("True"); }
 				} catch (Exception e) {e.printStackTrace();}
 			break;

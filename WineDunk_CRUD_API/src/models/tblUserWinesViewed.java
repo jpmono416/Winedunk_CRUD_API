@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 
 
 @Entity
-@Table(name = "tblUsers_wines_viewed")
+@Table(name = "tblUsers_Wines_Viewed")
 public class tblUserWinesViewed {
 
     @Transient
