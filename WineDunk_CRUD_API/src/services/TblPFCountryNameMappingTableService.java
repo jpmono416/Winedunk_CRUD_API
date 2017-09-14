@@ -18,7 +18,7 @@ import models.tblCountries;
 @LocalBean
 public class TblPFCountryNameMappingTableService {
 
-	@PersistenceContext(unitName="WineDunk")
+	@PersistenceContext(unitName="Winedunk")
 	EntityManager em;
 
     /**
