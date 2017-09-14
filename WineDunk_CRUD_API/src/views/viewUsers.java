@@ -160,6 +160,7 @@ public class viewUsers {
         this.phoneNumber = null;
         this.DoB = null;
         this.recoveringPassEmail = null;
+        this.recoveringPassToken = null;
         this.isAdmin = false;
         this.deleted = false;
         this.loginEmail = null;

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -35,12 +36,19 @@ public class tblWineTypes {
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 
     @ManyToMany(mappedBy = "wineTypes", targetEntity = tblWines.class)
-    @JsonBackReference
+    @JsonBackReference("wine")
     private List<tblWines> wines;
     public List<tblWines> getWines() { return wines; }
 	public void setWines(List<tblWines> wines) { this.wines = wines; }
 
-    public tblWineTypes(Integer id) { this.id = id; }
+	@OneToMany(mappedBy = "winetypeId", targetEntity = tblBestOffersbyType.class)
+	@JsonBackReference("wineType")
+	private List<tblBestOffersbyType> bestOffersByType;
+    public List<tblBestOffersbyType> getBestOffersByType() { return bestOffersByType; }
+	public void setBestOffersByType(List<tblBestOffersbyType> bestOffersByType) { this.bestOffersByType = bestOffersByType; }
+	
+	
+	public tblWineTypes(Integer id) { this.id = id; }
     public tblWineTypes()
     {
         this.id = null;

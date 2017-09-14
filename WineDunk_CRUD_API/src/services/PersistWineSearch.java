@@ -123,6 +123,7 @@ public class PersistWineSearch {
 			+ " `w`.`wineAbv` AS `wineAbv`, "
 			+ " `w`.`wineClosureName` AS `wineClosureName`, "
 			+ " `w`.`wineMinimumPrice` AS `wineMinimumPrice`, "
+			+ " `w`.`avgRating` AS `avgRating`, "
 			+ " GROUP_CONCAT(DISTINCT `t`.`name`) AS `wineTypeName`,"
 			+ " GROUP_CONCAT(DISTINCT `v`.`name`) AS `grapeVarietyName`"
 			+ " FROM "; 
@@ -182,6 +183,7 @@ public class PersistWineSearch {
 			if(!vintageMin.equals("")) 					{ queryWhere += " AND (`w`.`wineVintage` BETWEEN " + vintageMin + " AND " + vintageMax + ") "; }
 
 			/* ---- MODIFICADO ---- */
+			
 			//if(!typeId.equals("")) 					{ queryWhere += " AND (`t`.`id` = " + typeId + ") "; }
 			// si se selecciona un solo tipo:
 			if(!typeId.isEmpty())						{ queryWhere += " AND (`w`.`id` in (SELECT DISTINCT `wineId` FROM `tblWinesWineTypes` WHERE `typeId` = " + typeId + "))"; }  

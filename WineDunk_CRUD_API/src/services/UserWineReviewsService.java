@@ -98,9 +98,7 @@ public class UserWineReviewsService {
     public Long getCountOfReviewsForWine(Integer wineId)
     {
     	Query query = em.createNativeQuery("SELECT count(`id`) FROM tblUsers_Wines_Reviews WHERE `wineId` = " + wineId);
-    	System.out.println(query.toString()); //TODO DELETE
     	Long amount = (Long) query.getSingleResult();
-    	System.out.println("Amount: " + amount); //TODO DELETE
     	return amount;
     }
 }

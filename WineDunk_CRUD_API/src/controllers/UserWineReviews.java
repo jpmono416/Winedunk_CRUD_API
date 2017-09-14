@@ -127,10 +127,27 @@ public class UserWineReviews extends HttpServlet {
 			case "updateUserWineReview" :
 				try
 				{
+					System.out.println("Content received: " + content); //TODO DELETE
 					tblUserWineReviews userWineReview = new tblUserWineReviews();
 					ObjectMapper mapper = new ObjectMapper();
 					userWineReview = mapper.readValue(content, tblUserWineReviews.class);
 					
+					tblUsers userIdObject = new tblUsers();
+					tblWines wineIdObject = new tblWines();
+					
+					if(userWineReview.getUserId() == null) 
+					{ 
+						userIdObject.setId(userWineReview.getNumericUserId());
+						userWineReview.setUserId(userIdObject);
+					}
+
+					if(userWineReview.getWineId()== null) 
+					{ 
+						wineIdObject.setId(userWineReview.getNumericWineId());
+						userWineReview.setWineId(wineIdObject);
+					}
+					
+					System.out.println("Object: " + userWineReview ); //TODO DELETE
 					if(userWineReviewService.updateUserWineReview(userWineReview)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return;}
 			break;
@@ -186,7 +203,6 @@ public class UserWineReviews extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					System.out.println("ID received: " + id); // TODO DELETE
 					Long amountOfReviews = userWineReviewService.getCountOfReviewsForWine(id);
 					response.getWriter().write(amountOfReviews.toString());
 				} catch (Exception e) { return; }
