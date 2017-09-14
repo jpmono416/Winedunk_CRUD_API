@@ -31,13 +31,24 @@ public class RegionsService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public Boolean addRegion(tblRegions device) {
+    public tblRegions getRegionByName(String regionName)
+    {
+    	try {
+    		return em.createNamedQuery("tblRegions.findByName", tblRegions.class)
+   		    	 	 .setParameter(0, regionName)
+   		    	 	 .getSingleResult();
+    	} catch ( Exception e) {
+    		return null;
+    	}
+    }
+
+    public Integer addRegion(tblRegions device) {
         try
         {
         	if(device.getId() != null) { device.setId(null); }
         	em.persist(device);
-        	return true;
-        } catch (Exception e) { return false; }
+        	return device.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateRegion(tblRegions device)

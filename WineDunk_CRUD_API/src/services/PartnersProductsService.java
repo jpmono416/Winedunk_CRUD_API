@@ -32,13 +32,13 @@ public class PartnersProductsService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public Boolean addPartnersProduct(tblPartnersProducts device) {
+    public Integer addPartnersProduct(tblPartnersProducts device) {
         try
         {
         	if(device.getId() != null) { device.setId(null); }
         	em.persist(device);
-        	return true;
-        } catch (Exception e) { return false; }
+        	return device.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updatePartnersProduct(tblPartnersProducts device)

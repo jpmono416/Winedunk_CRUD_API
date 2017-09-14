@@ -23,7 +23,8 @@ import services.WineTypesService;
 @WebServlet("/winetypes")
 public class WineTypes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private final ObjectMapper mapper = new ObjectMapper();
+
 	@EJB
 	WineTypesService wineTypeService = new WineTypesService();
     public WineTypes() { super(); }
@@ -39,13 +40,12 @@ public class WineTypes extends HttpServlet {
 			case "getWineTypes" :
 			{
 				try 
-				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
+				{
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblWineTypes> wineTypes = wineTypeService.getWineTypes();
-					String arrayToJson = objectMapper.writeValueAsString(wineTypes);
+					String arrayToJson = this.mapper.writeValueAsString(wineTypes);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -60,19 +60,28 @@ public class WineTypes extends HttpServlet {
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
-					
-					ObjectMapper objectMapper = new ObjectMapper();
+
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblWineTypes wineType = wineTypeService.getWineTypeById(id);
-					String arrayToJson = objectMapper.writeValueAsString(wineType);
+					String arrayToJson = this.mapper.writeValueAsString(wineType);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				break;
+			}
+			case "getByName":
+			{
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+
+				tblWineTypes wineType = this.wineTypeService.getByName(request.getParameter("name"));
+				
+				response.getWriter().write(this.mapper.writeValueAsString(wineType));
+				return;
 			}
 		}
 	}
@@ -97,10 +106,10 @@ public class WineTypes extends HttpServlet {
 				try
 				{
 					tblWineTypes wineType = new tblWineTypes();
-					ObjectMapper mapper = new ObjectMapper();
-					wineType = mapper.readValue(content, tblWineTypes.class);
-					
-					if(wineTypeService.addWineType(wineType)) { response.getWriter().println("True"); }
+					wineType = this.mapper.readValue(content, tblWineTypes.class);
+
+					wineType = wineTypeService.addWineType(wineType);
+					if(wineType!=null) { response.getWriter().println(wineType.getId()); }
 				} catch (Exception e) {return;}
 			break;
 			
@@ -108,8 +117,7 @@ public class WineTypes extends HttpServlet {
 				try
 				{
 					tblWineTypes wineType = new tblWineTypes();
-					ObjectMapper mapper = new ObjectMapper();
-					wineType = mapper.readValue(content, tblWineTypes.class);
+					wineType = this.mapper.readValue(content, tblWineTypes.class);
 					
 					if(wineTypeService.updateWineType(wineType)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }

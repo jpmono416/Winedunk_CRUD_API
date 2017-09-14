@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblRegions")
+@NamedQuery(name="tblRegions.findByName", query="SELECT t FROM tblRegions t WHERE t.name = :name")
 public class tblRegions {
 
     @Transient
@@ -51,9 +53,9 @@ public class tblRegions {
 
     @ManyToOne
     @JoinColumn(name = "countryId")
-    private tblCountries countryId;
-    public tblCountries getCountryId() { return countryId; }
-	public void setCountryId(tblCountries countryId) { this.countryId = countryId; }
+    private tblCountries tblCountries;
+    public tblCountries getTblCountries() { return tblCountries; }
+	public void setTblCountries(tblCountries tblCountries) { this.tblCountries = tblCountries; }
 	
 	public tblRegions(Integer id) { this.id = id; }
     public tblRegions()
@@ -62,6 +64,6 @@ public class tblRegions {
         this.name = null;
         this.deleted = null;
         this.wines = null;
-        this.countryId = null;
+        this.tblCountries = null;
     }
 }

@@ -1,0 +1,65 @@
+package models;
+
+import java.io.Serializable;
+import java.lang.Integer;
+import java.lang.String;
+import javax.persistence.*;
+import models.tblCountries;
+
+/**
+ * Entity implementation class for Entity: TblPFCountryNameMappingTable
+ *
+ */
+@Entity
+@NamedQueries({
+	@NamedQuery(name="TblPFCountryNameMappingTable.findAll", query="SELECT t FROM TblPFCountryNameMappingTable t"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByCountry", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE t.tblCountries = :country"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByCountryId", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE t.tblCountries.id = :id"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByMerchantName", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE t.merchantCountryName = :name"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByCountryAndMerchantName", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE t.tblCountries = :country AND t.merchantCountryName = :name"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByCountryIdAndMerchantName", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE t.tblCountries.id = :id AND t.merchantCountryName = :name"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByMerchantNameInsensitive", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE LOWER(t.merchantCountryName) = LOWER(:name)"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByCountryAndMerchantNameInsensitive", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE t.tblCountries = :country AND LOWER(t.merchantCountryName) = LOWER(:name)"),
+	@NamedQuery(name="TblPFCountryNameMappingTable.findByCountryIdAndMerchantNameInsensitive", query="SELECT t FROM TblPFCountryNameMappingTable t WHERE t.tblCountries.id = :id AND LOWER(t.merchantCountryName) = LOWER(:name)")
+})
+public class TblPFCountryNameMappingTable implements Serializable {
+	private static final long serialVersionUID = 1L;
+	   
+	@Id
+	private Integer id;
+	@ManyToOne
+	@JoinColumn(name="countryId")
+	private tblCountries tblCountries;
+	@Column(name="merchantName")
+	private String merchantCountryName;
+
+	public TblPFCountryNameMappingTable() {
+		super();
+	}
+	public TblPFCountryNameMappingTable(tblCountries country, String merchantCountryName) {
+		super();
+		this.tblCountries = country;
+		this.merchantCountryName = merchantCountryName;
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public tblCountries getTblCountries() {
+		return this.tblCountries;
+	}
+	public void setTblCountries(tblCountries tblCountries) {
+		this.tblCountries = tblCountries;
+	}
+
+	public String getMerchantCountryName() {
+		return this.merchantCountryName;
+	}
+	public void setMerchantCountryName(String merchantCountryName) {
+		this.merchantCountryName = merchantCountryName;
+	}
+}

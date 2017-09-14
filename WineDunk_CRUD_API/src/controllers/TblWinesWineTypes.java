@@ -14,43 +14,40 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import models.tblAppellations;
-import services.ApellationsService;
-import services.DefaultServiceClass;
+import models.TblWinesWineType;
+import services.TblWinesWineTypesService;
 
 /**
- * Servlet implementation class Apellations
+ * Servlet implementation class TblWinesWineTypes
  */
-@WebServlet("/appellations")
-public class Apellations extends HttpServlet {
+@WebServlet("/TblWinesWineTypes")
+public class TblWinesWineTypes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ObjectMapper mapper = new ObjectMapper();
-	
-	@EJB
-	ApellationsService apellationService = new ApellationsService();
-	
-	@EJB
-	DefaultServiceClass defaultService = new DefaultServiceClass();
-	
-    public Apellations() { super(); }
+	private final ObjectMapper mapper = new ObjectMapper();
+       
+    @EJB
+    TblWinesWineTypesService tblWinesWineTypesService;
 
+    public TblWinesWineTypes() {
+        super();
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
 		switch(action) 
 		{
-			case "getAppellations" :
+			case "getTblWinesWineTypes" :
 			{
 				try 
 				{ 
 					//Set pretty printing of json
 			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
-					List<tblAppellations> apellations = apellationService.getApellations();
-					String arrayToJson = this.mapper.writeValueAsString(apellations);
+
+					List<TblWinesWineType> tblWinesWineTypes= this.tblWinesWineTypesService.getTblWinesWineTypes();
+					String arrayToJson = this.mapper.writeValueAsString(tblWinesWineTypes);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -59,7 +56,7 @@ public class Apellations extends HttpServlet {
 				return;
 			}
 			
-			case "getAppellation" :
+			case "getById" :
 			{
 				try 
 				{
@@ -69,8 +66,8 @@ public class Apellations extends HttpServlet {
 			    	//Set pretty printing of json
 					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
-					tblAppellations apellation = apellationService.getApellationById(id);
-					String arrayToJson = this.mapper.writeValueAsString(apellation);
+					TblWinesWineType tblWinesWineType = tblWinesWineTypesService.getTblWinesWineTypeById(id);
+					String arrayToJson = this.mapper.writeValueAsString(tblWinesWineType);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -78,14 +75,21 @@ public class Apellations extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				return;
 			}
-			case "getByName":
-				if(!request.getParameterMap().containsKey("name"))
-					return;
-
-				tblAppellations appellation = this.apellationService.getApellationByName(request.getParameter("name"));
-				response.getWriter().write(this.mapper.writeValueAsString(appellation));
+			case "getByWineIdAndWineTypeId":
+			{
+				for(String parameter : new String[] {"wineId", "wineTypeId"})
+				{
+					if(!request.getParameterMap().containsKey(parameter))
+					{
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter "+parameter+" missing");
+						return;
+					}
+				}
+				TblWinesWineType winesWineType = this.tblWinesWineTypesService.getTblWinesWineTypeByWineIdAndWineTypeId(Integer.valueOf(request.getParameter("wineId")), 
+																					   									Integer.valueOf(request.getParameter("wineTypeId")));
 				
-				return;
+				response.getWriter().write(this.mapper.writeValueAsString(winesWineType));
+			}
 		}
 	}
 
@@ -105,13 +109,13 @@ public class Apellations extends HttpServlet {
 		String action = request.getParameter("action");
 		switch (action) 
 		{
-			case "addAppellation" :
+			case "addTblWinesWineType" :
 			{
 				try
 				{
-					tblAppellations apellation = this.mapper.readValue(content, tblAppellations.class);
+					TblWinesWineType tblWinesWineType = this.mapper.readValue(content, TblWinesWineType.class);
 
-					response.getWriter().write(this.apellationService.addApellation(apellation));
+					response.getWriter().write(this.tblWinesWineTypesService.addTblWinesWineType(tblWinesWineType));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -119,25 +123,25 @@ public class Apellations extends HttpServlet {
 				return;
 			}
 			
-			case "updateAppellation" :
+			case "updateTblWinesWineType" :
 			{
 				try
 				{
-					tblAppellations apellation = new tblAppellations();
+					TblWinesWineType tblWinesWineType = new TblWinesWineType();
 
-					apellation = this.mapper.readValue(content, tblAppellations.class);
+					tblWinesWineType = this.mapper.readValue(content, TblWinesWineType.class);
 					
-					if(apellationService.updateApellation(apellation)) { response.getWriter().println("True"); }
+					if(tblWinesWineTypesService.updateTblWinesWineType(tblWinesWineType)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
 			
-			case "deleteAppellation" :
+			case "deleteTblWinesWineType" :
 			{
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(apellationService.deleteApellation(id)) { response.getWriter().println("True"); }
+					if(tblWinesWineTypesService.deleteTblWinesWineType(id)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

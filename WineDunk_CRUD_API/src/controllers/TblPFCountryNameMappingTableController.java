@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,25 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import models.tblAppellations;
-import services.ApellationsService;
-import services.DefaultServiceClass;
+import models.TblPFCountryNameMappingTable;
+import services.TblPFCountryNameMappingTableService;
 
 /**
- * Servlet implementation class Apellations
+ * Servlet implementation class TblPFCountryNameMappingTable
  */
-@WebServlet("/appellations")
-public class Apellations extends HttpServlet {
+@WebServlet("/TblPFCountryNameMappingTableController")
+public class TblPFCountryNameMappingTableController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ObjectMapper mapper = new ObjectMapper();
 	
 	@EJB
-	ApellationsService apellationService = new ApellationsService();
+	TblPFCountryNameMappingTableService countryNameMappingService;
 	
-	@EJB
-	DefaultServiceClass defaultService = new DefaultServiceClass();
-	
-    public Apellations() { super(); }
+    public TblPFCountryNameMappingTableController() { super(); }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,15 +37,15 @@ public class Apellations extends HttpServlet {
 		String action = request.getParameter("action");
 		switch(action) 
 		{
-			case "getAppellations" :
+			case "getAll" :
 			{
 				try 
 				{ 
 					//Set pretty printing of json
 			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
-					List<tblAppellations> apellations = apellationService.getApellations();
-					String arrayToJson = this.mapper.writeValueAsString(apellations);
+					List<TblPFCountryNameMappingTable> mappings = countryNameMappingService.getAll();
+					String arrayToJson = this.mapper.writeValueAsString(mappings);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -59,7 +54,7 @@ public class Apellations extends HttpServlet {
 				return;
 			}
 			
-			case "getAppellation" :
+			case "getById" :
 			{
 				try 
 				{
@@ -69,8 +64,8 @@ public class Apellations extends HttpServlet {
 			    	//Set pretty printing of json
 					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
-					tblAppellations apellation = apellationService.getApellationById(id);
-					String arrayToJson = this.mapper.writeValueAsString(apellation);
+					TblPFCountryNameMappingTable mapping = countryNameMappingService.getById(id);
+					String arrayToJson = this.mapper.writeValueAsString(mapping);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -79,65 +74,62 @@ public class Apellations extends HttpServlet {
 				return;
 			}
 			case "getByName":
+			{
 				if(!request.getParameterMap().containsKey("name"))
+				{
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter name missing");
 					return;
+				}
 
-				tblAppellations appellation = this.apellationService.getApellationByName(request.getParameter("name"));
-				response.getWriter().write(this.mapper.writeValueAsString(appellation));
-				
-				return;
+				try {
+					TblPFCountryNameMappingTable mapping = this.countryNameMappingService.getByName(request.getParameter("name"));
+					response.getWriter().write(this.mapper.writeValueAsString(mapping));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
-		
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
-
-	    String content = sb.toString().replaceFirst("\n", "");
 	    
 		String action = request.getParameter("action");
 		switch (action) 
 		{
-			case "addAppellation" :
+			case "addTblPFCountryNameMappingTable" :
 			{
+				for(String parameter : new String[] {"countryId", "name"})
+			    {
+			    	if(!request.getParameterMap().containsKey(parameter))
+			    	{
+			    		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter "+parameter+" missing");
+			    		return;
+			    	}
+			    	
+			    }
+
 				try
 				{
-					tblAppellations apellation = this.mapper.readValue(content, tblAppellations.class);
 
-					response.getWriter().write(this.apellationService.addApellation(apellation));
+					response.getWriter().write(this.countryNameMappingService.addMapping(Integer.valueOf(request.getParameter("countryId")), request.getParameter("name")));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 					 
 				return;
 			}
-			
-			case "updateAppellation" :
+			case "deleteTblPFCountryNameMappingTable" :
 			{
-				try
+				if(!request.getParameterMap().containsKey("id"))
 				{
-					tblAppellations apellation = new tblAppellations();
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
+					return;
+				}
 
-					apellation = this.mapper.readValue(content, tblAppellations.class);
-					
-					if(apellationService.updateApellation(apellation)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
-				break;
-			}
-			
-			case "deleteAppellation" :
-			{
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(apellationService.deleteApellation(id)) { response.getWriter().println("True"); }
+					if(countryNameMappingService.deleteMappingById(Integer.valueOf(request.getParameter("id")))) { response.getWriter().println(true); }
 				} catch (Exception e) { return; }
 				break;
 			}

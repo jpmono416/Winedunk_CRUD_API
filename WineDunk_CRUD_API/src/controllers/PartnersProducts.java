@@ -98,8 +98,9 @@ public class PartnersProducts extends HttpServlet {
 					tblPartnersProducts partnersProducts = new tblPartnersProducts();
 					ObjectMapper mapper = new ObjectMapper();
 					partnersProducts = mapper.readValue(content, tblPartnersProducts.class);
-					
-					if(partnersProductsService.addPartnersProduct(partnersProducts)) { response.getWriter().println("True"); }
+
+					Integer id = partnersProductsService.addPartnersProduct(partnersProducts);
+					if(id != null) { response.getWriter().println(id); }
 				} catch (Exception e) {return;}
 				break;
 			
@@ -110,7 +111,7 @@ public class PartnersProducts extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					partnersProducts = mapper.readValue(content, tblPartnersProducts.class);
 					
-					if(partnersProductsService.updatePartnersProduct(partnersProducts)) { response.getWriter().println("True"); }
+					if(partnersProductsService.updatePartnersProduct(partnersProducts) != null) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
 				break;
 			

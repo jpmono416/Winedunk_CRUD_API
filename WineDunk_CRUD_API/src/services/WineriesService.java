@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -31,13 +32,24 @@ public class WineriesService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public Boolean addWinery(tblWineries winery) {
+    public tblWineries getByName(String name)
+    {
+    	try {
+    		return em.createNamedQuery("tblWineries.findByName", tblWineries.class)
+    				 .setParameter(0, name)
+    				 .getSingleResult();
+    	} catch (NoResultException noResExc) {
+    		return null;
+    	}
+    }
+
+    public Integer addWinery(tblWineries winery) {
         try
         {
         	if(winery.getId() != null) { winery.setId(null); }
         	em.persist(winery);
-        	return true;
-        } catch (Exception e) { return false; }
+        	return winery.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateWinery(tblWineries winery)
