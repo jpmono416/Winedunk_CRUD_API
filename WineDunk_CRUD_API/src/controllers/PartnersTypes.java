@@ -102,7 +102,7 @@ public class PartnersTypes extends HttpServlet {
 					partnerType = mapper.readValue(content, tblPartnersTypes.class);
 					
 					if(partnerTypeService.addPartnerType(partnerType)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
+				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
 			
@@ -115,7 +115,7 @@ public class PartnersTypes extends HttpServlet {
 					partnerType = mapper.readValue(content, tblPartnersTypes.class);
 					
 					if(partnerTypeService.updatePartnerType(partnerType)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
+				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
 			
@@ -125,7 +125,7 @@ public class PartnersTypes extends HttpServlet {
 				{
 					Integer id = Integer.parseInt(content);
 					if(partnerTypeService.deletePartnerType(id)) { response.getWriter().println("True"); }
-				} catch (Exception e) { return; }
+				} catch (Exception e) { e.printStackTrace(); return; }
 				break;
 			}
 		}

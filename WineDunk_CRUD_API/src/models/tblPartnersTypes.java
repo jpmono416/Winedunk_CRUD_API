@@ -45,7 +45,7 @@ public class tblPartnersTypes {
     {
         this.id = null;
         this.name = null;    
-        this.deleted = null;
+        this.deleted = false;
         this.partners = null;
     }
 }

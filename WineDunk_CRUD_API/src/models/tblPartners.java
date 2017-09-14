@@ -32,7 +32,7 @@ public class tblPartners {
     public void setName(String name) { this.name = name; }
 
     @Column(name= "deleted")
-    private Boolean deleted;
+    private Boolean deleted = false;
     public Boolean isDeleted() { return deleted; }
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
     

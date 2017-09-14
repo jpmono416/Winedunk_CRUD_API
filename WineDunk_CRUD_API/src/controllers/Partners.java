@@ -101,7 +101,7 @@ public class Partners extends HttpServlet {
 					partner = mapper.readValue(content, tblPartners.class);
 					
 					if(partnerService.addPartner(partner)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
+				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); return;}
 				break;
 			}
 			
@@ -114,7 +114,7 @@ public class Partners extends HttpServlet {
 					partner = mapper.readValue(content, tblPartners.class);
 					
 					if(partnerService.updatePartner(partner)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
+				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); return;}
 				break;
 			}
 			
@@ -124,7 +124,7 @@ public class Partners extends HttpServlet {
 				{
 					Integer id = Integer.parseInt(content);
 					if(partnerService.deletePartner(id)) { response.getWriter().println("True"); }
-				} catch (Exception e) { return; }
+				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); return; }
 				break;
 			}
 		}
