@@ -13,7 +13,7 @@
 
 
 <!--  <jdbc-connection-pool name="java:app/jdbc/winedunk_main" -->
-<jdbc-connection-pool name="java:app/jdbc/winedunk_UATwinedunk_main"  
+<jdbc-connection-pool name="java:app/jdbc/winedunk_UAT"  
                           associate-with-thread="false"
             			  connection-creation-retry-attempts="0" 
             			  connection-creation-retry-interval-in-seconds="10"
@@ -25,7 +25,7 @@
            				  max-wait-time-in-millis="60000" 
            				  match-connections="false" 
            				  steady-pool-size="3"
-           				  max-pool-size="32"   
+           				  max-pool-size="32"
            				  pool-resize-quantity="2" 
            				  res-type="javax.sql.DataSource"  
            				  wrap-jdbc-objects="false">
@@ -38,6 +38,6 @@
         <!-- <property name="Password" value="mySQLAdminP4$$"/> -->
         <property name="serverName" value="127.0.0.1"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/jdbc/winedunk_main" object-type="user" pool-name="java:app/jdbc/winedunk_UAT"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/jdbc/winedunk_UAT" object-type="user" pool-name="java:app/jdbc/winedunk_UAT"/>
     <!-- <jdbc-resource enabled="true" jndi-name="java:app/jdbc/winedunk_UAT" object-type="user" pool-name="java:app/jdbc/winedunk_main"/> -->
 </resources>
