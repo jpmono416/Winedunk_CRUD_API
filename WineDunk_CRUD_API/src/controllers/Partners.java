@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -23,110 +23,107 @@ import services.PartnersService;
 @WebServlet("/partners")
 public class Partners extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private final ObjectMapper mapper = new ObjectMapper();
+
 	@EJB
 	PartnersService partnerService = new PartnersService();
-    public Partners() { super(); }
 
+	public Partners() {
+		super();
+	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameterMap().containsKey("action")) { return; }
-		
-		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getPartners" :
-			{
-				try 
-				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
-					List<tblPartners> partners = partnerService.getPartners();
-					String arrayToJson = objectMapper.writeValueAsString(partners);
-					
-					response.setStatus(200);
-					response.getWriter().write(arrayToJson);
-				} 
-				catch (Exception e) { e.printStackTrace(); }
-				break;
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!request.getParameterMap().containsKey("action")) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter action missing");
+			return;
+		}
+
+		switch (request.getParameter("action")) {
+		case "getPartners": {
+			try {
+				// Set pretty printing of json
+				this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+				List<tblPartners> partners = partnerService.getPartners();
+				String arrayToJson = this.mapper.writeValueAsString(partners);
+
+				response.getWriter().write(arrayToJson);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-			case "getPartner" :
-			{
-				try 
-				{
-					if(!request.getParameterMap().containsKey("id")) { return; }
-					Integer id = Integer.parseInt(request.getParameter("id"));
-					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
-					tblPartners partner = partnerService.getPartnerById(id);
-					String arrayToJson = objectMapper.writeValueAsString(partner);
-					
-					response.setStatus(200);
-					response.getWriter().write(arrayToJson);
+			break;
+		}
+
+		case "getPartner": {
+			try {
+				if (!request.getParameterMap().containsKey("id")) {
+					return;
 				}
-				catch (Exception e) { e.printStackTrace(); }
-				break;
+				Integer id = Integer.parseInt(request.getParameter("id"));
+
+				// Set pretty printing of json
+				this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+				tblPartners partner = partnerService.getPartnerById(id);
+				String arrayToJson = this.mapper.writeValueAsString(partner);
+
+				response.getWriter().write(arrayToJson);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+			break;
+		}
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameterMap().containsKey("action")) { return; }
-		
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!request.getParameterMap().containsKey("action")) {
+			return;
+		}
 
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
-		String action = request.getParameter("action");
-		switch (action) 
-		{
-			case "addPartner" :
-			{
-				try
-				{
-					tblPartners partner = new tblPartners();
-					ObjectMapper mapper = new ObjectMapper();
-					partner = mapper.readValue(content, tblPartners.class);
-					
-					if(partnerService.addPartner(partner)) { response.getWriter().println("True"); }
-				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); return;}
-				break;
+		switch (request.getParameter("action")) {
+		case "addPartner": {
+			try {
+				tblPartners partner = this.mapper.readValue(request.getInputStream(), tblPartners.class);
+				System.out.println(partner);
+				if (partnerService.addPartner(partner)) {
+					response.getWriter().println("True");
+				}
+			} catch (Exception e) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
 			}
-			
-			case "updatePartner" :
-			{
-				try
-				{
-					tblPartners partner = new tblPartners();
-					ObjectMapper mapper = new ObjectMapper();
-					partner = mapper.readValue(content, tblPartners.class);
-					
-					if(partnerService.updatePartner(partner)) { response.getWriter().println("True"); }
-				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); return;}
-				break;
+			break;
+		}
+
+		case "updatePartner": {
+			try {
+				tblPartners partner = this.mapper.readValue(request.getInputStream(), tblPartners.class);
+
+				if (partnerService.updatePartner(partner)) {
+					response.getWriter().println("True");
+				}
+			} catch (Exception e) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
 			}
-			
-			case "deletePartner" :
-			{
-				try
-				{
-					Integer id = Integer.parseInt(content);
-					if(partnerService.deletePartner(id)) { response.getWriter().println("True"); }
-				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); return; }
-				break;
+			break;
+		}
+
+		case "deletePartner": {
+			try {
+				JsonNode json = this.mapper.readTree(request.getInputStream());
+				if (partnerService.deletePartner(json.get("id").asInt())) {
+					response.getWriter().println("True");
+				}
+			} catch (Exception e) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
 			}
+			break;
+		}
 		}
 	}
 

@@ -7,34 +7,34 @@
      steady-pool-size		-> minimum number of connections that will be kept alive in the pool
      max-pool-size			-> to allow more/less maximum connections
      max-wait-time-in-millis-> to change the time it will wait for a connection
-     
+
      for more info visit https://docs.oracle.com/cd/E19798-01/821-1753/abhcy/index.html
      -->
 
 
 <!--  <jdbc-connection-pool name="java:app/jdbc/winedunk_main" -->
 <jdbc-connection-pool name="java:app/jdbc/winedunk_UAT"  
-                          associate-with-thread="false"
-            			  connection-creation-retry-attempts="0" 
-            			  connection-creation-retry-interval-in-seconds="10"
-           				  connection-leak-reclaim="false" 
-           				  connection-leak-timeout-in-seconds="0" 
-           				  datasource-classname="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
-             			  fail-all-connections="false" 
-             			  idle-timeout-in-seconds="300"
-           				  max-wait-time-in-millis="60000" 
-           				  match-connections="false" 
-           				  steady-pool-size="3"
-           				  max-pool-size="32"
-           				  pool-resize-quantity="2" 
-           				  res-type="javax.sql.DataSource"  
-           				  wrap-jdbc-objects="false">
+                      associate-with-thread="false"
+            		  connection-creation-retry-attempts="0"
+            		  connection-creation-retry-interval-in-seconds="10"
+            		  connection-leak-reclaim="false"
+            		  connection-leak-timeout-in-seconds="0"
+            		  datasource-classname="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+            		  fail-all-connections="false"
+            		  idle-timeout-in-seconds="300"
+            		  max-wait-time-in-millis="60000"
+            		  match-connections="false"
+            		  steady-pool-size="3"
+            		  max-pool-size="32"
+            		  pool-resize-quantity="2"
+            		  res-type="javax.sql.DataSource"
+            		  wrap-jdbc-objects="false">
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="winedunk_UAT"/>
         <!--  <property name="databaseName" value="winedunk_mainwinedunk_UAT"/> -->
         <property name="User" value="winedunk_uat"/>
         <!-- <property name="User" value="winedunk_admin"/> -->
-         <property name="Password" value="mySQLUatP4$$"/> 
+         <property name="Password" value="mySQLUatP4$$"/>
         <!-- <property name="Password" value="mySQLAdminP4$$"/> -->
         <property name="serverName" value="127.0.0.1"/>
     </jdbc-connection-pool>

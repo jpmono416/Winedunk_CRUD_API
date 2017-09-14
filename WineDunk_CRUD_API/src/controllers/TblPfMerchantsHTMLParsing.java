@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import services.TblPfMerchantsHTMLParsingService;
@@ -19,6 +20,8 @@ import services.TblPfMerchantsHTMLParsingService;
 @WebServlet("/TblPfMerchantsHTMLParsing")
 public class TblPfMerchantsHTMLParsing extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final ObjectMapper mapper = new ObjectMapper();
+
 	@EJB
 	TblPfMerchantsHTMLParsingService merchantParsingService;
 
@@ -32,19 +35,15 @@ public class TblPfMerchantsHTMLParsing extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action");
 			return;
 		}
-		
+
+		JsonNode json =  this.mapper.readTree(request.getInputStream());
 		switch(request.getParameter("action"))
 		{
 			case "getAll":
-				response.sendError(HttpServletResponse.SC_OK, new ObjectMapper().writeValueAsString(this.merchantParsingService.getAll()));
+				response.sendError(HttpServletResponse.SC_OK, this.mapper.writeValueAsString(this.merchantParsingService.getAll()));
 				return;
 			case "getByMerchant":
-				if(!request.getParameterMap().containsKey("id"))
-				{
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
-					return;
-				}
-				String merchantParsingJson = new ObjectMapper().writeValueAsString(this.merchantParsingService.getByMerchant(Integer.valueOf(request.getParameter("id"))));
+				String merchantParsingJson = this.mapper.writeValueAsString(this.merchantParsingService.getByMerchant(json.get("id").asInt()));
 				response.sendError(HttpServletResponse.SC_OK, merchantParsingJson);
 				return;
 		}

@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -95,25 +95,15 @@ public class TblWinesWineTypes extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
-		
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
 
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
-		String action = request.getParameter("action");
-		switch (action) 
+		JsonNode json = this.mapper.readTree(request.getInputStream());
+		switch (request.getParameter("action")) 
 		{
 			case "addTblWinesWineType" :
 			{
 				try
 				{
-					TblWinesWineType tblWinesWineType = this.mapper.readValue(content, TblWinesWineType.class);
+					TblWinesWineType tblWinesWineType = this.mapper.treeToValue(json, TblWinesWineType.class);
 
 					response.getWriter().write(this.tblWinesWineTypesService.addTblWinesWineType(tblWinesWineType));
 				} catch (Exception e) {
@@ -127,9 +117,7 @@ public class TblWinesWineTypes extends HttpServlet {
 			{
 				try
 				{
-					TblWinesWineType tblWinesWineType = new TblWinesWineType();
-
-					tblWinesWineType = this.mapper.readValue(content, TblWinesWineType.class);
+					TblWinesWineType tblWinesWineType = this.mapper.treeToValue(json, TblWinesWineType.class);
 					
 					if(tblWinesWineTypesService.updateTblWinesWineType(tblWinesWineType)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
@@ -140,8 +128,7 @@ public class TblWinesWineTypes extends HttpServlet {
 			{
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(tblWinesWineTypesService.deleteTblWinesWineType(id)) { response.getWriter().println("True"); }
+					if(tblWinesWineTypesService.deleteTblWinesWineType(json.get("id").asInt())) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

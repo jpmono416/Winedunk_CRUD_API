@@ -13,10 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import services.BestOffersByWineTypeViewService;
 import services.EncodeURL;
 import services.MerchantsWithBestOffersViewService;
-import views.viewBestOffersbyWineTypes;
 import views.viewMerchantsWithBestOffers;
 
 

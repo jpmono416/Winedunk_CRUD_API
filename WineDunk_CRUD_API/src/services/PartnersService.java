@@ -6,7 +6,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import models.tblPartners;
 
@@ -16,12 +15,9 @@ public class PartnersService {
 	@PersistenceContext(unitName = "Winedunk")
 	EntityManager em;
 
-    @SuppressWarnings("unchecked")
 	public List<tblPartners> getPartners() 
-	
     {
-        Query query	= em.createQuery("SELECT p FROM tblPartners p");
-        try { return (List<tblPartners>) query.getResultList(); }
+		try { return em.createNamedQuery("tblPartners.findAll", tblPartners.class).getResultList(); }
         catch (Exception e) { e.printStackTrace(); return null; }
     }
 

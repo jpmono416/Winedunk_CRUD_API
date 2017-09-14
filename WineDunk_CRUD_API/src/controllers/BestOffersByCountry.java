@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -23,6 +23,7 @@ import services.BestOffersByCountryService;
 @WebServlet("/BestOffersByCountry")
 public class BestOffersByCountry extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final ObjectMapper mapper= new ObjectMapper();
 	
 	@EJB
 	BestOffersByCountryService BestOffersByCountryervice = new BestOffersByCountryService();
@@ -32,42 +33,39 @@ public class BestOffersByCountry extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
-		String action = request.getParameter("action");
-		switch(action) 
+    	//Set pretty printing of json
+    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+    	switch(request.getParameter("action"))
 		{
 			case "getBestOffersByCountry" :
 				try 
-				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				{
 		    	
 					List<tblBestOffersbyCountries> BestOffersByCountry = BestOffersByCountryervice.getBestOffersByCountry();
-					String arrayToJson = objectMapper.writeValueAsString(BestOffersByCountry);
+					String arrayToJson = this.mapper.writeValueAsString(BestOffersByCountry);
 					
-					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				} 
-				catch (Exception e) { e.printStackTrace(); }
+				catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); e.printStackTrace(); }
 				break;
 				
 			case "getBestOfferByCountry" :
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
-					Integer id = Integer.parseInt(request.getParameter("id"));
-					
-					ObjectMapper objectMapper = new ObjectMapper();
+
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+					Integer id = Integer.parseInt(request.getParameter("id"));
+
 					tblBestOffersbyCountries BestOfferByCountry = BestOffersByCountryervice.getBestOfferByCountryById(id);
-					String arrayToJson = objectMapper.writeValueAsString(BestOfferByCountry);
+					String arrayToJson = this.mapper.writeValueAsString(BestOfferByCountry);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				}
-				catch (Exception e) { e.printStackTrace(); }
+				catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); e.printStackTrace(); }
 				break;
 		}
 	}
@@ -75,48 +73,34 @@ public class BestOffersByCountry extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
-
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
 		String action = request.getParameter("action");
 		switch (action) 
 		{
 			case "addBestOfferByCountry" :
 				try
 				{
-					tblBestOffersbyCountries BestOfferByCountry = new tblBestOffersbyCountries();
-					ObjectMapper mapper = new ObjectMapper();
-					BestOfferByCountry = mapper.readValue(content, tblBestOffersbyCountries.class);
+					tblBestOffersbyCountries bestOfferByCountry = this.mapper.readValue(request.getInputStream(), tblBestOffersbyCountries.class);
 					
-					if(BestOffersByCountryervice.addBestOfferByCountry(BestOfferByCountry)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
-				break;
+					if(BestOffersByCountryervice.addBestOfferByCountry(bestOfferByCountry)) { response.getWriter().println("True"); }
+				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); e.printStackTrace(); }
+				return;
 			
 			case "updateBestOfferByCountry" :
 				try
 				{
-					tblBestOffersbyCountries BestOfferByCountry = new tblBestOffersbyCountries();
-					ObjectMapper mapper = new ObjectMapper();
-					BestOfferByCountry = mapper.readValue(content, tblBestOffersbyCountries.class);
+					tblBestOffersbyCountries bestOfferByCountry = this.mapper.readValue(request.getInputStream(), tblBestOffersbyCountries.class);
 					
-					if(BestOffersByCountryervice.updateBestOfferByCountry(BestOfferByCountry)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
-				break;
+					if(BestOffersByCountryervice.updateBestOfferByCountry(bestOfferByCountry)) { response.getWriter().println("True"); }
+				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); e.printStackTrace(); }
+				return;
 			
 			case "deleteBestOfferByCountry" :
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(BestOffersByCountryervice.deleteBestOfferByCountry(id)) { response.getWriter().println("True"); }
-				} catch (Exception e) { return; }
-				break;
+					JsonNode json = this.mapper.readTree(request.getInputStream());
+					if(BestOffersByCountryervice.deleteBestOfferByCountry(json.get("id").asInt())) { response.getWriter().println("True"); }
+				} catch (Exception e) {response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); e.printStackTrace(); }
+				return;
 		}
 	}
 

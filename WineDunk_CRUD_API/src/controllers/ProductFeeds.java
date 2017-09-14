@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.List;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.ejb.EJB;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import models.Tblpf;
@@ -42,63 +41,27 @@ public class ProductFeeds extends HttpServlet {
     		return;
 		}
 
+		JsonNode json = this.mapper.readTree(request.getInputStream());
 		switch(request.getParameter("action"))
 		{
 			case "getAll":
-				final List<Tblpf> productFeeds = this.pfService.getAll();
-
-				response.setContentType("application/json");
-				response.getWriter().write(this.mapper.writeValueAsString(productFeeds));
+				response.getWriter().write(this.mapper.writeValueAsString(this.pfService.getAll()));
 				break;
 			case "getById":
-				if(request.getParameter("id")==null)
-				{
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
-					return;
-				}
-
-				response.setContentType("application/json");
-				response.getWriter().write(this.mapper.writeValueAsString(this.pfService.getById(Integer.valueOf(request.getParameter("id")))));
+				response.getWriter().write(this.mapper.writeValueAsString(this.pfService.getById(json.get("id").asInt())));
 				break;
-			case "addNew":
-				String newProductFeed = this.requestToString(request);
-				
-				response.getWriter().write(this.pfService.persist(this.mapper.readValue(newProductFeed, Tblpf.class)));
+			case "addNew":				
+				response.getWriter().write(this.pfService.persist(this.mapper.treeToValue(json, Tblpf.class)));
 				break;
-			case "edit":
-				String productFeedJson = this.requestToString(request);
-				
-				if(this.pfService.update(this.mapper.readValue(productFeedJson, Tblpf.class)))
+			case "edit":				
+				if(this.pfService.update(this.mapper.treeToValue(json, Tblpf.class)))
 					response.getWriter().write("true");
 				break;
 			case "delete":
-				if(request.getParameter("id")==null)
-				{
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
-					return;
-				}
-
-				this.pfService.delete(Integer.valueOf(request.getParameter("id")));
+				this.pfService.delete(json.get("id").asInt());
 				break;
 			case "fail":
-				if(request.getParameter("id")==null)
-				{
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
-					return;
-				}
-				this.pfService.setStatusFailed(Integer.valueOf(request.getParameter("id")));
+				this.pfService.setStatusFailed(json.get("id").asInt());
 		}
-	}
-
-	private String requestToString(HttpServletRequest request) throws IOException
-	{
-		BufferedReader reader = new BufferedReader(request.getReader());
-		StringBuilder stringBuilder = new StringBuilder();
-		String line;
-
-		while((line = reader.readLine())!=null)
-			stringBuilder.append(line);
-		
-		return stringBuilder.toString();
 	}
 }
