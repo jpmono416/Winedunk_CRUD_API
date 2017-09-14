@@ -24,11 +24,11 @@ public class Tblpfproduct implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	private String clicktag;
 
-	private float deliveryCost;
+	private Float deliveryCost;
 
 	private String imageURL;
 
@@ -43,7 +43,7 @@ public class Tblpfproduct implements Serializable {
 
 	private String partnerProductId;
 
-	private float price;
+	private Float price;
 
 	private String productType;
 
@@ -57,11 +57,11 @@ public class Tblpfproduct implements Serializable {
 	public Tblpfproduct() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -73,11 +73,11 @@ public class Tblpfproduct implements Serializable {
 		this.clicktag = clicktag;
 	}
 
-	public float getDeliveryCost() {
+	public Float getDeliveryCost() {
 		return this.deliveryCost;
 	}
 
-	public void setDeliveryCost(float deliveryCost) {
+	public void setDeliveryCost(Float deliveryCost) {
 		this.deliveryCost = deliveryCost;
 	}
 
@@ -129,11 +129,11 @@ public class Tblpfproduct implements Serializable {
 		this.partnerProductId = partnerProductId;
 	}
 
-	public float getPrice() {
+	public Float getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 

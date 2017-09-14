@@ -26,7 +26,12 @@ public class ProductsService {
 		return em.createNamedQuery("Tblpproduct.findAll", Tblpfproduct.class).getResultList();
 	}
 
-	public List<Tblpfproduct> getByTblpf(Integer tblpfId)
+	public Tblpfproduct findById(Integer id)
+	{
+		return em.find(Tblpfproduct.class, id);
+	}
+
+	public List<Tblpfproduct> findByTblpf(Integer tblpfId)
 	{
 		try {
 			Tblpf tblpf = em.find(Tblpf.class, tblpfId);
@@ -36,7 +41,7 @@ public class ProductsService {
 		}
 	}
 	
-	public Tblpfproduct getByPartnerIdAndMerchantId(Integer partnerProductId, Integer merchantProductId)
+	public Tblpfproduct findByPartnerIdAndMerchantId(Integer partnerProductId, Integer merchantProductId)
 	{
 		try {
 			return em.createNamedQuery("Tblpfproduct.findByPartnerIdAndMerchantId", Tblpfproduct.class)
@@ -45,6 +50,53 @@ public class ProductsService {
 					 .getSingleResult();
 		} catch (NoResultException noResExc) {
 			return null;
+		}
+	}
+
+	public Integer addProduct(Tblpfproduct product)
+	{
+		product.setId(null);
+
+		try {
+			em.persist(product);
+			return product.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public boolean updateProduct(Tblpfproduct product)
+	{
+		if(product==null || product.getId()==null)
+			return false;
+
+		try {
+			em.merge(product);
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
+	}
+
+	public boolean deleteProduct(Tblpfproduct product)
+	{
+		try {
+			em.remove(product);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public boolean deleteProduct(Integer id)
+	{
+		try {
+			em.remove(this.findById(id));
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

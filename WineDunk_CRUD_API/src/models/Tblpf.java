@@ -19,19 +19,21 @@ public class Tblpf implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	private String description;
 
 	private String downloadURL;
 
-	private int importPriority;
+	private Integer importPriority;
 
 	private Timestamp lastImportation;
 
 	private Timestamp lastStandardisation;
 
-	private int partnerId;
+	@ManyToOne
+	@JoinColumn(name = "partnerId")
+	private tblPartners tblPartners;
 
 	private Time startTime;
 
@@ -64,14 +66,20 @@ public class Tblpf implements Serializable {
 	@OneToMany(mappedBy="tblpf")
 	private List<Tblpfstatuschangelog> tblpfstatuschangelogs;
 
+	private Boolean isZip;
+	
+	private Boolean hasHeader;
+	
+	private String separator;
+
 	public Tblpf() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -91,11 +99,11 @@ public class Tblpf implements Serializable {
 		this.downloadURL = downloadURL;
 	}
 
-	public int getImportPriority() {
+	public Integer getImportPriority() {
 		return this.importPriority;
 	}
 
-	public void setImportPriority(int importPriority) {
+	public void setImportPriority(Integer importPriority) {
 		this.importPriority = importPriority;
 	}
 
@@ -115,12 +123,12 @@ public class Tblpf implements Serializable {
 		this.lastStandardisation = lastStandardisation;
 	}
 
-	public int getPartnerId() {
-		return this.partnerId;
+	public tblPartners getTblPartners() {
+		return this.tblPartners;
 	}
 
-	public void setPartnerId(int partnerId) {
-		this.partnerId = partnerId;
+	public void setTblPartners(tblPartners tblPartners) {
+		this.tblPartners = tblPartners;
 	}
 
 	public Time getStartTime() {
@@ -229,20 +237,45 @@ public class Tblpf implements Serializable {
 		return tblpfstatuschangelog;
 	}
 
+	public Boolean getIsZip() {
+		return isZip;
+	}
+
+	public void setIsZip(Boolean isZip) {
+		this.isZip = isZip;
+	}
+
+	public Boolean getHasHeader() {
+		return hasHeader;
+	}
+
+	public void setHasHeader(Boolean hasHeader) {
+		this.hasHeader = hasHeader;
+	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public void setSeparator(String separator) {
+		this.separator = separator;
+	}
+
 	@Override
 	public String toString() {
 		return "Tblpf [id=" + id + ", description=" + description + ", downloadURL=" + downloadURL + ", importPriority="
 				+ importPriority + ", lastImportation=" + lastImportation + ", lastStandardisation="
-				+ lastStandardisation + ", partnerId=" + partnerId + ", startTime=" + startTime + ", timePeriod="
+				+ lastStandardisation + ", partnerId=" + tblPartners + ", startTime=" + startTime + ", timePeriod="
 				+ timePeriod + ", tblpfmappings=" + tblpfmappings + ", tblpfproducts=" + tblpfproducts
 				+ ", latestStatus=" + latestStatus + ", standardisationStatus=" + standardisationStatus
-				+ ", importationStatus=" + importationStatus + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs + "]";
+				+ ", importationStatus=" + importationStatus + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs
+				+ ", isZip=" + isZip + ", hasHeader=" + hasHeader + ", separator=" + separator + "]";
 	}
 
 	public String toBodyRequest() {
 		return "id=" + id + ", description=" + description + ", downloadURL=" + downloadURL + ", importPriority="
 				+ importPriority + ", lastImportation=" + lastImportation + ", lastStandardisation="
-				+ lastStandardisation + ", partnerId=" + partnerId + ", startTime=" + startTime + ", timePeriod="
+				+ lastStandardisation + ", partnerId=" + tblPartners + ", startTime=" + startTime + ", timePeriod="
 				+ timePeriod + ", tblpfmappings=" + tblpfmappings + ", tblpfproducts=" + tblpfproducts
 				+ ", latestStatus=" + latestStatus + ", standardisationStatus=" + standardisationStatus
 				+ ", importationStatus=" + importationStatus + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs;

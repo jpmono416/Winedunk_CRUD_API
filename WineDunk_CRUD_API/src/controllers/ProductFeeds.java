@@ -1,8 +1,8 @@
 package controllers;
 
 import java.util.List;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.Time;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,6 +22,7 @@ import services.ProductFeedsService;
 @WebServlet("/ProductFeeds")
 public class ProductFeeds extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final ObjectMapper mapper = new ObjectMapper();
 
 	@EJB
 	ProductFeedsService pfService;
@@ -47,7 +48,7 @@ public class ProductFeeds extends HttpServlet {
 				final List<Tblpf> productFeeds = this.pfService.getAll();
 
 				response.setContentType("application/json");
-				response.getWriter().write(new ObjectMapper().writeValueAsString(productFeeds));
+				response.getWriter().write(this.mapper.writeValueAsString(productFeeds));
 				break;
 			case "getById":
 				if(request.getParameter("id")==null)
@@ -57,42 +58,18 @@ public class ProductFeeds extends HttpServlet {
 				}
 
 				response.setContentType("application/json");
-				response.getWriter().write(new ObjectMapper().writeValueAsString(this.pfService.getById(Integer.valueOf(request.getParameter("id")))));
+				response.getWriter().write(this.mapper.writeValueAsString(this.pfService.getById(Integer.valueOf(request.getParameter("id")))));
 				break;
 			case "addNew":
-				for(String parameter : new String[] {"description, downloadURL, importPriority, partnerId, startTime, timePeriod"})
-				{
-					if(request.getParameter(parameter) == null)
-					{
-						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter "+parameter+" missing");
-						return;
-					}
-				}
-
-				//Populate a new ProductFeed, persist it (here we get the id automatically) and then return it as JSON
-				String finalProductFeed = new ObjectMapper().writeValueAsString(this.pfService.persist(this.populateProductFeed(new Tblpf(), request)));
-
-				response.setContentType("application/json");
-				response.getWriter().write(finalProductFeed);
+				String newProductFeed = this.requestToString(request);
+				
+				response.getWriter().write(this.pfService.persist(this.mapper.readValue(newProductFeed, Tblpf.class)));
 				break;
 			case "edit":
-				for(String parameter : new String[] {"id, description, downloadURL, importPriority, partnerId, startTime, timePeriod"})
-				{
-					if(request.getParameter(parameter) == null)
-					{
-						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter "+parameter+" missing");
-						return;
-					}
-				}
-
-				Tblpf productFeed = this.pfService.getById(Integer.valueOf(request.getParameter("id")));
-				if(productFeed == null)
-					return;
-
-				String editedProductFeed = new ObjectMapper().writeValueAsString(this.pfService.persist(this.populateProductFeed(productFeed, request)));
-
-				response.setContentType("application/json");
-				response.getWriter().write(editedProductFeed);
+				String productFeedJson = this.requestToString(request);
+				
+				if(this.pfService.update(this.mapper.readValue(productFeedJson, Tblpf.class)))
+					response.getWriter().write("true");
 				break;
 			case "delete":
 				if(request.getParameter("id")==null)
@@ -110,33 +87,18 @@ public class ProductFeeds extends HttpServlet {
 					return;
 				}
 				this.pfService.setStatusFailed(Integer.valueOf(request.getParameter("id")));
-			case "process":
-				if(request.getParameter("id")==null)
-				{
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
-					return;
-				}
-
-				this.pfService.processProductFeed(Integer.valueOf(request.getParameter("id")));
-				break;
 		}
 	}
 
-	public Tblpf populateProductFeed(Tblpf productFeed, HttpServletRequest request)
+	private String requestToString(HttpServletRequest request) throws IOException
 	{
-		productFeed.setDescription(request.getParameter("description"));
-		productFeed.setDownloadURL(request.getParameter("downloadURL"));
-		productFeed.setImportPriority(Integer.valueOf(request.getParameter("importPriority")));
-		productFeed.setPartnerId(Integer.valueOf(request.getParameter("partnerId")));
+		BufferedReader reader = new BufferedReader(request.getReader());
+		StringBuilder stringBuilder = new StringBuilder();
+		String line;
 
-		//This field stores the exact value when this cron has to be executed for the first time
-		//We'll process it if this value is older than the current timestamp and the lastImportation is null
-		Time startTime = new Time(Long.valueOf(request.getParameter("startTime")));
-		productFeed.setStartTime(startTime);
-
-		//the time period will come in a cron format tha we will have to parse when executing the PFs processor
-		productFeed.setTimePeriod(request.getParameter("downloadURL"));
-
-		return productFeed;
+		while((line = reader.readLine())!=null)
+			stringBuilder.append(line);
+		
+		return stringBuilder.toString();
 	}
 }

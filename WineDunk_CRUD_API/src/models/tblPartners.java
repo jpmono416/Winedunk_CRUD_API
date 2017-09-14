@@ -53,8 +53,13 @@ public class tblPartners {
 	private List<tblClicks> clicks;
 	public List<tblClicks> getClicks() { return clicks; }
 	public void setClicks(List<tblClicks> clicks) { this.clicks = clicks; }
-	
-	
+
+	@OneToMany(mappedBy = "tblPartners", targetEntity = Tblpf.class)
+	@JsonBackReference("partners_productfeeds")
+	private List<Tblpf> tblPfs;
+	public List<Tblpf> getTblpfs() { return tblPfs; }
+	public void setTblpfs(List<Tblpf> tblPfs) { this.tblPfs = tblPfs; }
+
 	public tblPartners(Integer id) { this.id = id;}
     public tblPartners()
     {

@@ -40,6 +40,7 @@ public class Tblpfmapping implements Serializable {
 
 	private int wineTypeColumn;
 
+	private int partnerMerchantIdColumn;
 	//bi-directional many-to-one association to Tblpf
 	@ManyToOne
 	@JoinColumn(name="pfId")
@@ -136,6 +137,14 @@ public class Tblpfmapping implements Serializable {
 		this.wineTypeColumn = wineTypeColumn;
 	}
 
+	public int getPartnerMerchantIdColumn() {
+		return this.partnerMerchantIdColumn;
+	}
+
+	public void setPartnerMerchantIdColumn(int partnerMerchantIdColumn) {
+		this.partnerMerchantIdColumn = partnerMerchantIdColumn;
+	}
+
 	public Tblpf getTblpf() {
 		return this.tblpf;
 	}
@@ -143,5 +152,4 @@ public class Tblpfmapping implements Serializable {
 	public void setTblpf(Tblpf tblpf) {
 		this.tblpf = tblpf;
 	}
-
 }
