@@ -20,8 +20,6 @@ public class PFMappingService {
     @PersistenceContext(unitName = "Winedunk")
     EntityManager em;
 
-    public PFMappingService() {}
-
     /**
      * 
      * @param id

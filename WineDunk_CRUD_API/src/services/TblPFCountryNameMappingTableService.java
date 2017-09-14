@@ -22,11 +22,6 @@ public class TblPFCountryNameMappingTableService {
 	EntityManager em;
 
     /**
-     * Default constructor. 
-     */
-    public TblPFCountryNameMappingTableService() {}
-
-    /**
 	 * 
 	 * @param id
 	 * @return
