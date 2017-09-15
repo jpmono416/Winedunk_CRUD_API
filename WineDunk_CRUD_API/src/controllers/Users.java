@@ -132,13 +132,12 @@ public class Users extends HttpServlet {
 					tblUsers user = new tblUsers();
 					ObjectMapper mapper = new ObjectMapper();
 					user = mapper.readValue(content, tblUsers.class);
-					
 					// Edit only for the recover password method
 					if(user.getRecoveringPassToken() != null)
 					{
 						tblUsers previousUser = userService.getUserById(user.getId());
 						previousUser.setRecoveringPassToken(user.getRecoveringPassToken());
-						if(userService.updateUser(user)) { response.getWriter().println("True"); }
+						if(userService.updateUser(previousUser)) { response.getWriter().println("True"); }
 						return;
 					}
 					
@@ -202,6 +201,24 @@ public class Users extends HttpServlet {
 					user.setLoginPassword(password);
 					
 					if(userService.updateUser(user)) { response.getWriter().println("True"); }
+				} catch (Exception e) { e.printStackTrace(); }
+			break;
+			
+			case "deleteTokenAndSaveUser" :
+				try
+				{
+					tblUsers user = new tblUsers();
+					ObjectMapper mapper = new ObjectMapper();
+					user = mapper.readValue(content, tblUsers.class);
+					
+					if(user.getRecoveringPassToken() == null) { return; }
+					
+					tblUsers previousUser = userService.getUserById(user.getId());
+					
+					previousUser.setLoginPassword(user.getLoginPassword());
+					previousUser.setRecoveringPassToken(null);
+					
+					if(userService.updateUser(previousUser)) { response.getWriter().write("true"); }
 				} catch (Exception e) { e.printStackTrace(); }
 			break;
 		}
