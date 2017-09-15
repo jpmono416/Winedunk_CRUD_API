@@ -1,11 +1,19 @@
 package controllers;
 
 import java.io.IOException;
+
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import models.tblShops;
+import services.MerchantsService;
 
 /**
  * Servlet implementation class Merchants
@@ -13,8 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Merchants")
 public class Merchants extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final ObjectMapper mapper = new ObjectMapper(); 
 
-    public Merchants() {
+	@EJB
+	private MerchantsService merchantsService;
+	
+	public Merchants() {
         super();
     }
 
@@ -25,13 +37,22 @@ public class Merchants extends HttpServlet {
     		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action");
     		return;
     	}
-    	
+
+    	JsonNode json = this.mapper.readTree(request.getInputStream());
     	switch(request.getParameter("action"))
     	{
     		case "getAll":
-    			break;
+    			response.getWriter().write(this.mapper.writeValueAsString(this.merchantsService.getAll()));
+    			return;
     		case "getByName":
-    			break;
+    			response.getWriter().write(this.mapper.writeValueAsString(this.merchantsService.getByName(json.get("name").asText())));
+    			return;
+    		case "addMerchant":
+    			response.getWriter().write(this.merchantsService.addMerchant(this.mapper.treeToValue(json, tblShops.class)));
+    			return;
+    		case "removeMerchant":
+    			response.getWriter().write(this.merchantsService.removeMerchant(json.get("id").asInt()).toString());
+    			return;
     	}
     }
 

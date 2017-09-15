@@ -37,6 +37,10 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@JoinColumn(name="extractionColumnsId")
 	private Tblpfextractioncolumn tblpfextractioncolumn;
 
+	@ManyToOne
+	@JoinColumn(name="downloadmethodId")
+	private Tbldownloadmethod  downloadMethod;
+
 	public Tblpfmerchanthtmlparsing() {}
 
 	public int getId() {
@@ -77,6 +81,14 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 
 	public void setTblpfextractioncolumn(Tblpfextractioncolumn tblpfextractioncolumn) {
 		this.tblpfextractioncolumn = tblpfextractioncolumn;
+	}
+
+	public Tbldownloadmethod getDownloadMethod() {
+		return downloadMethod;
+	}
+
+	public void setDownloadMethod(Tbldownloadmethod downloadMethod) {
+		this.downloadMethod = downloadMethod;
 	}
 
 }

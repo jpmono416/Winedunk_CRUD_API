@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -13,6 +15,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblShops")
+@NamedQueries({
+	@NamedQuery(name="tblShops.findAll", query="SELECT t FROM tblShops t"),
+	@NamedQuery(name="tblShops.findByName", query="SELECT t FROM tblShops t WHERE t.name = :name")
+})
 public class tblShops {
 	
 	@Transient

@@ -12,7 +12,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="tblpfs")
+@Table(name="tblPFs")
 @NamedQuery(name="Tblpf.findAll", query="SELECT t FROM Tblpf t")
 public class Tblpf implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -69,7 +69,9 @@ public class Tblpf implements Serializable {
 	private Boolean isZip;
 	
 	private Boolean hasHeader;
-	
+
+	//force backticks as "separator" is a reserved word by mysql
+	@Column(name="`separator`")
 	private String separator;
 
 	public Tblpf() {

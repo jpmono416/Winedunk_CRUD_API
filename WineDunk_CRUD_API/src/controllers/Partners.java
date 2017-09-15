@@ -32,20 +32,19 @@ public class Partners extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (!request.getParameterMap().containsKey("action")) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter action missing");
 			return;
 		}
 
+		// Set pretty printing of json
+		this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		switch (request.getParameter("action")) {
 		case "getPartners": {
 			try {
-				// Set pretty printing of json
-				this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
 				List<tblPartners> partners = partnerService.getPartners();
+				System.out.println(partners);
 				String arrayToJson = this.mapper.writeValueAsString(partners);
 
 				response.getWriter().write(arrayToJson);
@@ -60,12 +59,8 @@ public class Partners extends HttpServlet {
 				if (!request.getParameterMap().containsKey("id")) {
 					return;
 				}
-				Integer id = Integer.parseInt(request.getParameter("id"));
 
-				// Set pretty printing of json
-				this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-				tblPartners partner = partnerService.getPartnerById(id);
+				tblPartners partner = partnerService.getPartnerById(Integer.parseInt(request.getParameter("id")));
 				String arrayToJson = this.mapper.writeValueAsString(partner);
 
 				response.getWriter().write(arrayToJson);
@@ -89,6 +84,7 @@ public class Partners extends HttpServlet {
 				tblPartners partner = this.mapper.readValue(request.getInputStream(), tblPartners.class);
 				System.out.println(partner);
 				if (partnerService.addPartner(partner)) {
+					System.out.println(true);
 					response.getWriter().println("True");
 				}
 			} catch (Exception e) {
