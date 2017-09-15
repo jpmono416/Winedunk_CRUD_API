@@ -210,14 +210,14 @@ public class Users extends HttpServlet {
 					tblUsers user = new tblUsers();
 					ObjectMapper mapper = new ObjectMapper();
 					user = mapper.readValue(content, tblUsers.class);
-					
+					System.out.println("User: " + user.toString()); // TODO DELETE
 					if(user.getRecoveringPassToken() == null) { return; }
 					
 					tblUsers previousUser = userService.getUserById(user.getId());
 					
 					previousUser.setLoginPassword(user.getLoginPassword());
 					previousUser.setRecoveringPassToken(null);
-					
+					System.out.println("Previous: " + previousUser.toString()); // TODO DELTE
 					if(userService.updateUser(previousUser)) { response.getWriter().write("true"); }
 				} catch (Exception e) { e.printStackTrace(); }
 			break;
