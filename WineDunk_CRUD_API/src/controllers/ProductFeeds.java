@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import models.Tblpf;
 import models.Tblpfstatus;
@@ -45,12 +44,8 @@ public class ProductFeeds extends HttpServlet {
     		return;
 		}
 
-		ObjectNode json;
-		try {
-			json = (ObjectNode) this.mapper.readTree(request.getInputStream());
-		} catch (JsonMappingException e) {
-			json = null;
-		}
+		JsonNode json = this.mapper.readTree(request.getInputStream());
+		System.out.print(json.asText());
 		switch(request.getParameter("action"))
 		{
 			case "getAll":
@@ -59,7 +54,8 @@ public class ProductFeeds extends HttpServlet {
 			case "getById":
 				response.getWriter().write(this.mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.pfService.getById(json.get("id").asInt())));
 				break;
-			case "addNew":				
+			case "addNew":
+			{
 				Tblpfstatus status = this.statusService.getByID(1);
 				Tblpf productFeed = this.mapper.treeToValue(json, Tblpf.class);
 
@@ -70,14 +66,26 @@ public class ProductFeeds extends HttpServlet {
 						   .setStandardisationStatus(status)
 						   .setImportationStatus(status)
 						   .setPartnerId(this.partnersService.getPartnerById(json.get("partnerId").asInt()));
-				Integer id = this.pfService.persist(productFeed);
-				response.getWriter().write(id);
-				//response.getWriter().write(this.mapper.writeValueAsString(productFeed));
+				response.getWriter().write(this.pfService.persist(productFeed));
 				break;
-			case "update":				
-				if(this.pfService.update(this.mapper.treeToValue(json, Tblpf.class)))
+			}
+			case "update":	
+			{
+				//Make sure the status are not null before updating
+				Tblpf existingPf = this.pfService.getById(json.get("id").asInt());
+				Tblpf newPf = this.mapper.treeToValue(json, Tblpf.class);
+
+				if(newPf.getStandardisationStatus()==null)
+					newPf.setStandardisationStatus(existingPf.getStandardisationStatus());
+				if(newPf.getImportationStatus()==null)
+					newPf.setImportationStatus(existingPf.getImportationStatus());
+				if(newPf.getLatestStatus()==null)
+					newPf.setLatestStatus(existingPf.getLatestStatus());
+
+				if(this.pfService.update(newPf))
 					response.getWriter().write("true");
 				break;
+			}
 			case "delete":
 				this.pfService.delete(json.get("id").asInt());
 				break;

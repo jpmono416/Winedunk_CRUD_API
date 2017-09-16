@@ -61,7 +61,7 @@ public class tblPartners {
 	public void setClicks(List<tblClicks> clicks) { this.clicks = clicks; }
 
 	@OneToMany(mappedBy = "partnerId", targetEntity = Tblpf.class)
-	@JsonManagedReference
+	@JsonManagedReference("partnerId_tblPartners")
 	private List<Tblpf> tblPfs;
 	public List<Tblpf> getTblpfs() { return tblPfs; }
 	public void setTblpfs(List<Tblpf> tblPfs) { this.tblPfs = tblPfs; }

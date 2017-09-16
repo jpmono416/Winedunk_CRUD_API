@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -17,6 +15,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "tblWines")
@@ -129,16 +128,16 @@ public class tblWines {
 		return this;
 	}
 
-	@ManyToMany
-	@JoinTable(name = "tblWinesGrapeVarieties", joinColumns = @JoinColumn(name = "wineId"), inverseJoinColumns = @JoinColumn(name = "grapeVarietyId"))
-	private List<tblGrapeVarieties> grapeVarieties;
+	@OneToMany(mappedBy="wine", targetEntity=TblWinesGrapeVariety.class)
+	@JsonManagedReference
+	private List<TblWinesGrapeVariety> tblWinesGrapeVariety;
 
-	public List<tblGrapeVarieties> getGrapeVarieties() {
-		return grapeVarieties;
+	public List<TblWinesGrapeVariety> getTblWinesGrapeVariety() {
+		return tblWinesGrapeVariety;
 	}
 
-	public void setGrapeVarieties(List<tblGrapeVarieties> grapeVarieties) {
-		this.grapeVarieties = grapeVarieties;
+	public void setTblWinesGrapeVariety(List<TblWinesGrapeVariety> tblWinesGrapeVariety) {
+		this.tblWinesGrapeVariety = tblWinesGrapeVariety;
 	}
 
 	@Column(name = "name", nullable = false)

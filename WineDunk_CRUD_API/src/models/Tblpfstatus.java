@@ -12,7 +12,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 		@NamedQuery(name="Tblpfstatus.findAll", query="SELECT t FROM Tblpfstatus t"),
 		@NamedQuery(name="Tblpfstatus.findByName", query="SELECT t FROM Tblpfstatus t WHERE t.name = :name")
 })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Tblpfstatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -35,23 +38,23 @@ public class Tblpfstatus implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to Tblpf
-	@OneToMany(mappedBy="latestStatus")
-	@JsonBackReference
+	@OneToMany(mappedBy="latestStatus", targetEntity=Tblpf.class)
+	@JsonManagedReference("latestStatus_status")
 	private List<Tblpf> latestStatusList;
 
 	//bi-directional many-to-one association to Tblpf
-	@OneToMany(mappedBy="standardisationStatus")
-	@JsonBackReference("standardisationstatus_status")
+	@OneToMany(mappedBy="standardisationStatus", targetEntity=Tblpf.class)
+	@JsonManagedReference("standardisationStatus_status")
 	private List<Tblpf> standardisationStatusList;
 
 	//bi-directional many-to-one association to Tblpf
-	@OneToMany(mappedBy="importationStatus")
-	@JsonBackReference("importationstatus_status")
+	@OneToMany(mappedBy="importationStatus", targetEntity=Tblpf.class)
+	@JsonManagedReference("importationStatus_status")
 	private List<Tblpf> importationStatusList;
 
 	//bi-directional many-to-one association to Tblpfstatuschangelog
-	@OneToMany(mappedBy="tblpfstatus")
-	@JsonBackReference("statuschangelog_status")
+	@OneToMany(mappedBy="tblpfstatus", targetEntity=Tblpfstatuschangelog.class)
+	@JsonManagedReference("tblpfstatus_status")
 	private List<Tblpfstatuschangelog> tblpfstatuschangelogs;
 
 	public Tblpfstatus() {
@@ -163,9 +166,8 @@ public class Tblpfstatus implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Tblpfstatus [id=" + id + ", name=" + name + ", latestStatusList=" + latestStatusList
-				+ ", standardisationStatusList=" + standardisationStatusList + ", importationStatusList="
-				+ importationStatusList + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs + "]";
+		return "Tblpfstatus [id=" + id + ", name=" + name + "]";
 	}
+
 
 }

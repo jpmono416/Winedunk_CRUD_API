@@ -2,6 +2,11 @@ package models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.sql.Timestamp;
 
 
@@ -10,7 +15,9 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="tblPFStatusChangeLog")
 @NamedQuery(name="Tblpfstatuschangelog.findAll", query="SELECT t FROM Tblpfstatuschangelog t")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Tblpfstatuschangelog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,11 +29,13 @@ public class Tblpfstatuschangelog implements Serializable {
 	//bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name="pfStatus_id")
+	@JsonBackReference("tblpfstatus_status")
 	private Tblpfstatus tblpfstatus;
 
 	//bi-directional many-to-one association to Tblpf
 	@ManyToOne
 	@JoinColumn(name="tblProductFeeds_id")
+	@JsonBackReference("tblpfstatuschangelogs_tblpf")
 	private Tblpf tblpf;
 
 	public Tblpfstatuschangelog() {

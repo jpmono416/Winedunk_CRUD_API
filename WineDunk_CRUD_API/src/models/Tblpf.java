@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * The persistent class for the tblpfs database table.
@@ -25,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "tblPFs")
 @NamedQuery(name = "Tblpf.findAll", query = "SELECT t FROM Tblpf t")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Tblpf implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +44,7 @@ public class Tblpf implements Serializable {
 		this.id = id;
 	}
 
+	@Column(nullable=false)
 	private String description;
 	public String getDescription() {
 		return this.description;
@@ -49,6 +54,7 @@ public class Tblpf implements Serializable {
 		return this;
 	}
 
+	@Column(nullable=false)
 	private String downloadURL;
 	public String getDownloadURL() {
 		return this.downloadURL;
@@ -58,6 +64,7 @@ public class Tblpf implements Serializable {
 		return this;
 	}
 
+	@Column(nullable=false)
 	private Integer importPriority;
 	public Integer getImportPriority() {
 		return this.importPriority;
@@ -87,7 +94,7 @@ public class Tblpf implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "partnerId")
-	@JsonBackReference
+	@JsonBackReference("partnerId_tblPartners")
 	private tblPartners partnerId;
 	public tblPartners getPartnerId() {
 		return this.partnerId;
@@ -106,6 +113,7 @@ public class Tblpf implements Serializable {
 		return this;
 	}
 
+	@Column(nullable=false)
 	private String timePeriod;
 	public String getTimePeriod() {
 		return this.timePeriod;
@@ -165,6 +173,7 @@ public class Tblpf implements Serializable {
 	// bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name = "latestStatus")
+	@JsonBackReference("latestStatus_status")
 	private Tblpfstatus latestStatus;
 	public Tblpfstatus getLatestStatus() {
 		return this.latestStatus;
@@ -177,6 +186,7 @@ public class Tblpf implements Serializable {
 	// bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name = "standardisationStatus")
+	@JsonBackReference("standardisationStatus_status")
 	private Tblpfstatus standardisationStatus;
 	public Tblpfstatus getStandardisationStatus() {
 		return this.standardisationStatus;
@@ -189,6 +199,7 @@ public class Tblpf implements Serializable {
 	// bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name = "importationStatus")
+	@JsonBackReference("importationStatus_status")
 	private Tblpfstatus importationStatus;
 
 	public Tblpfstatus getImportationStatus() {
@@ -201,7 +212,7 @@ public class Tblpf implements Serializable {
 
 	// bi-directional many-to-one association to Tblpfstatuschangelog
 	@OneToMany(mappedBy = "tblpf", targetEntity=Tblpfstatuschangelog.class)
-	@JsonBackReference("statuschangelog_tblpf")
+	@JsonManagedReference("tblpfstatuschangelogs_tblpf")
 	private List<Tblpfstatuschangelog> tblpfstatuschangelogs;
 
 	public List<Tblpfstatuschangelog> getTblpfstatuschangelogs() {
@@ -223,6 +234,7 @@ public class Tblpf implements Serializable {
 		return tblpfstatuschangelog;
 	}
 
+	@Column(nullable=false)
 	private Boolean isZip;
 	public Boolean getIsZip() {
 		return isZip;
@@ -231,6 +243,7 @@ public class Tblpf implements Serializable {
 		this.isZip = isZip;
 	}
 
+	@Column(nullable=false)
 	private Boolean hasHeader;
 	public Boolean getHasHeader() {
 		return hasHeader;
@@ -240,7 +253,7 @@ public class Tblpf implements Serializable {
 	}
 
 	// force back ticks as "separator" is a reserved word by MySQL
-	@Column(name = "`separator`")
+	@Column(name = "`separator`", nullable=false)
 	private String separator;
 	public String getSeparator() {
 		return separator;
@@ -254,9 +267,8 @@ public class Tblpf implements Serializable {
 		return "Tblpf [id=" + id + ", description=" + description + ", downloadURL=" + downloadURL + ", importPriority="
 				+ importPriority + ", lastImportation=" + lastImportation + ", lastStandardisation="
 				+ lastStandardisation + ", partnerId=" + partnerId + ", startTime=" + startTime + ", timePeriod="
-				+ timePeriod + ", tblpfmappings=" + tblpfmappings + ", tblpfproducts=" + tblpfproducts
-				+ ", latestStatus=" + latestStatus + ", standardisationStatus=" + standardisationStatus
-				+ ", importationStatus=" + importationStatus + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs
+				+ timePeriod + ", tblpfmappings=" + tblpfmappings + ", latestStatus=" + latestStatus
+				+ ", standardisationStatus=" + standardisationStatus + ", importationStatus=" + importationStatus
 				+ ", isZip=" + isZip + ", hasHeader=" + hasHeader + ", separator=" + separator + "]";
 	}
 

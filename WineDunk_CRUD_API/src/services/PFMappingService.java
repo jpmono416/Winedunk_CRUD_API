@@ -29,7 +29,7 @@ public class PFMappingService {
     {
     	try {
 	    	return em.createNamedQuery("Tblpfmapping.findByPFId", Tblpfmapping.class)
-	    			 .setParameter("tblpf", id)
+	    			 .setParameter("id", id)
 	    			 .getSingleResult();
     	} catch(NoResultException noResExc) {
     		

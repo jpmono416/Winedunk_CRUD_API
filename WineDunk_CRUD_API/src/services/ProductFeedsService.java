@@ -102,6 +102,7 @@ public class ProductFeedsService {
 		Tblpfstatus status = em.createNamedQuery("Tblpfstatus.findByName", Tblpfstatus.class).setParameter("name", "Error").getSingleResult();
 
 		productFeed.setStandardisationStatus(status);
+		productFeed.setLatestStatus(status);
 		return productFeed;
 	}
 }

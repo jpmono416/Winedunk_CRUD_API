@@ -5,15 +5,20 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
 @Table(name = "tblGrapeVarieties")
+@NamedQueries({
+	@NamedQuery(name="tblGrapeVarieties.findByName", query="SELECT g FROM tblGrapeVarieties g WHERE g.name = :name")
+})
 public class tblGrapeVarieties {
 
     @Transient
@@ -34,11 +39,11 @@ public class tblGrapeVarieties {
     public Boolean isDeleted() {return deleted;}
     public void setDeleted(Boolean deleted) {this.deleted = deleted;}
 
-    @ManyToMany(mappedBy = "grapeVarieties", targetEntity = tblWines.class)
-    @JsonBackReference
-    private List<tblWines> wines;
-    public List<tblWines> getWines() { return wines; }
-	public void setWines(List<tblWines> wines) { this.wines = wines; }
+    @OneToMany(mappedBy = "grapeVariety", targetEntity = TblWinesGrapeVariety.class)
+    @JsonManagedReference("variety_winesvarieties")
+    private List<TblWinesGrapeVariety> tblWinesGrapeVariety;
+    public List<TblWinesGrapeVariety> getWTblWinesGrapeVariety() { return tblWinesGrapeVariety; }
+	public void setTblWinesGrapeVariety(List<TblWinesGrapeVariety> TblWinesGrapeVariety) { this.tblWinesGrapeVariety = TblWinesGrapeVariety; }
 
     public tblGrapeVarieties(Integer id) { this.id = id; }
     public tblGrapeVarieties()
@@ -46,7 +51,7 @@ public class tblGrapeVarieties {
         this.id = null;
         this.name = null;
         this.deleted = null;
-        this.wines = null;
+        this.tblWinesGrapeVariety = null;
     }
     public tblGrapeVarieties(String name) {
         this.name = name;

@@ -50,8 +50,7 @@ public class PFProducts extends HttpServlet {
 				response.getWriter().write(this.mapper.writeValueAsString(this.productsService.findByTblpf(json.get("id").asInt())));
 				return;
 			case "findByPartnerProductIdAndMerchantProductId":
-				
-				response.getWriter().write(this.mapper.writeValueAsString(this.productsService.findByPartnerIdAndMerchantId(json.get("partnerProductId").asInt(), json.get("merchantProductId").asInt())));
+				response.getWriter().write(this.mapper.writeValueAsString(this.productsService.findByPartnerIdAndMerchantId(json.get("partnerProductId").asText(), json.get("merchantProductId").asText())));
 				return;
 			case "deleteProduct":
 				if(this.productsService.deleteProduct(json.get("id").asInt()))
@@ -62,7 +61,9 @@ public class PFProducts extends HttpServlet {
 				response.getWriter().write("true");
 				return;
 			case "addProduct":
+				System.out.println(json.asText());
 				Integer id = this.productsService.addProduct(this.mapper.treeToValue(json, Tblpfproduct.class));
+				System.out.println("ID = "+id);
 				response.getWriter().write(id);
 				return;
 				

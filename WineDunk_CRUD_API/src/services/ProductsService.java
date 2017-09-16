@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import models.Tblpf;
 import models.Tblpfproduct;
 
 /**
@@ -34,22 +33,23 @@ public class ProductsService {
 	public List<Tblpfproduct> findByTblpf(Integer tblpfId)
 	{
 		try {
-			Tblpf tblpf = em.find(Tblpf.class, tblpfId);
-			return em.createNamedQuery("Tblpfproduct.findByTblpf", Tblpfproduct.class).setParameter(0, tblpf).getResultList();
-		} catch(NoResultException noResExc) {
+			return em.createNamedQuery("Tblpfproduct.findByTblpfId", Tblpfproduct.class).setParameter("id", tblpfId).getResultList();
+		} catch(Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public Tblpfproduct findByPartnerIdAndMerchantId(Integer partnerProductId, Integer merchantProductId)
+	public Tblpfproduct findByPartnerIdAndMerchantId(String partnerProductId, String merchantProductId)
 	{
 		try {
 			return em.createNamedQuery("Tblpfproduct.findByPartnerIdAndMerchantId", Tblpfproduct.class)
-					 .setParameter(0, partnerProductId)
-					 .setParameter(1, merchantProductId)
+					 .setParameter("merchantProductId", merchantProductId)
+					 .setParameter("partnerProductId", partnerProductId)
 					 .getSingleResult();
 		} catch (NoResultException noResExc) {
-			return null;
+			System.out.println("Couldn't find already existing product");
+			return new Tblpfproduct();
 		}
 	}
 
@@ -59,6 +59,8 @@ public class ProductsService {
 
 		try {
 			em.persist(product);
+			em.flush();
+			System.out.println("ID: "+product.getId());
 			return product.getId();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,12 +93,6 @@ public class ProductsService {
 	}
 	public boolean deleteProduct(Integer id)
 	{
-		try {
-			em.remove(this.findById(id));
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+		return this.deleteProduct(this.findById(id));
 	}
 }

@@ -9,38 +9,40 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="tblPFMapping")
 @NamedQueries({
 	@NamedQuery(name="Tblpfmapping.findAll", query="SELECT t FROM Tblpfmapping t"),
-	@NamedQuery(name="Tblpfmapping.findByPFId", query="SELECT t FROM Tblpfmapping t WHERE t.tblpf = :tblpf")
+	@NamedQuery(name="Tblpfmapping.findByPFId", query="SELECT t FROM Tblpfmapping t WHERE t.tblpf.id = :id")
 })
 public class Tblpfmapping implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
-	private int clicktagColumn;
+	private Integer clicktagColumn;
 
-	private int deliveryCostColumn;
+	private Integer deliveryCostColumn;
 
-	private int imageURLColumn;
+	private Integer imageURLColumn;
 
-	private int merchantNameColumn;
+	private Integer merchantNameColumn;
 
-	private int merchantProductIdColumn;
+	private Integer merchantProductIdColumn;
 
-	private int nameColumn;
+	private Integer nameColumn;
 
-	private int partnerProductDescriptionColumn;
+	@Column(name="partnerProductDescriotionColumn")
+	private Integer partnerProductDescriptionColumn;
 
-	private int partnerProductIdColumn;
+	private Integer partnerProductIdColumn;
 
-	private int priceColumn;
+	private Integer priceColumn;
 
-	private int wineTypeColumn;
+	private Integer wineTypeColumn;
 
-	private int partnerMerchantIdColumn;
+	private Integer partnerMerchantId;
 	//bi-directional many-to-one association to Tblpf
 	@ManyToOne
 	@JoinColumn(name="pfId")
@@ -49,100 +51,100 @@ public class Tblpfmapping implements Serializable {
 	public Tblpfmapping() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getClicktagColumn() {
+	public Integer getClicktagColumn() {
 		return this.clicktagColumn;
 	}
 
-	public void setClicktagColumn(int clicktagColumn) {
+	public void setClicktagColumn(Integer clicktagColumn) {
 		this.clicktagColumn = clicktagColumn;
 	}
 
-	public int getDeliveryCostColumn() {
+	public Integer getDeliveryCostColumn() {
 		return this.deliveryCostColumn;
 	}
 
-	public void setDeliveryCostColumn(int deliveryCostColumn) {
+	public void setDeliveryCostColumn(Integer deliveryCostColumn) {
 		this.deliveryCostColumn = deliveryCostColumn;
 	}
 
-	public int getImageURLColumn() {
+	public Integer getImageURLColumn() {
 		return this.imageURLColumn;
 	}
 
-	public void setImageURLColumn(int imageURLColumn) {
+	public void setImageURLColumn(Integer imageURLColumn) {
 		this.imageURLColumn = imageURLColumn;
 	}
 
-	public int getMerchantNameColumn() {
+	public Integer getMerchantNameColumn() {
 		return this.merchantNameColumn;
 	}
 
-	public void setMerchantNameColumn(int merchantNameColumn) {
+	public void setMerchantNameColumn(Integer merchantNameColumn) {
 		this.merchantNameColumn = merchantNameColumn;
 	}
 
-	public int getMerchantProductIdColumn() {
+	public Integer getMerchantProductIdColumn() {
 		return this.merchantProductIdColumn;
 	}
 
-	public void setMerchantProductIdColumn(int merchantProductIdColumn) {
+	public void setMerchantProductIdColumn(Integer merchantProductIdColumn) {
 		this.merchantProductIdColumn = merchantProductIdColumn;
 	}
 
-	public int getNameColumn() {
+	public Integer getNameColumn() {
 		return this.nameColumn;
 	}
 
-	public void setNameColumn(int nameColumn) {
+	public void setNameColumn(Integer nameColumn) {
 		this.nameColumn = nameColumn;
 	}
 
-	public int getPartnerProductDescriptionColumn() {
+	public Integer getPartnerProductDescriptionColumn() {
 		return this.partnerProductDescriptionColumn;
 	}
 
-	public void setPartnerProductDescriptionColumn(int partnerProductDescriptionColumn) {
+	public void setPartnerProductDescriptionColumn(Integer partnerProductDescriptionColumn) {
 		this.partnerProductDescriptionColumn = partnerProductDescriptionColumn;
 	}
 
-	public int getPartnerProductIdColumn() {
+	public Integer getPartnerProductIdColumn() {
 		return this.partnerProductIdColumn;
 	}
 
-	public void setPartnerProductIdColumn(int partnerProductIdColumn) {
+	public void setPartnerProductIdColumn(Integer partnerProductIdColumn) {
 		this.partnerProductIdColumn = partnerProductIdColumn;
 	}
 
-	public int getPriceColumn() {
+	public Integer getPriceColumn() {
 		return this.priceColumn;
 	}
 
-	public void setPriceColumn(int priceColumn) {
+	public void setPriceColumn(Integer priceColumn) {
 		this.priceColumn = priceColumn;
 	}
 
-	public int getWineTypeColumn() {
+	public Integer getWineTypeColumn() {
 		return this.wineTypeColumn;
 	}
 
-	public void setWineTypeColumn(int wineTypeColumn) {
+	public void setWineTypeColumn(Integer wineTypeColumn) {
 		this.wineTypeColumn = wineTypeColumn;
 	}
 
-	public int getPartnerMerchantIdColumn() {
-		return this.partnerMerchantIdColumn;
+	public Integer getPartnerMerchantId() {
+		return this.partnerMerchantId;
 	}
 
-	public void setPartnerMerchantIdColumn(int partnerMerchantIdColumn) {
-		this.partnerMerchantIdColumn = partnerMerchantIdColumn;
+	public void setPartnerMerchantId(Integer partnerMerchantId) {
+		this.partnerMerchantId = partnerMerchantId;
 	}
 
 	public Tblpf getTblpf() {
