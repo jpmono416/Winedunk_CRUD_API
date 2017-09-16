@@ -1,15 +1,26 @@
 package models;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 /**
  * The persistent class for the tblpfstatus database table.
  * 
  */
-@Entity
+@Entity()
+@Table(name="tblPFStatus")
 @NamedQueries(value = {
 		@NamedQuery(name="Tblpfstatus.findAll", query="SELECT t FROM Tblpfstatus t"),
 		@NamedQuery(name="Tblpfstatus.findByName", query="SELECT t FROM Tblpfstatus t WHERE t.name = :name")
@@ -25,18 +36,22 @@ public class Tblpfstatus implements Serializable {
 
 	//bi-directional many-to-one association to Tblpf
 	@OneToMany(mappedBy="latestStatus")
+	@JsonBackReference
 	private List<Tblpf> latestStatusList;
 
 	//bi-directional many-to-one association to Tblpf
 	@OneToMany(mappedBy="standardisationStatus")
+	@JsonBackReference("standardisationstatus_status")
 	private List<Tblpf> standardisationStatusList;
 
 	//bi-directional many-to-one association to Tblpf
 	@OneToMany(mappedBy="importationStatus")
+	@JsonBackReference("importationstatus_status")
 	private List<Tblpf> importationStatusList;
 
 	//bi-directional many-to-one association to Tblpfstatuschangelog
 	@OneToMany(mappedBy="tblpfstatus")
+	@JsonBackReference("statuschangelog_status")
 	private List<Tblpfstatuschangelog> tblpfstatuschangelogs;
 
 	public Tblpfstatus() {
@@ -144,6 +159,13 @@ public class Tblpfstatus implements Serializable {
 		tblpfstatuschangelog.setTblpfstatus(null);
 
 		return tblpfstatuschangelog;
+	}
+
+	@Override
+	public String toString() {
+		return "Tblpfstatus [id=" + id + ", name=" + name + ", latestStatusList=" + latestStatusList
+				+ ", standardisationStatusList=" + standardisationStatusList + ", importationStatusList="
+				+ importationStatusList + ", tblpfstatuschangelogs=" + tblpfstatuschangelogs + "]";
 	}
 
 }

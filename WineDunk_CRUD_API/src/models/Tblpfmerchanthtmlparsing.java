@@ -20,9 +20,8 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	//@ManyToOne
-	//@JoinColumn(name="merchantId")
-	@Transient
+	@ManyToOne
+	@JoinColumn(name="merchantId")
 	private tblShops tblShops;
 
 	private String nameInWeb;

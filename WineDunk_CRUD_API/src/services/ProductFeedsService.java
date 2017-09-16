@@ -38,8 +38,14 @@ public class ProductFeedsService {
 	 */
 	public Integer persist(Tblpf newProductFeed)
 	{
-		em.persist(newProductFeed);
-		return newProductFeed.getId();
+		try {
+			em.persist(newProductFeed);
+			em.flush();
+			return newProductFeed.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**

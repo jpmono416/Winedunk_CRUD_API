@@ -9,11 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import models.Tblpf;
+import models.Tblpfstatus;
+import services.PartnersService;
 import services.ProductFeedsService;
+import services.StatusService;
 
 /**
  * Servlet implementation class ProductFeeds
@@ -25,14 +29,14 @@ public class ProductFeeds extends HttpServlet {
 
 	@EJB
 	ProductFeedsService pfService;
+	@EJB
+	StatusService statusService;
+	@EJB
+	PartnersService partnersService;
 
     public ProductFeeds() {
         super();
     }
-
-	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}*/
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action"))
@@ -41,19 +45,36 @@ public class ProductFeeds extends HttpServlet {
     		return;
 		}
 
-		JsonNode json = this.mapper.readTree(request.getInputStream());
+		ObjectNode json;
+		try {
+			json = (ObjectNode) this.mapper.readTree(request.getInputStream());
+		} catch (JsonMappingException e) {
+			json = null;
+		}
 		switch(request.getParameter("action"))
 		{
 			case "getAll":
-				response.getWriter().write(this.mapper.writeValueAsString(this.pfService.getAll()));
+				response.getWriter().write(this.mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.pfService.getAll()));
 				break;
 			case "getById":
-				response.getWriter().write(this.mapper.writeValueAsString(this.pfService.getById(json.get("id").asInt())));
+				response.getWriter().write(this.mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.pfService.getById(json.get("id").asInt())));
 				break;
 			case "addNew":				
-				response.getWriter().write(this.pfService.persist(this.mapper.treeToValue(json, Tblpf.class)));
+				Tblpfstatus status = this.statusService.getByID(1);
+				Tblpf productFeed = this.mapper.treeToValue(json, Tblpf.class);
+
+				System.out.print(json.get("partnerId").asInt());
+				System.out.println(this.partnersService.getPartnerById(json.get("partnerId").asInt()));
+
+				productFeed.setLatestStatus(status)
+						   .setStandardisationStatus(status)
+						   .setImportationStatus(status)
+						   .setPartnerId(this.partnersService.getPartnerById(json.get("partnerId").asInt()));
+				Integer id = this.pfService.persist(productFeed);
+				response.getWriter().write(id);
+				//response.getWriter().write(this.mapper.writeValueAsString(productFeed));
 				break;
-			case "edit":				
+			case "update":				
 				if(this.pfService.update(this.mapper.treeToValue(json, Tblpf.class)))
 					response.getWriter().write("true");
 				break;

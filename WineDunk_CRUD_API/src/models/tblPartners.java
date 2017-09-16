@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -59,8 +60,8 @@ public class tblPartners {
 	public List<tblClicks> getClicks() { return clicks; }
 	public void setClicks(List<tblClicks> clicks) { this.clicks = clicks; }
 
-	@OneToMany(mappedBy = "tblPartners", targetEntity = Tblpf.class)
-	@JsonBackReference("partners_productfeeds")
+	@OneToMany(mappedBy = "partnerId", targetEntity = Tblpf.class)
+	@JsonManagedReference
 	private List<Tblpf> tblPfs;
 	public List<Tblpf> getTblpfs() { return tblPfs; }
 	public void setTblpfs(List<Tblpf> tblPfs) { this.tblPfs = tblPfs; }
@@ -72,7 +73,6 @@ public class tblPartners {
         this.name = null;
         this.deleted = null;
         this.partnerTypeId = null;
-        
     }
     public tblPartners(String name) { this.name = name; }
 	@Override

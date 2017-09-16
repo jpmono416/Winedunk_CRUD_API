@@ -42,10 +42,10 @@ public class Merchants extends HttpServlet {
     	switch(request.getParameter("action"))
     	{
     		case "getAll":
-    			response.getWriter().write(this.mapper.writeValueAsString(this.merchantsService.getAll()));
+    			response.getWriter().write(this.mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.merchantsService.getAll()));
     			return;
     		case "getByName":
-    			response.getWriter().write(this.mapper.writeValueAsString(this.merchantsService.getByName(json.get("name").asText())));
+    			response.getWriter().write(this.mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.merchantsService.getByName(json.get("name").asText())));
     			return;
     		case "addMerchant":
     			response.getWriter().write(this.merchantsService.addMerchant(this.mapper.treeToValue(json, tblShops.class)));

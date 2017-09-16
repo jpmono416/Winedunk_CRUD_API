@@ -93,6 +93,7 @@ public class tblWines {
 	}
 
 	@OneToMany(mappedBy = "tblWines", targetEntity=TblWinesWineType.class)
+	@JsonBackReference
 	private List<TblWinesWineType> tblWinesWineType;
 	public List<TblWinesWineType> getTblWinesWineType() {
 		return tblWinesWineType;

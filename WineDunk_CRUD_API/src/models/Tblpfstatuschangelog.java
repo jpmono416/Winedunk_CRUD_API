@@ -14,8 +14,8 @@ import java.sql.Timestamp;
 public class Tblpfstatuschangelog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private TblpfstatuschangelogPK id;
+	@Id
+	private Integer id;
 
 	private Timestamp dateTimeEvent;
 
@@ -32,11 +32,11 @@ public class Tblpfstatuschangelog implements Serializable {
 	public Tblpfstatuschangelog() {
 	}
 
-	public TblpfstatuschangelogPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(TblpfstatuschangelogPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
