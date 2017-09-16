@@ -45,13 +45,14 @@ public class GrapeVarietiesService {
     	return null;
     }
 
-    public Boolean addGrapeVariety(tblGrapeVarieties grapeVariety) {
+    public Integer addGrapeVariety(tblGrapeVarieties grapeVariety) {
         try
         {
         	if(grapeVariety.getId() != null) { grapeVariety.setId(null); }
         	em.persist(grapeVariety);
-        	return true;
-        } catch (Exception e) { return false; }
+        	em.flush();
+        	return grapeVariety.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateGrapeVariety(tblGrapeVarieties grapeVariety)

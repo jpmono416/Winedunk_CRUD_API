@@ -12,41 +12,38 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
+import models.TblWinesGrapeVariety;
 import models.tblGrapeVarieties;
-import services.GrapeVarietiesService;
+import services.WinesGrapeVarietiesService;
 
 /**
- * Servlet implementation class GrapeVarieties
+ * Servlet implementation class WinesGrapeVarieties
  */
-@WebServlet("/grapevarieties")
-public class GrapeVarieties extends HttpServlet {
+@WebServlet("/WinesGrapeVarieties")
+public class WinesGrapeVarieties extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final ObjectMapper mapper = new ObjectMapper();
 
 	@EJB
-	GrapeVarietiesService grapeVarietyService = new GrapeVarietiesService();
+	WinesGrapeVarietiesService wineGrapeService = new WinesGrapeVarietiesService();
 
-	public GrapeVarieties() {
-		super();
-		// Set pretty printing of json
-		this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-	}
+	public WinesGrapeVarieties() {
+        super();
+    }
 
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
 		switch(action) 
 		{
-			case "getGrapeVarieties" :
+			case "getAll" :
 			{
 				try 
 				{
-					List<tblGrapeVarieties> grapeVarieties = grapeVarietyService.getGrapeVarieties();
+					List<TblWinesGrapeVariety> grapeVarieties = wineGrapeService.getAll();
 					String arrayToJson = this.mapper.writeValueAsString(grapeVarieties);
 
 					response.getWriter().write(arrayToJson);
@@ -55,7 +52,7 @@ public class GrapeVarieties extends HttpServlet {
 				return;
 			}
 			
-			case "getGrapeVariety" :
+			case "getById" :
 			{
 				try 
 				{
@@ -66,22 +63,11 @@ public class GrapeVarieties extends HttpServlet {
 					}
 					Integer id = Integer.parseInt(request.getParameter("id"));
 		    	
-					tblGrapeVarieties grapeVariety = grapeVarietyService.getGrapeVarietyById(id);
+					TblWinesGrapeVariety grapeVariety = wineGrapeService.getById(id);
 					
 					response.getWriter().write(this.mapper.writeValueAsString(grapeVariety));
 				}
 				catch (Exception e) { e.printStackTrace(); }
-				return;
-			}
-			case "getByName":
-			{
-				if(!request.getParameterMap().containsKey("name"))
-				{
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing name parameter");
-					return;
-				}
-				tblGrapeVarieties grapeVariety = this.grapeVarietyService.getByName(request.getParameter("name"));
-				response.getWriter().write(this.mapper.writeValueAsString(grapeVariety));
 				return;
 			}
 		}
@@ -99,7 +85,7 @@ public class GrapeVarieties extends HttpServlet {
 				{
 					tblGrapeVarieties grapeVariety = this.mapper.treeToValue(json, tblGrapeVarieties.class);
 
-					Integer id = grapeVarietyService.addGrapeVariety(grapeVariety);
+					Integer id = wineGrapeService.addNew(grapeVariety);
 					if(id!=null) { response.getWriter().write(id); }
 				} catch (Exception e) {return;}
 				break;
@@ -112,7 +98,7 @@ public class GrapeVarieties extends HttpServlet {
 					tblGrapeVarieties grapeVariety = new tblGrapeVarieties();
 					grapeVariety = this.mapper.treeToValue(json, tblGrapeVarieties.class);
 					
-					if(grapeVarietyService.updateGrapeVariety(grapeVariety)) { response.getWriter().println("True"); }
+					if(wineGrapeService.update(grapeVariety)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}
@@ -121,7 +107,7 @@ public class GrapeVarieties extends HttpServlet {
 			{
 				try
 				{
-					if(grapeVarietyService.deleteGrapeVariety(json.get("id").asInt())) { response.getWriter().println("True"); }
+					if(wineGrapeService.delete(json.get("id").asInt())) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

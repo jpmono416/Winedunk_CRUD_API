@@ -10,6 +10,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  *
  */
 @Entity
+@Table(name="tblWinesGrapesVarieties")
+@NamedQueries({
+	@NamedQuery(name="tblWinesGrapesVarieties.finAll", query="SELECT wg FROM TblWinesGrapeVariety wg")
+})
 public class TblWinesGrapeVariety implements Serializable {	
 	private static final long serialVersionUID = 1L;
 
