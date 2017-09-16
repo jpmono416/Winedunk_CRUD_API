@@ -153,7 +153,6 @@ public class Users extends HttpServlet {
 			    try
 			    {
 					String email = content;
-					System.out.println("Content: " + email); //TODO DELETE
 			    	viewUsers user = userService.getUserByEmail(email);
 			    	
 			    	ObjectMapper objectMapper = new ObjectMapper();
@@ -219,10 +218,11 @@ public class Users extends HttpServlet {
 			case "updateUserDetails" :
 				try
 				{
+					System.out.println("Content: " + content); //TODO DELETE
 					tblUsers userIncoming = new tblUsers();
 					ObjectMapper mapper = new ObjectMapper();
 					userIncoming = mapper.readValue(content, tblUsers.class);
-					
+					System.out.println("User: " + userIncoming.toString()); //TODO DELETE
 					tblUsers previousUser = userService.getUserById(userIncoming.getId());
 					String userName = userIncoming.getName();
 					String preferredEmail = userIncoming.getPreferredEmail();
