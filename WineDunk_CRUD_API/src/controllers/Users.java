@@ -16,10 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import models.tblCountries;
-import models.tblCurrencies;
-import models.tblLanguages;
-import models.tblTimeZones;
 import models.tblUsers;
 import services.UsersService;
 import views.viewUsers;
@@ -210,17 +206,34 @@ public class Users extends HttpServlet {
 					tblUsers user = new tblUsers();
 					ObjectMapper mapper = new ObjectMapper();
 					user = mapper.readValue(content, tblUsers.class);
-					System.out.println("User: " + user.toString()); // TODO DELETE
 					if(user.getRecoveringPassToken() == null) { return; }
 					
 					tblUsers previousUser = userService.getUserById(user.getId());
 					
 					previousUser.setLoginPassword(user.getLoginPassword());
 					previousUser.setRecoveringPassToken(null);
-					System.out.println("Previous: " + previousUser.toString()); // TODO DELTE
 					if(userService.updateUser(previousUser)) { response.getWriter().write("true"); }
 				} catch (Exception e) { e.printStackTrace(); }
 			break;
+			
+			case "updateUserDetails" :
+				try
+				{
+					tblUsers userIncoming = new tblUsers();
+					ObjectMapper mapper = new ObjectMapper();
+					userIncoming = mapper.readValue(content, tblUsers.class);
+					
+					tblUsers previousUser = userService.getUserById(userIncoming.getId());
+					String userName = userIncoming.getName();
+					String preferredEmail = userIncoming.getPreferredEmail();
+					String recoveryEmail = userIncoming.getRecoveringPassEmail();
+					
+					if(userName != null) { previousUser.setName(userName); }
+					if(preferredEmail != null) { previousUser.setPreferredEmail(preferredEmail); }
+					if(recoveryEmail != null) {  previousUser.setRecoveringPassEmail(recoveryEmail);}
+					if(userService.updateUser(previousUser)) { response.getWriter().write("true"); }
+				} catch (Exception e) { e.printStackTrace(); }
+				break;
 		}
 	}
 
