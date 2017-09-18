@@ -228,9 +228,9 @@ public class Users extends HttpServlet {
 					String preferredEmail = userIncoming.getPreferredEmail();
 					String recoveryEmail = userIncoming.getRecoveringPassEmail();
 					
-					if(userName != null) { previousUser.setName(userName); }
-					if(preferredEmail != null) { previousUser.setPreferredEmail(preferredEmail); }
-					if(recoveryEmail != null) {  previousUser.setRecoveringPassEmail(recoveryEmail);}
+					if(userName != null && !userName.equals("")) { previousUser.setName(userName); }
+					if(preferredEmail != null && !preferredEmail.equals("")) { previousUser.setPreferredEmail(preferredEmail); }
+					if(recoveryEmail != null && !recoveryEmail.equals("")) {  previousUser.setRecoveringPassEmail(recoveryEmail);}
 					if(userService.updateUser(previousUser)) { response.getWriter().write("true"); }
 				} catch (Exception e) { e.printStackTrace(); }
 				break;
