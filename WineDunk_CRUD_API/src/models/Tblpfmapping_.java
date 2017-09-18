@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-09-18T16:01:39.419+0100")
+@Generated(value="Dali", date="2017-09-18T19:08:59.436+0100")
 @StaticMetamodel(Tblpfmapping.class)
 public class Tblpfmapping_ {
 	public static volatile SingularAttribute<Tblpfmapping, Integer> id;
@@ -19,6 +19,6 @@ public class Tblpfmapping_ {
 	public static volatile SingularAttribute<Tblpfmapping, Integer> priceColumn;
 	public static volatile SingularAttribute<Tblpfmapping, Integer> wineTypeColumn;
 	public static volatile SingularAttribute<Tblpfmapping, Integer> partnerMerchantId;
-	public static volatile SingularAttribute<Tblpfmapping, Integer> productURLColumn;
 	public static volatile SingularAttribute<Tblpfmapping, Tblpf> tblpf;
+	public static volatile SingularAttribute<Tblpfmapping, Integer> productURLColumn;
 }

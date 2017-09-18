@@ -184,7 +184,7 @@ public class PersistWineSearch {
 			if(!minPrice.equals("")) 		{ queryWhere += " AND (`w`.`wineMinimumPrice` BETWEEN " + minPrice + " AND " + maxPrice +") ";  }
 			if(!closureId.equals("")) 		{ queryWhere += " AND (`w`.`wineClosureId` = " + closureId + ") "; }
 			if(!vintageMin.equals("")) 		{ queryWhere += " AND (`w`.`wineVintage` BETWEEN " + vintageMin + " AND " + vintageMax + ") "; }
-			if(!rating.equals("")) 			{ queryWhere += " AND (`w`.`avgRating` = " + rating + ") "; }
+			if(!rating.equals("")) 			{ queryWhere += " AND (`w`.`avgRating` >= " + rating + ") "; }
 
 			/* ---- MODIFICADO ---- */
 			
