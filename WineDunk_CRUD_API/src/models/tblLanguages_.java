@@ -5,7 +5,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-09-15T20:31:41.789+0100")
+@Generated(value="Dali", date="2017-09-18T16:01:39.371+0100")
 @StaticMetamodel(tblLanguages.class)
 public class tblLanguages_ {
 	public static volatile SingularAttribute<tblLanguages, Integer> id;

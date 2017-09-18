@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-09-18T15:43:21.198+0100")
+@Generated(value="Dali", date="2017-09-18T16:01:39.423+0100")
 @StaticMetamodel(Tblpfmerchanthtmlparsing.class)
 public class Tblpfmerchanthtmlparsing_ {
 	public static volatile SingularAttribute<Tblpfmerchanthtmlparsing, Integer> id;
