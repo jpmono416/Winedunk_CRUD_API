@@ -22,7 +22,7 @@ public class ProductsService {
 
 	public List<Tblpfproduct> getAll()
 	{
-		return em.createNamedQuery("Tblpproduct.findAll", Tblpfproduct.class).getResultList();
+		return em.createNamedQuery("Tblpfproduct.findAll", Tblpfproduct.class).getResultList();
 	}
 
 	public Tblpfproduct findById(Integer id)
@@ -60,7 +60,6 @@ public class ProductsService {
 		try {
 			em.persist(product);
 			em.flush();
-			System.out.println("ID: "+product.getId());
 			return product.getId();
 		} catch (Exception e) {
 			e.printStackTrace();

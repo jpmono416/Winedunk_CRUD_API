@@ -14,7 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @NamedQueries({
 	@NamedQuery(name="tblPartners.findAll", query="SELECT p FROM tblPartners p"),
 })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class tblPartners {
 
     @Transient
@@ -61,7 +63,6 @@ public class tblPartners {
 	public void setClicks(List<tblClicks> clicks) { this.clicks = clicks; }
 
 	@OneToMany(mappedBy = "partnerId", targetEntity = Tblpf.class)
-	@JsonManagedReference("partnerId_tblPartners")
 	private List<Tblpf> tblPfs;
 	public List<Tblpf> getTblpfs() { return tblPfs; }
 	public void setTblpfs(List<Tblpf> tblPfs) { this.tblPfs = tblPfs; }
@@ -77,8 +78,7 @@ public class tblPartners {
     public tblPartners(String name) { this.name = name; }
 	@Override
 	public String toString() {
-		return "tblPartners [id=" + id + ", name=" + name + ", deleted=" + deleted + ", partnerTypeId=" + partnerTypeId
-				+ ", contacts=" + contacts + ", clicks=" + clicks + ", tblPfs=" + tblPfs + "]";
+		return "tblPartners [id=" + id + ", name=" + name + ", deleted=" + deleted + ", partnerTypeId=" + partnerTypeId + "]";
 	}
 
     

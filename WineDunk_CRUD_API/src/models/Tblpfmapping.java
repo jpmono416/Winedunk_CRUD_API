@@ -43,6 +43,9 @@ public class Tblpfmapping implements Serializable {
 	private Integer wineTypeColumn;
 
 	private Integer partnerMerchantId;
+
+	private Integer productURLColumn;
+
 	//bi-directional many-to-one association to Tblpf
 	@ManyToOne
 	@JoinColumn(name="pfId")
@@ -153,5 +156,24 @@ public class Tblpfmapping implements Serializable {
 
 	public void setTblpf(Tblpf tblpf) {
 		this.tblpf = tblpf;
+	}
+
+	public Integer getProductURLColumn() {
+		return productURLColumn;
+	}
+
+	public void setProductURLColumn(Integer productURLColumn) {
+		this.productURLColumn = productURLColumn;
+	}
+
+	@Override
+	public String toString() {
+		return "Tblpfmapping [id=" + id + ", clicktagColumn=" + clicktagColumn + ", deliveryCostColumn="
+				+ deliveryCostColumn + ", imageURLColumn=" + imageURLColumn + ", merchantNameColumn="
+				+ merchantNameColumn + ", merchantProductIdColumn=" + merchantProductIdColumn + ", nameColumn="
+				+ nameColumn + ", partnerProductDescriptionColumn=" + partnerProductDescriptionColumn
+				+ ", partnerProductIdColumn=" + partnerProductIdColumn + ", priceColumn=" + priceColumn
+				+ ", wineTypeColumn=" + wineTypeColumn + ", partnerMerchantId=" + partnerMerchantId + ", productURL="
+				+ productURLColumn + ", tblpf=" + tblpf + "]";
 	}
 }

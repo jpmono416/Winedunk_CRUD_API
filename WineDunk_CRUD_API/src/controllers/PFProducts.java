@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.Tblpfproduct;
 import services.ProductsService;
@@ -28,6 +29,7 @@ public class PFProducts extends HttpServlet {
 
 	public PFProducts() {
         super();
+        this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -63,7 +65,7 @@ public class PFProducts extends HttpServlet {
 			case "addProduct":
 				System.out.println(json.asText());
 				Integer id = this.productsService.addProduct(this.mapper.treeToValue(json, Tblpfproduct.class));
-				System.out.println("ID = "+id);
+
 				response.getWriter().write(id);
 				return;
 				

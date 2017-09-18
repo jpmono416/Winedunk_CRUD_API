@@ -9,6 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="tblPFMerchantHTMLParsing")
 @NamedQueries({
 	@NamedQuery(name="Tblpfmerchanthtmlparsing.findAll", query="SELECT t FROM Tblpfmerchanthtmlparsing t"),
 	//@NamedQuery(name="Tblpfmerchanthtmlparsing.findByTblShops", query="SELECT t FROM Tblpfmerchanthtmlparsing t WHERE t.tblShops = :tblShops") TODO UNCOMMENT ONCE TABLE EXISTS

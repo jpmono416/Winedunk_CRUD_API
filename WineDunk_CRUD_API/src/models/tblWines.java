@@ -17,13 +17,15 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "tblWines")
 @NamedQueries({ @NamedQuery(name = "tblWines.FindByGtin", query = "SELECT t FROM tblWines t WHERE t.gtin = :gtin"),
 		@NamedQuery(name = "tblWines.FindByNameBottleAndVintage", query = "SELECT t FROM tblWines t "
 				+ "WHERE t.name = :name " + "AND t.bottleSize = :bottleSize " + "AND t.vintage = :vintage") })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class tblWines {
 
 	@Transient
@@ -132,7 +134,6 @@ public class tblWines {
 	}
 
 	@OneToMany(mappedBy="wine", targetEntity=TblWinesGrapeVariety.class)
-	@JsonManagedReference("wine_winesvarieties")
 	private List<TblWinesGrapeVariety> tblWinesGrapeVariety;
 
 	public List<TblWinesGrapeVariety> getTblWinesGrapeVariety() {
