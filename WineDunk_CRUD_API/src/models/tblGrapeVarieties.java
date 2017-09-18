@@ -11,7 +11,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @NamedQueries({
 	@NamedQuery(name="tblGrapeVarieties.findByName", query="SELECT g FROM tblGrapeVarieties g WHERE g.name = :name")
 })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class tblGrapeVarieties {
 
     @Transient
@@ -40,7 +43,7 @@ public class tblGrapeVarieties {
     public void setDeleted(Boolean deleted) {this.deleted = deleted;}
 
     @OneToMany(mappedBy = "grapeVariety", targetEntity = TblWinesGrapeVariety.class)
-    @JsonManagedReference("variety_winesvarieties")
+    @JsonBackReference("variety_winesvarieties")
     private List<TblWinesGrapeVariety> tblWinesGrapeVariety;
     public List<TblWinesGrapeVariety> getWTblWinesGrapeVariety() { return tblWinesGrapeVariety; }
 	public void setTblWinesGrapeVariety(List<TblWinesGrapeVariety> TblWinesGrapeVariety) { this.tblWinesGrapeVariety = TblWinesGrapeVariety; }

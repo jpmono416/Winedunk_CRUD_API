@@ -79,7 +79,7 @@ public class WinesGrapeVarieties extends HttpServlet {
 		JsonNode json = this.mapper.readTree(request.getInputStream());
 		switch (request.getParameter("action")) 
 		{
-			case "addGrapeVariety" :
+			case "addNew" :
 			{
 				try
 				{
@@ -91,7 +91,7 @@ public class WinesGrapeVarieties extends HttpServlet {
 				break;
 			}
 			
-			case "updateGrapeVariety" :
+			case "update" :
 			{
 				try
 				{
@@ -103,7 +103,7 @@ public class WinesGrapeVarieties extends HttpServlet {
 				break;
 			}
 			
-			case "deleteGrapeVariety" :
+			case "delete" :
 			{
 				try
 				{

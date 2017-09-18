@@ -5,7 +5,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-09-16T19:57:19.952+0100")
+@Generated(value="Dali", date="2017-09-17T11:31:56.243+0100")
 @StaticMetamodel(tblWines.class)
 public class tblWines_ {
 	public static volatile SingularAttribute<tblWines, Integer> id;
@@ -16,6 +16,7 @@ public class tblWines_ {
 	public static volatile ListAttribute<tblWines, TblWinesWineType> tblWinesWineType;
 	public static volatile SingularAttribute<tblWines, tblWineries> winery;
 	public static volatile SingularAttribute<tblWines, tblClosures> closure;
+	public static volatile ListAttribute<tblWines, TblWinesGrapeVariety> tblWinesGrapeVariety;
 	public static volatile SingularAttribute<tblWines, String> name;
 	public static volatile SingularAttribute<tblWines, String> defaultDescription;
 	public static volatile SingularAttribute<tblWines, String> shortDescription;
@@ -37,5 +38,4 @@ public class tblWines_ {
 	public static volatile ListAttribute<tblWines, tblWinesbyMerchants> winesByMerchant;
 	public static volatile ListAttribute<tblWines, tblBestOffersbyType> bestOffersByType;
 	public static volatile SingularAttribute<tblWines, Float> avgRating;
-	public static volatile ListAttribute<tblWines, TblWinesGrapeVariety> tblWinesGrapeVariety;
 }

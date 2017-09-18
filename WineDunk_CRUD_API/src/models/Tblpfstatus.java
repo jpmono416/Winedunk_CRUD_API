@@ -39,22 +39,18 @@ public class Tblpfstatus implements Serializable {
 
 	//bi-directional many-to-one association to Tblpf
 	@OneToMany(mappedBy="latestStatus", targetEntity=Tblpf.class)
-	@JsonManagedReference("latestStatus_status")
 	private List<Tblpf> latestStatusList;
 
 	//bi-directional many-to-one association to Tblpf
 	@OneToMany(mappedBy="standardisationStatus", targetEntity=Tblpf.class)
-	@JsonManagedReference("standardisationStatus_status")
 	private List<Tblpf> standardisationStatusList;
 
 	//bi-directional many-to-one association to Tblpf
 	@OneToMany(mappedBy="importationStatus", targetEntity=Tblpf.class)
-	@JsonManagedReference("importationStatus_status")
 	private List<Tblpf> importationStatusList;
 
 	//bi-directional many-to-one association to Tblpfstatuschangelog
 	@OneToMany(mappedBy="tblpfstatus", targetEntity=Tblpfstatuschangelog.class)
-	@JsonManagedReference("tblpfstatus_status")
 	private List<Tblpfstatuschangelog> tblpfstatuschangelogs;
 
 	public Tblpfstatus() {

@@ -7,7 +7,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-09-16T02:21:11.506+0100")
+@Generated(value="Dali", date="2017-09-17T11:31:56.112+0100")
 @StaticMetamodel(Tblpf.class)
 public class Tblpf_ {
 	public static volatile SingularAttribute<Tblpf, Integer> id;
@@ -16,6 +16,7 @@ public class Tblpf_ {
 	public static volatile SingularAttribute<Tblpf, Integer> importPriority;
 	public static volatile SingularAttribute<Tblpf, Timestamp> lastImportation;
 	public static volatile SingularAttribute<Tblpf, Timestamp> lastStandardisation;
+	public static volatile SingularAttribute<Tblpf, tblPartners> partnerId;
 	public static volatile SingularAttribute<Tblpf, Time> startTime;
 	public static volatile SingularAttribute<Tblpf, String> timePeriod;
 	public static volatile ListAttribute<Tblpf, Tblpfmapping> tblpfmappings;
@@ -23,9 +24,8 @@ public class Tblpf_ {
 	public static volatile SingularAttribute<Tblpf, Tblpfstatus> latestStatus;
 	public static volatile SingularAttribute<Tblpf, Tblpfstatus> standardisationStatus;
 	public static volatile SingularAttribute<Tblpf, Tblpfstatus> importationStatus;
+	public static volatile ListAttribute<Tblpf, Tblpfstatuschangelog> tblpfstatuschangelogs;
 	public static volatile SingularAttribute<Tblpf, Boolean> isZip;
 	public static volatile SingularAttribute<Tblpf, Boolean> hasHeader;
 	public static volatile SingularAttribute<Tblpf, String> separator;
-	public static volatile SingularAttribute<Tblpf, tblPartners> partnerId;
-	public static volatile ListAttribute<Tblpf, Tblpfstatuschangelog> tblpfstatuschangelogs;
 }

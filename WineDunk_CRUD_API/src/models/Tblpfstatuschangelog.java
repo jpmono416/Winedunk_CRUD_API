@@ -1,13 +1,17 @@
 package models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import java.sql.Timestamp;
 
 
 /**
@@ -29,13 +33,11 @@ public class Tblpfstatuschangelog implements Serializable {
 	//bi-directional many-to-one association to Tblpfstatus
 	@ManyToOne
 	@JoinColumn(name="pfStatus_id")
-	@JsonBackReference("tblpfstatus_status")
 	private Tblpfstatus tblpfstatus;
 
 	//bi-directional many-to-one association to Tblpf
 	@ManyToOne
 	@JoinColumn(name="tblProductFeeds_id")
-	@JsonBackReference("tblpfstatuschangelogs_tblpf")
 	private Tblpf tblpf;
 
 	public Tblpfstatuschangelog() {

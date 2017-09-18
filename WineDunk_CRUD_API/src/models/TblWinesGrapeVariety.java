@@ -1,19 +1,28 @@
 package models;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * Entity implementation class for Entity: TblGrapeVariety
  *
  */
 @Entity
-@Table(name="tblWinesGrapesVarieties")
+@Table(name="tblWinesGrapeVarieties")
 @NamedQueries({
 	@NamedQuery(name="tblWinesGrapesVarieties.finAll", query="SELECT wg FROM TblWinesGrapeVariety wg")
 })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class TblWinesGrapeVariety implements Serializable {	
 	private static final long serialVersionUID = 1L;
 
@@ -22,12 +31,10 @@ public class TblWinesGrapeVariety implements Serializable {
 
    @ManyToOne
    @JoinColumn(name = "wineId")
-   @JsonBackReference("wine_winesvarieties")
    private tblWines wine;
 
    @ManyToOne
    @JoinColumn(name = "grapeVarietyId")
-   @JsonBackReference("variety_winesvarieties")
    private tblGrapeVarieties grapeVariety;
 
 	public Integer getId() {
