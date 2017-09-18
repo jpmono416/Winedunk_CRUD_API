@@ -218,19 +218,19 @@ public class Users extends HttpServlet {
 			case "updateUserDetails" :
 				try
 				{
-					System.out.println("Content: " + content); //TODO DELETE
 					tblUsers userIncoming = new tblUsers();
 					ObjectMapper mapper = new ObjectMapper();
 					userIncoming = mapper.readValue(content, tblUsers.class);
-					System.out.println("User: " + userIncoming.toString()); //TODO DELETE
+					
 					tblUsers previousUser = userService.getUserById(userIncoming.getId());
 					String userName = userIncoming.getName();
 					String preferredEmail = userIncoming.getPreferredEmail();
 					String recoveryEmail = userIncoming.getRecoveringPassEmail();
 					
-					if(userName != null && !userName.equals("")) { previousUser.setName(userName); }
-					if(preferredEmail != null && !preferredEmail.equals("")) { previousUser.setPreferredEmail(preferredEmail); }
-					if(recoveryEmail != null && !recoveryEmail.equals("")) {  previousUser.setRecoveringPassEmail(recoveryEmail);}
+					if(userName != null && !userName.equals("null")) { previousUser.setName(userName); }
+					if(preferredEmail != null && !preferredEmail.equals("null")) { previousUser.setPreferredEmail(preferredEmail); }
+					if(recoveryEmail != null && !recoveryEmail.equals("null")) {  previousUser.setRecoveringPassEmail(recoveryEmail);}
+
 					if(userService.updateUser(previousUser)) { response.getWriter().write("true"); }
 				} catch (Exception e) { e.printStackTrace(); }
 				break;

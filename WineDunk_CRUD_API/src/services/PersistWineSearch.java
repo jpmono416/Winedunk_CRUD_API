@@ -61,6 +61,9 @@ public class PersistWineSearch {
 
 	private String typeId;
 	public void setTypeId(String typeId) { this.typeId = typeId; }
+	
+	private String rating;
+	public void setRating(String rating) { this.rating = rating; }
 
 	private String grapeVarietyId;
 	public void setGrapeVarietyId(String grapeVarietyId) { this.grapeVarietyId = grapeVarietyId; }
@@ -170,17 +173,18 @@ public class PersistWineSearch {
 		queryWhere = "  WHERE (`w`.`wineDeleted` = 0) AND (`wineMinimumPrice` IS NOT NULL) AND (`wineMinimumPrice` > 0) ";
 		try
 		{
-			if(!name.equals("")) 						{ queryWhere += " AND ((`w`.`wineName` ='" + name + "') OR (`w`.`wineName` LIKE '%" + name + "%') OR (`w`.`wineDefaultDescription` LIKE '%" + name + "%'))"; }  
-			if(!merchantId.equals("")) 					{ queryWhere += " AND (`w`.`merchantId` = " + merchantId + ")"; }
-			if(!countryId.equals("")) 					{ queryWhere += " AND (`w`.`wineCountryId` = " + countryId + ") "; }
-			if(!regionId.equals("")) 					{ queryWhere += " AND (`w`.`wineRegionId` = " + regionId +  ") "; }
-			if(!wineryId.equals("")) 					{ queryWhere += " AND (`w`.`wineWineryId` = " + wineryId +  ") "; }
-			if(!appellationId.equals("")) 				{ queryWhere += " AND (`w`.`wineAppellationId` = " + appellationId + ") "; }
-			if(!colourId.equals("")) 					{ queryWhere += " AND (`w`.`wineColourId` = " + colourId + ") "; }
-			if(!abvMin.equals("")) 						{ queryWhere += " AND (`w`.`wineAbv` BETWEEN " + abvMin + " AND " + abvMax + ") "; }
-			if(!minPrice.equals("")) 					{ queryWhere += " AND (`w`.`wineMinimumPrice` BETWEEN " + minPrice + " AND " + maxPrice +") ";  }
-			if(!closureId.equals("")) 					{ queryWhere += " AND (`w`.`wineClosureId` = " + closureId + ") "; }
-			if(!vintageMin.equals("")) 					{ queryWhere += " AND (`w`.`wineVintage` BETWEEN " + vintageMin + " AND " + vintageMax + ") "; }
+			if(!name.equals("")) 			{ queryWhere += " AND ((`w`.`wineName` ='" + name + "') OR (`w`.`wineName` LIKE '%" + name + "%') OR (`w`.`wineDefaultDescription` LIKE '%" + name + "%'))"; }  
+			if(!merchantId.equals("")) 		{ queryWhere += " AND (`w`.`merchantId` = " + merchantId + ")"; }
+			if(!countryId.equals("")) 		{ queryWhere += " AND (`w`.`wineCountryId` = " + countryId + ") "; }
+			if(!regionId.equals("")) 		{ queryWhere += " AND (`w`.`wineRegionId` = " + regionId +  ") "; }
+			if(!wineryId.equals("")) 		{ queryWhere += " AND (`w`.`wineWineryId` = " + wineryId +  ") "; }
+			if(!appellationId.equals("")) 	{ queryWhere += " AND (`w`.`wineAppellationId` = " + appellationId + ") "; }
+			if(!colourId.equals("")) 		{ queryWhere += " AND (`w`.`wineColourId` = " + colourId + ") "; }
+			if(!abvMin.equals("")) 			{ queryWhere += " AND (`w`.`wineAbv` BETWEEN " + abvMin + " AND " + abvMax + ") "; }
+			if(!minPrice.equals("")) 		{ queryWhere += " AND (`w`.`wineMinimumPrice` BETWEEN " + minPrice + " AND " + maxPrice +") ";  }
+			if(!closureId.equals("")) 		{ queryWhere += " AND (`w`.`wineClosureId` = " + closureId + ") "; }
+			if(!vintageMin.equals("")) 		{ queryWhere += " AND (`w`.`wineVintage` BETWEEN " + vintageMin + " AND " + vintageMax + ") "; }
+			if(!rating.equals("")) 			{ queryWhere += " AND (`w`.`avgRating` = " + rating + ") "; }
 
 			/* ---- MODIFICADO ---- */
 			
@@ -255,6 +259,7 @@ public class PersistWineSearch {
 		this.minPrice = "";
 		this.maxPrice = "";
 		this.typeId = "";
+		this.rating = "";
 		this.grapeVarietyId = "";
 		this.errorMessage = "";
 		this.fullQuery = "";
