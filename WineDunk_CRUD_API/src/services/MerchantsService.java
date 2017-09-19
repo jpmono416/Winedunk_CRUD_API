@@ -44,7 +44,7 @@ public class MerchantsService {
 	{
 		try {
 			return em.createNamedQuery("tblShops.findByName", tblShops.class)
-					 .setParameter(0, name)
+					 .setParameter("name", name)
 					 .getSingleResult();
 		} catch (NoResultException noResExc) {
 			

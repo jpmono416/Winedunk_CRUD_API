@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "tblShops")
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 	@NamedQuery(name="tblShops.findAll", query="SELECT t FROM tblShops t"),
 	@NamedQuery(name="tblShops.findByName", query="SELECT t FROM tblShops t WHERE t.name = :name")
 })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class tblShops {
 	
 	@Transient
