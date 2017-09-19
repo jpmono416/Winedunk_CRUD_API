@@ -124,7 +124,8 @@ public class viewUsers {
     public String getRecoveringPassEmail() { return recoveringPassEmail; }
     public void setRecoveringPassEmail(String recoveringPassEmail) { this.recoveringPassEmail = recoveringPassEmail; }
 
-    @Column(name = "recoveringPassToken")
+    //@Column(name = "recoveringPassToken")
+    @Transient
     private String recoveringPassToken;
     public String getRecoveringPassToken() { return recoveringPassToken; }
 	public void setRecoveringPassToken(String recoveringPassToken) { this.recoveringPassToken = recoveringPassToken; }

@@ -135,7 +135,8 @@ public class viewWinesMinimumPrice extends Object {
 	public Boolean getDeleted() { return deleted; }
 	public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 	
-	@Column(name = "avgRating")
+	@Transient
+	//@Column(name = "avgRating")
 	private Float avgRating;
 	public Float getAvgRating() { return avgRating; }
 	public void setAvgRating(Float avgRating) { this.avgRating = avgRating; }
