@@ -34,6 +34,7 @@ public class Merchants extends HttpServlet {
     {
     	if(!request.getParameterMap().containsKey("action"))
     	{
+    		System.out.println("Missing action");
     		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action");
     		return;
     	}
