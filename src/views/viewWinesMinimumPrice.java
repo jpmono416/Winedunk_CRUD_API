@@ -135,6 +135,10 @@ public class viewWinesMinimumPrice extends Object {
 	public Boolean getDeleted() { return deleted; }
 	public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 
+	@Column(name = "avgRating")
+	private Float avgRating;
+	public Float getAvgRating() { return avgRating; }
+	public void setAvgRating(Float avgRating) { this.avgRating = avgRating; }
 	
 	public viewWinesMinimumPrice(Integer wineId) { this.wineId = wineId; } 
 	public viewWinesMinimumPrice()
@@ -163,23 +167,25 @@ public class viewWinesMinimumPrice extends Object {
 		this.minimumPriceShopImgURL = null;
 		this.minimumPriceDestinationURL = null;
 		this.deleted = null;
+		this.avgRating = null;
 		
 	}
 	
 	@Override
-	public String toString() 
-	{
-		return "{ \"wineId\" : \"" + wineId + "\", countryName\" : \"" + countryName + "\", regionName\" : \""
-				+ regionName + "\", wineryName\" : \"" + wineryName + "\", appellationName\" : \"" + appellationName
-				+ "\", colourName\" : \"" + colourName + "\", vintage\" : \"" + vintage + "\", name\" : \"" + name
-				+ "\", defaultDescription\" : \"" + defaultDescription + "\", bottleSize\" : \"" + bottleSize
-				+ "\", abv\" : \"" + abv + "\", imageURL\" : \"" + imageURL + "\", closureName\" : \"" + closureName
-				+ "\", gtin\" : \"" + gtin + "\", wineTypeName\" : \"" + wineTypeName + "\", grapeVarietyName\" : \""
-				+ grapeVarietyName + "\", partnerProductId\" : \"" + partnerProductId + "\", partnerMerchantId\" : \""
-				+ partnerMerchantId + "\", partnerMerchantProductId\" : \"" + partnerMerchantProductId
-				+ "\", minimumPrice\" : \"" + minimumPrice + "\", minimumPriceShopName\" : \"" + minimumPriceShopName
-				+ "\", minimumPriceShopImgURL\" : \"" + minimumPriceShopImgURL + "\", minimumPriceDestinationURL\" : \""
-				+ minimumPriceDestinationURL + "\", deleted\" : \"" + deleted + " }";
+	public String toString() {
+		return "{ \"wineId\" : \"" + wineId + "\" , \"countryName\" : \"" + countryName + "\" , \"regionName\" : \""
+				+ regionName + "\" , \"wineryName\" : \"" + wineryName + "\" , \"appellationName\" : \""
+				+ appellationName + "\" , \"colourName\" : \"" + colourName + "\" , \"vintage\" : \"" + vintage
+				+ "\" , \"name\" : \"" + name + "\" , \"defaultDescription\" : \"" + defaultDescription
+				+ "\" , \"bottleSize\" : \"" + bottleSize + "\" , \"abv\" : \"" + abv + "\" , \"imageURL\" : \""
+				+ imageURL + "\" , \"closureName\" : \"" + closureName + "\" , \"gtin\" : \"" + gtin
+				+ "\" , \"wineTypeName\" : \"" + wineTypeName + "\" , \"grapeVarietyName\" : \"" + grapeVarietyName
+				+ "\" , \"partnerProductId\" : \"" + partnerProductId + "\" , \"partnerMerchantId\" : \""
+				+ partnerMerchantId + "\" , \"partnerMerchantProductId\" : \"" + partnerMerchantProductId
+				+ "\" , \"minimumPrice\" : \"" + minimumPrice + "\" , \"minimumPriceShopName\" : \""
+				+ minimumPriceShopName + "\" , \"minimumPriceShopImgURL\" : \"" + minimumPriceShopImgURL
+				+ "\" , \"minimumPriceDestinationURL\" : \"" + minimumPriceDestinationURL + "\" , \"deleted\" : \""
+				+ deleted + "\" , \"avgRating\" : \"" + avgRating + "\" }";
 	}
 
 }

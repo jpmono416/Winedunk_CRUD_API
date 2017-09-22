@@ -29,11 +29,11 @@
            				  res-type="javax.sql.DataSource"  
            				  wrap-jdbc-objects="false">
         <property name="portNumber" value="3306"/>
-        <!--  <property name="databaseName" value="winedunk_main"/> -->
+        <!-- <property name="databaseName" value="winedunk_main"/> -->
         <property name="databaseName" value="winedunk_UAT"/>
         <!-- <property name="User" value="winedunk_admin"/> -->
         <property name="User" value="winedunk_uat"/>
-        <!--  <property name="Password" value="mySQLAdminP4$$"/> --> 
+        <!-- <property name="Password" value="mySQLAdminP4$$"/> --> 
         <property name="Password" value="mySQLUatP4$$"/>
         <property name="serverName" value="127.0.0.1"/>
     </jdbc-connection-pool>

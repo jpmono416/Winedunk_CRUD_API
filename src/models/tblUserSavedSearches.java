@@ -39,8 +39,6 @@ public class tblUserSavedSearches {
     public tblUsers getUser() { return user; }
     public void setUser(tblUsers user) { this.user = user; }
 
-    //@Formats.DateTime(pattern="yyyy-MM-dd")
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Column(name = "created")
     private Date created;
@@ -52,7 +50,12 @@ public class tblUserSavedSearches {
     public String getSqlString() { return sqlString; }
     public void setSqlString(String SQL) { this.sqlString = SQL; }
 
-    public tblUserSavedSearches(Integer id) {this.id = id;}
+    @Transient
+    private Integer numericUserId;
+    public Integer getNumericUserId() { return numericUserId; }
+    
+    
+	public tblUserSavedSearches(Integer id) {this.id = id;}
     public tblUserSavedSearches()
     {
         this.id = null;

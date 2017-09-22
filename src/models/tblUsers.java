@@ -35,7 +35,6 @@ public class tblUsers {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
-
 	@ManyToOne
     @JoinColumn(name = "countryId")
     private tblCountries countryId;
@@ -91,13 +90,11 @@ public class tblUsers {
 	public void setLoginEmail(String loginEmail) { this.loginEmail = loginEmail; }
 	
 	@Column(name = "loginPassword")
-	@NotNull
 	private String loginPassword;
 	public String getLoginPassword() { return loginPassword; }
 	public void setLoginPassword(String loginPassword) { this.loginPassword = loginPassword; }
 	
 	@Column(name = "loginToken")
-	@NotNull
 	private String loginToken;
 	public String getLoginToken() { return loginToken; }
 	public void setLoginToken(String loginToken) { this.loginToken = loginToken; }

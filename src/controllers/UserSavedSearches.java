@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblUserSavedSearches;
+import models.tblUsers;
 import services.UserSavedSearchesService;
 
 /**
@@ -100,7 +101,14 @@ public class UserSavedSearches extends HttpServlet {
 					tblUserSavedSearches userSavedSearch = new tblUserSavedSearches();
 					ObjectMapper mapper = new ObjectMapper();
 					userSavedSearch = mapper.readValue(content, tblUserSavedSearches.class);
-					
+					System.out.println("Coming: " + content);
+					// This is added if the request comes from the CRUD
+					if(userSavedSearch.getUser() == null)
+					{
+						tblUsers user = new tblUsers();
+						user.setId(userSavedSearch.getNumericUserId());
+						userSavedSearch.setUser(user);
+					}
 					if(userSavedSearchService.addUserSavedSearch(userSavedSearch)) { response.getWriter().println("True"); }
 				} catch (Exception e) {e.printStackTrace(); return;}
 				break;

@@ -181,6 +181,11 @@ public class tblWines {
 	public List<tblWinesbyMerchants> getWinesByMerchant() { return winesByMerchant; }
 	public void setWinesByMerchant(List<tblWinesbyMerchants> winesByMerchant) { this.winesByMerchant = winesByMerchant; }
 	
+	@Column(name = "avgRating")
+	private Float avgRating;
+	public Float getAvgRating() { return avgRating; }
+	public void setAvgRating(Float avgRating) { this.avgRating = avgRating; }
+	
     public tblWines(Integer id) { this.id = id; }
     public tblWines()
     {
@@ -202,6 +207,7 @@ public class tblWines {
         this.minimumPriceShopId = null;
         this.userPriceAlerts = null;
         this.winesByMerchant = null;
+        this.avgRating = null;
     }
     public tblWines(String name) { this.name = name; }
 }
