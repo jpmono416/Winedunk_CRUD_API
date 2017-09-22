@@ -35,7 +35,7 @@ public class RegionsService {
     {
     	try {
     		return em.createNamedQuery("tblRegions.findByName", tblRegions.class)
-   		    	 	 .setParameter(0, regionName)
+   		    	 	 .setParameter("name", regionName)
    		    	 	 .getSingleResult();
     	} catch ( Exception e) {
     		return null;

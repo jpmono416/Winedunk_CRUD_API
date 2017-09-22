@@ -66,9 +66,9 @@ public class WinesService {
     {
     	try {
     		return em.createNamedQuery("tblWines.findByNameBottleAndVintage", tblWines.class)
-    			 .setParameter(0, name)
-    			 .setParameter(1, bottleSize)
-    			 .setParameter(2, vintage)
+    			 .setParameter("name", name)
+    			 .setParameter("bottleSize", bottleSize)
+    			 .setParameter("vintage", vintage)
     			 .getSingleResult();
     	} catch(NoResultException noResExc) {
     		return null;
@@ -80,13 +80,14 @@ public class WinesService {
      * @param wine
      * @return
      */
-    public Boolean addWine(tblWines wine) {
+    public Integer addWine(tblWines wine) {
         try
         {
         	if(wine.getId() != null) { wine.setId(null); }
         	em.persist(wine);
-        	return true;
-        } catch (Exception e) { return false; }
+        	em.flush();
+        	return wine.getId();
+        } catch (Exception e) { return null; }
     }
 
     /**

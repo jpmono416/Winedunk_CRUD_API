@@ -33,7 +33,7 @@ public class TblWinesWineType {
 	private tblWines tblWines;
 
 	@ManyToOne
-	@JoinColumn(name="wineTypeId")
+	@JoinColumn(name="typeId")
 	private tblWineTypes tblWineTypes;
 	/**
 	 *

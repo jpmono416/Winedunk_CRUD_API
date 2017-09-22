@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -89,27 +89,19 @@ public class WineTypes extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
-
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
-		String action = request.getParameter("action");
-		switch (action) 
+		switch (request.getParameter("action")) 
 		{
 			case "addWineType" :
 				try
 				{
-					tblWineTypes wineType = new tblWineTypes();
-					wineType = this.mapper.readValue(content, tblWineTypes.class);
-
-					wineType = wineTypeService.addWineType(wineType);
-					if(wineType!=null) { response.getWriter().println(wineType.getId()); }
+					tblWineTypes wineType = this.mapper.readValue(request.getInputStream(), tblWineTypes.class);
+					System.out.println(wineType);
+					Integer id = wineTypeService.addWineType(wineType);
+					System.out.println(id);
+					if(id!=null)
+						response.getWriter().write(id);
+					else
+						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the wine type in the database "+wineType.getName());
 				} catch (Exception e) {return;}
 			break;
 			
@@ -117,7 +109,7 @@ public class WineTypes extends HttpServlet {
 				try
 				{
 					tblWineTypes wineType = new tblWineTypes();
-					wineType = this.mapper.readValue(content, tblWineTypes.class);
+					wineType = this.mapper.readValue(request.getInputStream(), tblWineTypes.class);
 					
 					if(wineTypeService.updateWineType(wineType)) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
@@ -126,8 +118,8 @@ public class WineTypes extends HttpServlet {
 			case "deleteWineType" :
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(wineTypeService.deleteWineType(id)) { response.getWriter().println("True"); }
+					JsonNode json = this.mapper.readTree(request.getInputStream());
+					if(wineTypeService.deleteWineType(json.get("id").asInt())) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 			break;
 		}

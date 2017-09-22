@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -89,27 +89,17 @@ public class Colours extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
-
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
-		String action = request.getParameter("action");
-		switch (action) 
+		JsonNode json = this.mapper.readTree(request.getInputStream());
+		switch (request.getParameter("action")) 
 		{
 			case "addColour" :
 			{
 				try
 				{
-					tblColours colour = new tblColours();
-					colour = this.mapper.readValue(content, tblColours.class);
-					
-					if(colourService.addColour(colour)) { response.getWriter().println("True"); }
+					tblColours colour = this.mapper.treeToValue(json, tblColours.class);
+					Integer id = colourService.addColour(colour);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting the colour "+colour.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -119,7 +109,7 @@ public class Colours extends HttpServlet {
 				try
 				{
 					tblColours colour = new tblColours();
-					colour = this.mapper.readValue(content, tblColours.class);
+					colour = this.mapper.treeToValue(json, tblColours.class);
 					
 					if(colourService.updateColour(colour)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
@@ -130,8 +120,7 @@ public class Colours extends HttpServlet {
 			{
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(colourService.deleteColour(id)) { response.getWriter().println("True"); }
+					if(colourService.deleteColour(json.get("id").asInt())) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

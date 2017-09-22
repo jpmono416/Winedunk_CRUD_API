@@ -59,7 +59,7 @@ public class TblWinesWineTypesService {
     {
     	try {
     		return em.createNamedQuery("TblWinesWineType.findByWine", TblWinesWineType.class)
-    				 .setParameter(0, wine)
+    				 .setParameter("wine", wine)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {	
     	} catch (Exception e) {
@@ -77,7 +77,7 @@ public class TblWinesWineTypesService {
     {
     	try {
     		return em.createNamedQuery("TblWinesWineType.findByWineType", TblWinesWineType.class)
-    				 .setParameter(0, wineType)
+    				 .setParameter("tblWineTypes", wineType)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {	
     	} catch (Exception e) {
@@ -95,8 +95,8 @@ public class TblWinesWineTypesService {
     {
     	try {
     		return em.createNamedQuery("TblWinesWineType.findByWineAndWineType", TblWinesWineType.class)
-    				 .setParameter(0, wine).
-    				 setParameter(1, wineType)
+    				 .setParameter("tblWines", wine).
+    				 setParameter("tblWineTypes", wineType)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {	
     	} catch (Exception e) {
@@ -114,7 +114,7 @@ public class TblWinesWineTypesService {
     {
     	try {
     		return em.createNamedQuery("TblWinesWineType.findByWineId", TblWinesWineType.class)
-    				 .setParameter(0, id)
+    				 .setParameter("id", id)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {	
     	} catch (Exception e) {
@@ -132,7 +132,7 @@ public class TblWinesWineTypesService {
     {
     	try {
     		return em.createNamedQuery("TblWinesWineType.findByWineTypeId", TblWinesWineType.class)
-    				 .setParameter(0, id)
+    				 .setParameter("id", id)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {	
     	} catch (Exception e) {
@@ -151,8 +151,8 @@ public class TblWinesWineTypesService {
     {
     	try {
     		return em.createNamedQuery("TblWinesWineType.findByWineIdAndWineTypeId", TblWinesWineType.class)
-    				 .setParameter(0, wineId)
-    				 .setParameter(1, wineTypeId)
+    				 .setParameter("wineId", wineId)
+    				 .setParameter("wineTypeId", wineTypeId)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {	
     	} catch (Exception e) {
@@ -171,8 +171,9 @@ public class TblWinesWineTypesService {
         {
         	if(apellation.getId() != null) { apellation.setId(null); }
         	em.persist(apellation);
+        	em.flush();
         	return apellation.getId();
-        } catch (Exception e) { return null; }
+        } catch (Exception e) { e.printStackTrace(); return null; }
     }
 
     /**

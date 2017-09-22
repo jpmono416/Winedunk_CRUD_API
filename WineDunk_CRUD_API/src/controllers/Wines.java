@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -97,7 +99,9 @@ public class Wines extends HttpServlet {
 					}
 				}
 
-				tblWines wine = wineService.getWineByNameBottleAndVintage(request.getParameter("name"), Float.valueOf(request.getParameter("bottleSize")), Integer.valueOf(request.getParameter("vintage")));
+				tblWines wine = wineService.getWineByNameBottleAndVintage(request.getParameter("name"), 
+																		  NumberUtils.isCreatable(request.getParameter("bottleSize")) ? Float.parseFloat(request.getParameter("bottleSize")) : null,
+																		  NumberUtils.isCreatable(request.getParameter("vintage")) ? Integer.parseInt(request.getParameter("vintage")) : null);
 				
 				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
 				break;
@@ -128,8 +132,9 @@ public class Wines extends HttpServlet {
 					tblWines wine = new tblWines();
 					ObjectMapper mapper = new ObjectMapper();
 					wine = mapper.readValue(content, tblWines.class);
-					
-					if(wineService.addWine(wine)) { response.getWriter().println("True"); }
+					Integer id = wineService.addWine(wine);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the wine "+wine.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}

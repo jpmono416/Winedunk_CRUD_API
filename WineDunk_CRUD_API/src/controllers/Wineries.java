@@ -109,8 +109,9 @@ public class Wineries extends HttpServlet {
 					System.out.println("Started");
 					tblWineries winery = new tblWineries();
 					winery = this.mapper.readValue(content, tblWineries.class);
-					
-					response.getWriter().println(wineryService.addWinery(winery));
+					Integer id = wineryService.addWinery(winery);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting the winery "+winery.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}

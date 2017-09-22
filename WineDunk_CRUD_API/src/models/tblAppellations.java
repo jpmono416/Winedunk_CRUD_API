@@ -66,4 +66,10 @@ public class tblAppellations {
         this.wines = null;
         this.countryId = null;
     }
+
+    @Override
+	public String toString() {
+		return "tblAppellations [id=" + id + ", name=" + name + ", deleted=" + deleted + ", wines=" + wines
+				+ ", countryId=" + countryId + ", regionId=" + regionId + "]";
+	}
 }

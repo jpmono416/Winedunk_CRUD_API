@@ -23,14 +23,14 @@ public class TblPfMerchantsHTMLParsingService {
 
 	public List<Tblpfmerchanthtmlparsing> getAll()
 	{
-		return em.createNamedQuery("Tblpfmerchantshtmlparsing.findAll", Tblpfmerchanthtmlparsing.class).getResultList();
+		return em.createNamedQuery("Tblpfmerchanthtmlparsing.findAll", Tblpfmerchanthtmlparsing.class).getResultList();
 	}
 	
 	public List<Tblpfmerchanthtmlparsing> getByMerchant(Integer merchantId)
 	{
 		try {
 			tblShops merchant = em.find(tblShops.class, merchantId);
-			return em.createNamedQuery("Tblpfmerchantshtmlparsing.tblShops", Tblpfmerchanthtmlparsing.class).setParameter(0, merchant).getResultList();
+			return em.createNamedQuery("Tblpfmerchanthtmlparsing.findByTblShops", Tblpfmerchanthtmlparsing.class).setParameter("tblShops", merchant).getResultList();
 		} catch (NoResultException noResExc) {
 			return null;
 		}

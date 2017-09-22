@@ -35,19 +35,20 @@ public class CountriesService {
     public tblCountries getCountryByName(String name)
     {
     	try {
-    		return em.createNamedQuery("tblCountries.findByName", tblCountries.class).setParameter(0, name).getSingleResult();
+    		return em.createNamedQuery("tblCountries.findByName", tblCountries.class).setParameter("name", name).getSingleResult();
     	} catch (NoResultException noResExc) {
     		return null;
     	}
     }
 
-    public Boolean addCountry(tblCountries country) {
+    public Integer addCountry(tblCountries country) {
         try
         {
         	if(country.getId() != null) { country.setId(null); }
         	em.persist(country);
-        	return true;
-        } catch (Exception e) { return false; }
+        	em.flush();
+        	return country.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateCountry(tblCountries country)

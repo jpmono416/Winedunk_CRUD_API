@@ -27,11 +27,13 @@ public class TblPfMerchantsHTMLParsing extends HttpServlet {
 
     public TblPfMerchantsHTMLParsing() {
         super();
+        //For testing purposes this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action"))
 		{
+			System.out.println("Missing action on /TblPfMerchantsHTMLParsing#doPost");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action");
 			return;
 		}
@@ -44,7 +46,7 @@ public class TblPfMerchantsHTMLParsing extends HttpServlet {
 				return;
 			case "getByMerchant":
 				String merchantParsingJson = this.mapper.writeValueAsString(this.merchantParsingService.getByMerchant(json.get("id").asInt()));
-				response.sendError(HttpServletResponse.SC_OK, merchantParsingJson);
+				response.getWriter().write(merchantParsingJson);
 				return;
 		}
 	}

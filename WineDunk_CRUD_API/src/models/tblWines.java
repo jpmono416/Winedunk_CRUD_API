@@ -22,8 +22,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "tblWines")
-@NamedQueries({ @NamedQuery(name = "tblWines.FindByGtin", query = "SELECT t FROM tblWines t WHERE t.gtin = :gtin"),
-		@NamedQuery(name = "tblWines.FindByNameBottleAndVintage", query = "SELECT t FROM tblWines t "
+@NamedQueries({ @NamedQuery(name = "tblWines.findByGtin", query = "SELECT t FROM tblWines t WHERE t.gtin = :gtin"),
+		@NamedQuery(name = "tblWines.findByNameBottleAndVintage", query = "SELECT t FROM tblWines t "
 				+ "WHERE t.name = :name " + "AND t.bottleSize = :bottleSize " + "AND t.vintage = :vintage") })
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class tblWines {
@@ -398,4 +398,18 @@ public class tblWines {
         this.avgRating = null;
     }
     public tblWines(String name) { this.name = name; }
+
+	@Override
+	public String toString() {
+		return "tblWines [id=" + id + ", country=" + country + ", region=" + region + ", appellation=" + appellation
+				+ ", colour=" + colour + ", tblWinesWineType=" + tblWinesWineType + ", winery=" + winery + ", closure="
+				+ closure + ", tblWinesGrapeVariety=" + tblWinesGrapeVariety + ", name=" + name
+				+ ", defaultDescription=" + defaultDescription + ", shortDescription=" + shortDescription
+				+ ", bottleSize=" + bottleSize + ", vintage=" + vintage + ", abv=" + abv + ", imageURL=" + imageURL
+				+ ", gtin=" + gtin + ", minimumPrice=" + minimumPrice + ", minimumPriceShopId=" + minimumPriceShopId
+				+ ", deleted=" + deleted + ", favouriteWines=" + favouriteWines + ", wineRatings=" + wineRatings
+				+ ", reviews=" + reviews + ", winesViewed=" + winesViewed + ", clicks=" + clicks + ", userPriceAlerts="
+				+ userPriceAlerts + ", recommendedWines=" + recommendedWines + ", winesByMerchant=" + winesByMerchant
+				+ ", bestOffersByType=" + bestOffersByType + ", avgRating=" + avgRating + "]";
+	}
 }

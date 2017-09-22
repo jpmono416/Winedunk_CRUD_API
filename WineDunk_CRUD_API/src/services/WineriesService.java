@@ -36,7 +36,7 @@ public class WineriesService {
     {
     	try {
     		return em.createNamedQuery("tblWineries.findByName", tblWineries.class)
-    				 .setParameter(0, name)
+    				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
     		return null;
@@ -48,6 +48,7 @@ public class WineriesService {
         {
         	if(winery.getId() != null) { winery.setId(null); }
         	em.persist(winery);
+        	em.flush();
         	return winery.getId();
         } catch (Exception e) { return null; }
     }

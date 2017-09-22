@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -31,13 +32,14 @@ public class WineTypesService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public tblWineTypes addWineType(tblWineTypes wineType) {
+    public Integer addWineType(tblWineTypes wineType) {
         try
         {
         	if(wineType.getId() != null) { wineType.setId(null); }
         	em.persist(wineType);
-        	return wineType;
-        } catch (Exception e) { return null; }
+        	em.flush();
+        	return wineType.getId();
+        } catch (Exception e) { e.printStackTrace(); return null; }
     }
 
     public Boolean updateWineType(tblWineTypes wineType)
@@ -62,10 +64,12 @@ public class WineTypesService {
 	public tblWineTypes getByName(String wineTypeName) {
 		try {
 			return em.createNamedQuery("tblWineTypes.findByName", tblWineTypes.class)
-				     .setParameter(0, wineTypeName)
+				     .setParameter("name", wineTypeName)
 				     .getSingleResult();
 		} catch (Exception e) {
-			return null;
+			if(!e.getClass().equals(NoResultException.class))
+				e.printStackTrace();
+			return new tblWineTypes();
 		}
 	}
 }

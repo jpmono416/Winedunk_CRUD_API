@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -98,9 +99,20 @@ public class Apellations extends HttpServlet {
 			{
 				try
 				{
-					tblAppellations apellation = this.mapper.readValue(request.getInputStream(), tblAppellations.class);
+					StringBuilder sb = new StringBuilder();
+				    BufferedReader reader = request.getReader();
+				    String line;
+			        
+				    while ((line = reader.readLine()) != null) 
+			        { sb.append('\n').append(line); }
+				    reader.close();
 
-					response.getWriter().write(this.apellationService.addApellation(apellation));
+				    String content = sb.toString().replaceFirst("\n", "");
+				    System.out.println("CONTENT: "+content);
+					tblAppellations apellation = this.mapper.readValue(content, tblAppellations.class);
+					Integer id = apellationService.addApellation(apellation);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the appellation "+apellation.getName()); }
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

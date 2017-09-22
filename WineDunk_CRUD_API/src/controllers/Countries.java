@@ -114,8 +114,9 @@ public class Countries extends HttpServlet {
 				{
 					tblCountries country = new tblCountries();
 					country = this.mapper.readValue(content, tblCountries.class);
-					
-					if(countryService.addCountry(country)) { response.getWriter().println("True"); }
+					Integer id = countryService.addCountry(country);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the country "+country.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}

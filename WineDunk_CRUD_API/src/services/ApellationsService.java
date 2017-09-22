@@ -35,7 +35,7 @@ public class ApellationsService {
     {
     	try {
     		return em.createNamedQuery("tblAppellations.findByName", tblAppellations.class)
-    				 .setParameter(0, name)
+    				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (Exception e) {
     		return null;
@@ -48,6 +48,7 @@ public class ApellationsService {
         {
         	if(apellation.getId() != null) { apellation.setId(null); }
         	em.persist(apellation);
+        	em.flush();
         	return apellation.getId();
         } catch (Exception e) { return null; }
     }

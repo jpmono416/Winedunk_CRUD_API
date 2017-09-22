@@ -36,20 +36,21 @@ public class ColoursService {
     {
     	try {
     		return em.createNamedQuery("tblColours.findByName", tblColours.class)
-    				 .setParameter(0, name)
+    				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
     		return null;
     	}
     }
 
-    public Boolean addColour(tblColours colour) {
+    public Integer addColour(tblColours colour) {
         try
         {
         	if(colour.getId() != null) { colour.setId(null); }
         	em.persist(colour);
-        	return true;
-        } catch (Exception e) { return false; }
+        	em.flush();
+        	return colour.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateColour(tblColours colour)

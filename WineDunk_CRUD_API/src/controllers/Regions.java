@@ -105,8 +105,9 @@ public class Regions extends HttpServlet {
 				try
 				{
 					tblRegions region = this.mapper.readValue(content, tblRegions.class);
-					
-					response.getWriter().write(regionService.addRegion(region));
+					Integer id = regionService.addRegion(region);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the region "+region.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}

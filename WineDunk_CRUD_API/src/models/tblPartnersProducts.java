@@ -199,4 +199,15 @@ public class tblPartnersProducts {
 		this.deleted = null;
 		this.deletedDate = null;
 	}
+
+	@Override
+	public String toString() {
+		return "tblPartnersProducts [id=" + id + ", partnerId=" + partnerId + ", tblWines=" + tblWines + ", shopId="
+				+ shopId + ", partnerProductId=" + partnerProductId + ", partnerProductPrice=" + partnerProductPrice
+				+ ", partnerDestinationUrl=" + partnerDestinationUrl + ", partnerMerchantId=" + partnerMerchantId
+				+ ", partnerMerchantProductId=" + partnerMerchantProductId + ", partnerMerchantStock="
+				+ partnerMerchantStock + ", partnerMerchantDeliveringCost=" + partnerMerchantDeliveringCost
+				+ ", lastUpdated=" + lastUpdated + ", lastMD5=" + lastMD5 + ", deleted=" + deleted + ", deletedDate="
+				+ deletedDate + "]";
+	}
 }

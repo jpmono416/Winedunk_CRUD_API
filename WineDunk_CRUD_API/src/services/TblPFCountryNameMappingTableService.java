@@ -74,7 +74,7 @@ public class TblPFCountryNameMappingTableService {
     {
     	try {
     		return em.createNamedQuery("TblPFCountryNameMappingTable.findByMerchantNameInsensitive", TblPFCountryNameMappingTable.class)
-    				 .setParameter(0, merchantCountryName)
+    				 .setParameter("name", merchantCountryName)
     				 .getSingleResult();
     	} catch(NoResultException noResExc) {
     	} catch(Exception e) {

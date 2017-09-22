@@ -37,20 +37,21 @@ public class ClosuresService extends DefaultServiceClass {
     {
     	try {
     		return em.createNamedQuery("tblClosures.findByName", tblClosures.class)
-    				 .setParameter(0, name)
+    				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
     		return null;
     	}
     }
 
-    public Boolean addClosure(tblClosures closure) {
+    public Integer addClosure(tblClosures closure) {
         try
         {
         	if(closure.getId() != null) { closure.setId(null); }
         	em.persist(closure);
-        	return true;
-        } catch (Exception e) { return false; }
+        	em.flush();
+        	return closure.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateClosure(tblClosures closure)
