@@ -130,7 +130,8 @@ public class viewWines extends Object {
 	public Boolean getWineDeleted() { return wineDeleted; }
 	public void setWineDeleted(Boolean wineDeleted) { this.wineDeleted = wineDeleted; }
 	
-	@Column(name = "avgRating")
+	//@Column(name = "avgRating")
+	@Transient
 	private Float avgRating;
 	public Float getAvgRating() { return avgRating; }
 	public void setAvgRating(Float avgRating) { this.avgRating = avgRating; }
