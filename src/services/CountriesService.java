@@ -14,7 +14,7 @@ import models.tblCountries;
 @LocalBean
 public class CountriesService {
 	@PersistenceContext(unitName = "Winedunk")
-	EntityManager em;
+	private EntityManager em;
 
     @SuppressWarnings("unchecked")
 	public List<tblCountries> getCountries() 

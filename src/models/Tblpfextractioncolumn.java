@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="tblpfextractioncolumns")
+@Table(name="tblPFExtractionColumns")
 @NamedQuery(name="Tblpfextractioncolumn.findAll", query="SELECT t FROM Tblpfextractioncolumn t")
 public class Tblpfextractioncolumn implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="tblpfparsingextractionmethods")
+@Table(name="tblPFParsingExtractionMethods")
 @NamedQuery(name="Tblpfparsingextractionmethod.findAll", query="SELECT t FROM Tblpfparsingextractionmethod t")
 public class Tblpfparsingextractionmethod implements Serializable {
 	private static final long serialVersionUID = 1L;
