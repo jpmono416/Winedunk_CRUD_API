@@ -4,11 +4,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -18,13 +17,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblRegions")
+@NamedQuery(name="tblRegions.findByName", query="SELECT t FROM tblRegions t WHERE t.name = :name")
 public class tblRegions {
 
     @Transient
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     public Integer getId() { return id; }
@@ -45,6 +44,12 @@ public class tblRegions {
     private List<tblWines> wines;
     public List<tblWines> getWines() { return wines; }
     public void setWines(List<tblWines> wines) { this.wines = wines; }
+
+    @OneToMany(mappedBy = "regionId")
+    @JsonBackReference("appellation_region")
+    private List<tblAppellations> appellations;
+    public List<tblAppellations> getAppellations() { return appellations; }
+    public void setAppellations(List<tblAppellations> appellations) { this.appellations = appellations; }
 
     @ManyToOne
     @JoinColumn(name = "countryId")

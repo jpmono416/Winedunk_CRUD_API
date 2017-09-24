@@ -96,12 +96,10 @@ public class PartnersProducts extends HttpServlet {
 			case "addPartnersProducts" :
 				try
 				{
-					System.out.println("ADD PRODUCT");
 					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
 
-					System.out.println("PRODUCT "+partnersProducts);
 					Integer id = partnersProductsService.addPartnersProduct(partnersProducts);
-					if(id != null) { response.getWriter().write(id); }
+					if(id != null) { response.getWriter().print(id); }
 				} catch (Exception e) {e.printStackTrace(); return;}
 				break;
 

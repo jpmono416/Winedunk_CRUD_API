@@ -111,7 +111,7 @@ public class Closures extends HttpServlet {
 				tblClosures closure = this.mapper.treeToValue(json, tblClosures.class);
 				Integer id = this.closureService.addClosure(closure);
 				if(id!=null)
-					response.getWriter().write(id);
+					response.getWriter().print(id);
 				else
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting a closure "+closure.getName());
 				
