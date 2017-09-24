@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -30,14 +31,26 @@ public class ColoursService {
     	try { return em.find(tblColours.class, id); }
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
+    
+    public tblColours getByName(String name)
+    {
+    	try {
+    		return em.createNamedQuery("tblColours.findByName", tblColours.class)
+    				 .setParameter("name", name)
+    				 .getSingleResult();
+    	} catch (NoResultException noResExc) {
+    		return null;
+    	}
+    }
 
-    public Boolean addColour(tblColours colour) {
+    public Integer addColour(tblColours colour) {
         try
         {
         	if(colour.getId() != null) { colour.setId(null); }
         	em.persist(colour);
-        	return true;
-        } catch (Exception e) { return false; }
+        	em.flush();
+        	return colour.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateColour(tblColours colour)

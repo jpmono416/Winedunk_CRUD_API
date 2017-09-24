@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -74,6 +76,36 @@ public class Wines extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			case "getByGtin":
+			{
+				if(!request.getParameterMap().containsKey("gtin")) 
+				{
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing Gtin");
+					return;
+				}
+
+				tblWines wine = wineService.getWineByGtin(request.getParameter("gtin"));
+
+				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
+				break;
+			}
+			case "getByNameBottleAndVintage":
+			{
+				for(String parameter : new String[] {"name", "bottleSize", "vintage"})
+				{
+					if(!request.getParameterMap().containsKey(parameter))
+					{
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing "+parameter);
+					}
+				}
+
+				tblWines wine = wineService.getWineByNameBottleAndVintage(request.getParameter("name"), 
+																		  NumberUtils.isCreatable(request.getParameter("bottleSize")) ? Float.parseFloat(request.getParameter("bottleSize")) : null,
+																		  NumberUtils.isCreatable(request.getParameter("vintage")) ? Integer.parseInt(request.getParameter("vintage")) : null);
+				
+				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
+				break;
+			}
 		}
 	}
 
@@ -100,8 +132,9 @@ public class Wines extends HttpServlet {
 					tblWines wine = new tblWines();
 					ObjectMapper mapper = new ObjectMapper();
 					wine = mapper.readValue(content, tblWines.class);
-					
-					if(wineService.addWine(wine)) { response.getWriter().println("True"); }
+					Integer id = wineService.addWine(wine);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the wine "+wine.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}

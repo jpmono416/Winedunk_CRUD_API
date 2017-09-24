@@ -8,6 +8,8 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import models.tblCountries;
+
 /**
  * Entity implementation class for Entity: TblPFCountryNameMappingTable
  *
@@ -34,7 +36,7 @@ public class TblPFCountryNameMappingTable implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="countryId")
 	private tblCountries tblCountries;
-	@Column(name="merchantName")
+	@Column(name="mechantName")
 	private String merchantCountryName;
 
 	public TblPFCountryNameMappingTable() {

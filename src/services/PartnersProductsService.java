@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -31,13 +32,14 @@ public class PartnersProductsService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public Boolean addPartnersProduct(tblPartnersProducts device) {
+    public Integer addPartnersProduct(tblPartnersProducts product) {
         try
         {
-        	if(device.getId() != null) { device.setId(null); }
-        	em.persist(device);
-        	return true;
-        } catch (Exception e) { return false; }
+        	if(product.getId() != null) { product.setId(null); }
+        	em.persist(product);
+        	em.flush();
+        	return product.getId();
+        } catch (Exception e) { e.printStackTrace(); return null; }
     }
 
     public Boolean updatePartnersProduct(tblPartnersProducts device)
@@ -57,5 +59,17 @@ public class PartnersProductsService {
             return true;
         }
         return false;
+    }
+    
+    public tblPartnersProducts getByPartnerProductIdAndMerchantProductId(Integer partnerProductId, Integer merchantProductId)
+    {
+    	try {
+    		return em.createNamedQuery("tblPartnersProducts.findByPartProdIdAndMercProdId", tblPartnersProducts.class)
+    				 .setParameter(0, partnerProductId)
+    				 .setParameter(1, merchantProductId)
+    				 .getSingleResult();
+    	} catch (NoResultException noResExc) {
+    		return null;
+    	}
     }
 }

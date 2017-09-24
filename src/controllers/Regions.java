@@ -23,7 +23,8 @@ import services.RegionsService;
 @WebServlet("/regions")
 public class Regions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	ObjectMapper mapper = new ObjectMapper();
+
 	@EJB
 	RegionsService regionService = new RegionsService();
     public Regions() { super(); }
@@ -40,18 +41,17 @@ public class Regions extends HttpServlet {
 			{
 				try 
 				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblRegions> regions = regionService.getRegions();
-					String arrayToJson = objectMapper.writeValueAsString(regions);
+					String arrayToJson = this.mapper.writeValueAsString(regions);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				} 
 				catch (Exception e) { e.printStackTrace(); }
-				break;
+				return;
 			}
 			
 			case "getRegion" :
@@ -61,18 +61,25 @@ public class Regions extends HttpServlet {
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
 					
-					ObjectMapper objectMapper = new ObjectMapper();
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblRegions region = regionService.getRegionById(id);
-					String arrayToJson = objectMapper.writeValueAsString(region);
+					String arrayToJson = mapper.writeValueAsString(region);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
-				break;
+				return;
+			}
+			case "getByName":
+			{
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+
+				tblRegions region = this.regionService.getRegionByName(request.getParameter("name"));
+				response.getWriter().write(this.mapper.writeValueAsString(region));
 			}
 		}
 	}
@@ -97,11 +104,10 @@ public class Regions extends HttpServlet {
 			{
 				try
 				{
-					tblRegions region = new tblRegions();
-					ObjectMapper mapper = new ObjectMapper();
-					region = mapper.readValue(content, tblRegions.class);
-					
-					if(regionService.addRegion(region)) { response.getWriter().println("True"); }
+					tblRegions region = this.mapper.readValue(content, tblRegions.class);
+					Integer id = regionService.addRegion(region);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the region "+region.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -111,8 +117,7 @@ public class Regions extends HttpServlet {
 				try
 				{
 					tblRegions region = new tblRegions();
-					ObjectMapper mapper = new ObjectMapper();
-					region = mapper.readValue(content, tblRegions.class);
+					region = this.mapper.readValue(content, tblRegions.class);
 					
 					if(regionService.updateRegion(region)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}

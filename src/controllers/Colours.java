@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -23,7 +23,8 @@ import services.ColoursService;
 @WebServlet("/colours")
 public class Colours extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	ObjectMapper mapper = new ObjectMapper();
+
 	@EJB
 	ColoursService colourService = new ColoursService();
     public Colours() { super(); }
@@ -40,12 +41,11 @@ public class Colours extends HttpServlet {
 			{
 				try 
 				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					//Set pretty printing of json
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblColours> colours = colourService.getColours();
-					String arrayToJson = objectMapper.writeValueAsString(colours);
+					String arrayToJson = this.mapper.writeValueAsString(colours);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -61,12 +61,11 @@ public class Colours extends HttpServlet {
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
 					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					//Set pretty printing of json
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblColours colour = colourService.getColourById(id);
-					String arrayToJson = objectMapper.writeValueAsString(colour);
+					String arrayToJson = this.mapper.writeValueAsString(colour);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -74,34 +73,33 @@ public class Colours extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			case "getByName":
+			{
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+
+				tblColours colour= this.colourService.getByName(request.getParameter("name"));
+				
+				response.getWriter().write(this.mapper.writeValueAsString(colour));
+				return;
+			}
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
-
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
-		String action = request.getParameter("action");
-		switch (action) 
+		JsonNode json = this.mapper.readTree(request.getInputStream());
+		switch (request.getParameter("action")) 
 		{
 			case "addColour" :
 			{
 				try
 				{
-					tblColours colour = new tblColours();
-					ObjectMapper mapper = new ObjectMapper();
-					colour = mapper.readValue(content, tblColours.class);
-					
-					if(colourService.addColour(colour)) { response.getWriter().println("True"); }
+					tblColours colour = this.mapper.treeToValue(json, tblColours.class);
+					Integer id = colourService.addColour(colour);
+					if(id!=null) { response.getWriter().println(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting the colour "+colour.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -111,8 +109,7 @@ public class Colours extends HttpServlet {
 				try
 				{
 					tblColours colour = new tblColours();
-					ObjectMapper mapper = new ObjectMapper();
-					colour = mapper.readValue(content, tblColours.class);
+					colour = this.mapper.treeToValue(json, tblColours.class);
 					
 					if(colourService.updateColour(colour)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
@@ -123,8 +120,7 @@ public class Colours extends HttpServlet {
 			{
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(colourService.deleteColour(id)) { response.getWriter().println("True"); }
+					if(colourService.deleteColour(json.get("id").asInt())) { response.getWriter().println("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

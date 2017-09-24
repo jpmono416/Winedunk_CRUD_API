@@ -48,10 +48,9 @@ public class tblRegions {
 
     @ManyToOne
     @JoinColumn(name = "countryId")
-    private tblCountries countryId;
-    public tblCountries getCountryId() { return countryId; }
-	public void setCountryId(tblCountries countryId) { this.countryId = countryId; }
-	
+    private tblCountries tblCountries;
+    public tblCountries getTblCountries() { return tblCountries; }
+	public void setTblCountries(tblCountries tblCountries) { this.tblCountries = tblCountries; }
 	
 	public tblRegions(Integer id) { this.id = id; }
     public tblRegions()
@@ -60,6 +59,6 @@ public class tblRegions {
         this.name = null;
         this.deleted = null;
         this.wines = null;
-        this.countryId = null;
+        this.tblCountries = null;
     }
 }

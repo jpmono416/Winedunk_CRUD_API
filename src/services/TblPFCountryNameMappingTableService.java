@@ -2,10 +2,10 @@ package services;
 
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import models.TblPFCountryNameMappingTable;
@@ -19,16 +19,22 @@ import models.tblCountries;
 public class TblPFCountryNameMappingTableService {
 
 	@PersistenceContext(unitName="Winedunk")
-	private EntityManager em;
+	EntityManager em;
 
-	@EJB
-	private CountriesService countriesService;
+    /**
+	 * 
+	 * @param id
+	 * @return
+	 */
+    public TblPFCountryNameMappingTable getById(Integer id)
+    {
+    	return em.find(TblPFCountryNameMappingTable.class, id);
+    }
 
-	/**
-     * Default constructor. 
+    /**
+     * 
+     * @return
      */
-    public TblPFCountryNameMappingTableService() {}
-
     public List<TblPFCountryNameMappingTable> getAll()
     {
     	try {
@@ -39,35 +45,57 @@ public class TblPFCountryNameMappingTableService {
     	}
     }
 
-    public TblPFCountryNameMappingTable getById(Integer id)
+    /**
+     * 
+     * @param country
+     * @param name
+     * @return
+     */
+    public TblPFCountryNameMappingTable getByCountryAndName(tblCountries country, String name)
     {
     	try {
-    		return em.find(TblPFCountryNameMappingTable.class, id);
-    	} catch(Exception e) {
-    		e.printStackTrace();
-    		return null;
-    	}
-    }
-
-    public TblPFCountryNameMappingTable getByMerchantName(String name)
-    {
-    	try {
-    		return em.createNamedQuery("TblPFCountryNameMappingTable.findByMerchantName", TblPFCountryNameMappingTable.class)
-    				 .setParameter("name", name)
+    		return em.createNamedQuery("TblPFCountryNameMappingTable.findByCountryAndName", TblPFCountryNameMappingTable.class)
+    				 .setParameter(0, country)
+    				 .setParameter(1, name)
     				 .getSingleResult();
-    	} catch(Exception e) {
+    	} catch(NoResultException noResExc) {
+    	}catch (Exception e) {
     		e.printStackTrace();
-    		return null;
     	}
+
+		return null;
     }
 
-    public Integer addMapping(Integer countryId, String merchantName)
+    /**
+     * 
+     * @param merchantCountryName
+     */
+    public TblPFCountryNameMappingTable getByName(String merchantCountryName)
     {
     	try {
-    		tblCountries country = countriesService.getCountryById(countryId);
-    		TblPFCountryNameMappingTable mapping = new TblPFCountryNameMappingTable(country, merchantName);
+    		return em.createNamedQuery("TblPFCountryNameMappingTable.findByMerchantNameInsensitive", TblPFCountryNameMappingTable.class)
+    				 .setParameter("name", merchantCountryName)
+    				 .getSingleResult();
+    	} catch(NoResultException noResExc) {
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    	}
+
+		return null;
+    }
+
+    /**
+     * 
+     * @param countryId
+     * @param name
+     * @return The ID of the just added mapping
+     */
+    public Integer addMapping(Integer countryId, String name)
+    {
+    	try {
+    		tblCountries country = em.find(tblCountries.class, countryId);
+    		TblPFCountryNameMappingTable mapping = new TblPFCountryNameMappingTable(country, name);
     		em.persist(mapping);
-    		em.flush();
     		return mapping.getId();
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -75,14 +103,31 @@ public class TblPFCountryNameMappingTableService {
     	}
     }
 
-    public Boolean deleteMapping(Integer id)
+    public boolean deleteMapping(Integer id)
     {
-    	try {
+    	try{
     		em.remove(this.getById(id));
-    		return true;
-    	} catch (Exception e) {
+        	return true;
+    	} catch(Exception e) {
     		e.printStackTrace();
     		return false;
     	}
+    }
+
+    public boolean deleteMappingById(Integer id)
+    {
+		TblPFCountryNameMappingTable mapping = this.getById(id);
+
+		try{
+    		if(mapping!=null)
+    		{
+    			em.remove(mapping);
+    			return true;
+    		}
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    	}
+
+    	return false;
     }
 }

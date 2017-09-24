@@ -73,7 +73,7 @@ public class TblPFCountryNameMappingTableController extends HttpServlet {
 					return; 
 				} 
 				try { 
-					TblPFCountryNameMappingTable mapping = this.countryNameMappingService.getByMerchantName(request.getParameter("name")); 
+					TblPFCountryNameMappingTable mapping = this.countryNameMappingService.getByName(request.getParameter("name")); 
 					response.getWriter().write(this.mapper.writeValueAsString(mapping)); 
 				} catch (Exception e) { 
 					e.printStackTrace(); 

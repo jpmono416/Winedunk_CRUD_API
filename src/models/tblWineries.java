@@ -32,6 +32,21 @@ public class tblWineries {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
+    @Column(name="appellationId")
+    private Integer appellation;
+    public Integer getAppellation() { return appellation; }
+	public void setAppellation(Integer appellation) { this.appellation = appellation; }
+
+	@Column(name="regionId")
+    private Integer region;
+    public Integer getRegion() { return region; }
+	public void setRegion(Integer region) { this.region = region; }
+
+	@Column(name="countryId")
+    private tblCountries country;
+    public tblCountries getCountry() { return country; }
+	public void setCountry(tblCountries country) { this.country = country; }
+	
     @Column(name= "deleted")
     private Boolean deleted;
     public Boolean isDeleted() {return deleted;}

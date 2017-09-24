@@ -31,13 +31,26 @@ public class ApellationsService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public Boolean addApellation(tblAppellations apellation) {
+    public tblAppellations getApellationByName(String name)
+    {
+    	try {
+    		return em.createNamedQuery("tblAppellations.findByName", tblAppellations.class)
+    				 .setParameter("name", name)
+    				 .getSingleResult();
+    	} catch (Exception e) {
+    		return null;
+    	}
+    	
+    }
+
+    public Integer addApellation(tblAppellations apellation) {
         try
         {
         	if(apellation.getId() != null) { apellation.setId(null); }
         	em.persist(apellation);
-        	return true;
-        } catch (Exception e) { return false; }
+        	em.flush();
+        	return apellation.getId();
+        } catch (Exception e) { return null; }
     }
 
     public Boolean updateApellation(tblAppellations apellation)
