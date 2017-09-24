@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -18,9 +16,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblCountries")
-@NamedQueries({
-	@NamedQuery(name="tblCountries.findByName", query="SELECT c FROM tblCountries c WHERE c.name = :name"),
-})
 public class tblCountries {
 
 	@Transient
@@ -169,12 +164,14 @@ public class tblCountries {
 		this.countriesWithWines = countriesWithWines;
 	}
 
-	@OneToMany(mappedBy = "country", targetEntity = tblWineries.class)
-	@JsonBackReference("winery_country")
+	@OneToMany(mappedBy = "tblCountry", targetEntity = tblWineries.class)
+	@JsonBackReference("winery_coutry")
 	private List<tblWineries> tblWineries;
+
 	public List<tblWineries> getTblWineries() {
 		return tblWineries;
 	}
+
 	public void setTblWineries(List<tblWineries> tblWineries) {
 		this.tblWineries = tblWineries;
 	}

@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -22,7 +22,6 @@ public class tblWineries {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -32,21 +31,20 @@ public class tblWineries {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    @Column(name="appellationId")
-    private Integer appellation;
-    public Integer getAppellation() { return appellation; }
-	public void setAppellation(Integer appellation) { this.appellation = appellation; }
+    @ManyToOne
+    @JoinColumn(name="countryId")
+    private tblCountries tblCountry;
+    public tblCountries getTblCountries() { return this.tblCountry; }
+    public void setTblCountries(tblCountries tblCountries) { this.tblCountry = tblCountries; }
 
-	@Column(name="regionId")
-    private Integer region;
-    public Integer getRegion() { return region; }
-	public void setRegion(Integer region) { this.region = region; }
+    private Integer regionId;
+    public Integer getRegionId() { return this.regionId; }
+    public void setRegionId(Integer regionId) { this.regionId = regionId; }
 
-	@Column(name="countryId")
-    private tblCountries country;
-    public tblCountries getCountry() { return country; }
-	public void setCountry(tblCountries country) { this.country = country; }
-	
+    private Integer appellationId;
+    public Integer getAppellationId() { return this.appellationId; }
+    public void setAppellationId(Integer appellationId) { this.appellationId = appellationId; }
+
     @Column(name= "deleted")
     private Boolean deleted;
     public Boolean isDeleted() {return deleted;}
