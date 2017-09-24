@@ -79,8 +79,9 @@ public class Colours extends HttpServlet {
 					return;
 
 				tblColours colour= this.colourService.getByName(request.getParameter("name"));
-				
-				response.getWriter().write(this.mapper.writeValueAsString(colour));
+
+				if(colour!=null)
+					response.getWriter().write(this.mapper.writeValueAsString(colour));
 				return;
 			}
 		}
