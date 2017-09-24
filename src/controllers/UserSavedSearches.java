@@ -95,13 +95,11 @@ public class UserSavedSearches extends HttpServlet {
 		switch (action) 
 		{
 			case "addUserSavedSearch" :
-			{
 				try
 				{
 					tblUserSavedSearches userSavedSearch = new tblUserSavedSearches();
 					ObjectMapper mapper = new ObjectMapper();
 					userSavedSearch = mapper.readValue(content, tblUserSavedSearches.class);
-					System.out.println("Coming: " + content);
 					// This is added if the request comes from the CRUD
 					if(userSavedSearch.getUser() == null)
 					{
@@ -112,10 +110,8 @@ public class UserSavedSearches extends HttpServlet {
 					if(userSavedSearchService.addUserSavedSearch(userSavedSearch)) { response.getWriter().println("True"); }
 				} catch (Exception e) {e.printStackTrace(); return;}
 				break;
-			}
 			
 			case "updateUserSavedSearch" :
-			{
 				try
 				{
 					tblUserSavedSearches userSavedSearch = new tblUserSavedSearches();
@@ -125,17 +121,27 @@ public class UserSavedSearches extends HttpServlet {
 					if(userSavedSearchService.updateUserSavedSearch(userSavedSearch)) { response.getWriter().println("True"); }
 				} catch (Exception e) {return;}
 				break;
-			}
 			
 			case "deleteUserSavedSearch" :
-			{
 				try
 				{
 					Integer id = Integer.parseInt(content);
 					if(userSavedSearchService.deleteUserSavedSearch(id)) { response.getWriter().println("True"); }
 				} catch (Exception e) { e.printStackTrace() ;return; }
 				break;
-			}
+			
+			case "getUserSavedSearchesForUser" :
+				try
+				{
+					Integer id = Integer.parseInt(content);
+					List<tblUserSavedSearches> searches = userSavedSearchService.getSearchesForUser(id);
+					
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonResult = "{ \"SavedSearches\" : " + mapper.writeValueAsString(searches) + " }";
+					
+					response.getWriter().write(jsonResult);
+				} catch(Exception e) { e.printStackTrace(); return; }
+			break;
 		}
 	}
 

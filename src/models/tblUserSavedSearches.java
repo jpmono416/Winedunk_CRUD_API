@@ -45,10 +45,11 @@ public class tblUserSavedSearches {
     public Date getCreated() { return created; }
     public void setCreated(Date created) { this.created = created; }
 
-    @Column(name = "sqlString")
-    private String sqlString;
-    public String getSqlString() { return sqlString; }
-    public void setSqlString(String SQL) { this.sqlString = SQL; }
+    @Column(name = "urlString")
+    private String urlString;
+    public String getUrlString() { return urlString; }
+	public void setUrlString(String urlString) { this.urlString = urlString; }
+	
 
     @Transient
     private Integer numericUserId;
@@ -62,7 +63,7 @@ public class tblUserSavedSearches {
         this.user = null;
         this.name = null;
         this.created = null;
-        this.sqlString = null;
+        this.urlString = null;
     }
     public tblUserSavedSearches(String name) { this.name = name; }
 }

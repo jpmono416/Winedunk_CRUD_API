@@ -31,6 +31,17 @@ public class UserSavedSearchesService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
 
+    public List<tblUserSavedSearches> getSearchesForUser(Integer userId)
+    {
+    	Query query = em.createNativeQuery("SELECT * FROM tblUserSavedSearches WHERE `userId` = ?1 ", tblUserSavedSearches.class);
+    	query.setParameter(1, userId);
+    	
+    	@SuppressWarnings("unchecked")
+		List<tblUserSavedSearches> results = query.getResultList();
+		
+		return results;
+    }
+    
     public Boolean addUserSavedSearch(tblUserSavedSearches userSavedSearch) {
         try
         {
