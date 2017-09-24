@@ -101,7 +101,7 @@ public class TimeZones extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					timeZone = mapper.readValue(content, tblTimeZones.class);
 					
-					if(timeZoneService.addTimeZone(timeZone)) { response.getWriter().println("True"); }
+					if(timeZoneService.addTimeZone(timeZone)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class TimeZones extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					timeZone = mapper.readValue(content, tblTimeZones.class);
 					
-					if(timeZoneService.updateTimeZone(timeZone)) { response.getWriter().println("True"); }
+					if(timeZoneService.updateTimeZone(timeZone)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +124,7 @@ public class TimeZones extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(timeZoneService.deleteTimeZone(id)) { response.getWriter().println("True"); }
+					if(timeZoneService.deleteTimeZone(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

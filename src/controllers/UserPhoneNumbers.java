@@ -107,7 +107,7 @@ public class UserPhoneNumbers extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userPhoneNumber = mapper.readValue(content, tblUserPhoneNumbers.class);
 					
-					if(userPhoneNumberService.addUserPhoneNumber(userPhoneNumber)) { response.getWriter().println("True"); }
+					if(userPhoneNumberService.addUserPhoneNumber(userPhoneNumber)) { response.getWriter().print("True"); }
 				} catch (Exception e) {e.printStackTrace(); return;}
 				break;
 			}
@@ -120,7 +120,7 @@ public class UserPhoneNumbers extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userPhoneNumber = mapper.readValue(content, tblUserPhoneNumbers.class);
 					
-					if(userPhoneNumberService.updateUserPhoneNumber(userPhoneNumber)) { response.getWriter().println("True"); }
+					if(userPhoneNumberService.updateUserPhoneNumber(userPhoneNumber)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -130,7 +130,7 @@ public class UserPhoneNumbers extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(userPhoneNumberService.deleteUserPhoneNumber(id)) { response.getWriter().println("True"); }
+					if(userPhoneNumberService.deleteUserPhoneNumber(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace() ;return; }
 				break;
 			}

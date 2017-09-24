@@ -133,7 +133,7 @@ public class Wines extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					wine = mapper.readValue(content, tblWines.class);
 					Integer id = wineService.addWine(wine);
-					if(id!=null) { response.getWriter().println(id); }
+					if(id!=null) { response.getWriter().print(id); }
 					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the wine "+wine.getName()); }
 				} catch (Exception e) {return;}
 				break;
@@ -147,7 +147,7 @@ public class Wines extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					wine = mapper.readValue(content, tblWines.class);
 					
-					if(wineService.updateWine(wine)) { response.getWriter().println("True"); }
+					if(wineService.updateWine(wine)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -157,7 +157,7 @@ public class Wines extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(wineService.deleteWine(id)) { response.getWriter().println("True"); }
+					if(wineService.deleteWine(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

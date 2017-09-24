@@ -115,7 +115,7 @@ public class Countries extends HttpServlet {
 					tblCountries country = new tblCountries();
 					country = this.mapper.readValue(content, tblCountries.class);
 					Integer id = countryService.addCountry(country);
-					if(id!=null) { response.getWriter().println(id); }
+					if(id!=null) { response.getWriter().print(id); }
 					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the country "+country.getName()); }
 				} catch (Exception e) {return;}
 				break;
@@ -128,7 +128,7 @@ public class Countries extends HttpServlet {
 					tblCountries country = new tblCountries();
 					country = this.mapper.readValue(content, tblCountries.class);
 					
-					if(countryService.updateCountry(country)) { response.getWriter().println("True"); }
+					if(countryService.updateCountry(country)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -138,7 +138,7 @@ public class Countries extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(countryService.deleteCountry(id)) { response.getWriter().println("True"); }
+					if(countryService.deleteCountry(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

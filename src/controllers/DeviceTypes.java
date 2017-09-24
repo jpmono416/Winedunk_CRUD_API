@@ -101,7 +101,7 @@ public class DeviceTypes extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					deviceType = mapper.readValue(content, tblDeviceTypes.class);
 					
-					if(deviceTypeService.addDeviceType(deviceType)) { response.getWriter().println("True"); }
+					if(deviceTypeService.addDeviceType(deviceType)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class DeviceTypes extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					deviceType = mapper.readValue(content, tblDeviceTypes.class);
 					
-					if(deviceTypeService.updateDeviceType(deviceType)) { response.getWriter().println("True"); }
+					if(deviceTypeService.updateDeviceType(deviceType)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +124,7 @@ public class DeviceTypes extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(deviceTypeService.deleteDeviceType(id)) { response.getWriter().println("True"); }
+					if(deviceTypeService.deleteDeviceType(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

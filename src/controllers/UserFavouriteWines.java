@@ -100,7 +100,7 @@ public class UserFavouriteWines extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userFavouriteWine = mapper.readValue(content, tblUserFavouriteWines.class);
 					
-					if(userFavouriteWineService.addUserFavouriteWine(userFavouriteWine)) { response.getWriter().println("True"); }
+					if(userFavouriteWineService.addUserFavouriteWine(userFavouriteWine)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return; }
 				break;
 			
@@ -111,7 +111,7 @@ public class UserFavouriteWines extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userFavouriteWine = mapper.readValue(content, tblUserFavouriteWines.class);
 					
-					if(userFavouriteWineService.updateUserFavouriteWine(userFavouriteWine)) { response.getWriter().println("True"); }
+					if(userFavouriteWineService.updateUserFavouriteWine(userFavouriteWine)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			

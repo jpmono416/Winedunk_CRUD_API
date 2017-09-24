@@ -101,7 +101,7 @@ public class Platforms extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					platform = mapper.readValue(content, tblPlatforms.class);
 					
-					if(platformService.addPlatform(platform)) { response.getWriter().println("True"); }
+					if(platformService.addPlatform(platform)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class Platforms extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					platform = mapper.readValue(content, tblPlatforms.class);
 					
-					if(platformService.updatePlatform(platform)) { response.getWriter().println("True"); }
+					if(platformService.updatePlatform(platform)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +124,7 @@ public class Platforms extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(platformService.deletePlatform(id)) { response.getWriter().println("True"); }
+					if(platformService.deletePlatform(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

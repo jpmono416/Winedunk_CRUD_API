@@ -100,7 +100,7 @@ public class Subscriptions extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					subscription = mapper.readValue(content, tblUserSubscriptions.class);
 					
-					if(subscriptionService.addSubscription(subscription)) { response.getWriter().println("True"); }
+					if(subscriptionService.addSubscription(subscription)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class Subscriptions extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					subscription = mapper.readValue(content, tblUserSubscriptions.class);
 					
-					if(subscriptionService.updateSubscription(subscription)) { response.getWriter().println("True"); }
+					if(subscriptionService.updateSubscription(subscription)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class Subscriptions extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(subscriptionService.deleteSubscription(id)) { response.getWriter().println("True"); }
+					if(subscriptionService.deleteSubscription(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

@@ -101,7 +101,7 @@ public class Languages extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					language = mapper.readValue(content, tblLanguages.class);
 					
-					if(languageService.addLanguage(language)) { response.getWriter().println("True"); }
+					if(languageService.addLanguage(language)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class Languages extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					language = mapper.readValue(content, tblLanguages.class);
 					
-					if(languageService.updateLanguage(language)) { response.getWriter().println("True"); }
+					if(languageService.updateLanguage(language)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +124,7 @@ public class Languages extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(languageService.deleteLanguage(id)) { response.getWriter().println("True"); }
+					if(languageService.deleteLanguage(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

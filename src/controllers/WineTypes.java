@@ -111,7 +111,7 @@ public class WineTypes extends HttpServlet {
 					tblWineTypes wineType = new tblWineTypes();
 					wineType = this.mapper.readValue(request.getInputStream(), tblWineTypes.class);
 					
-					if(wineTypeService.updateWineType(wineType)) { response.getWriter().println("True"); }
+					if(wineTypeService.updateWineType(wineType)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 			break;
 			
@@ -119,7 +119,7 @@ public class WineTypes extends HttpServlet {
 				try
 				{
 					JsonNode json = this.mapper.readTree(request.getInputStream());
-					if(wineTypeService.deleteWineType(json.get("id").asInt())) { response.getWriter().println("True"); }
+					if(wineTypeService.deleteWineType(json.get("id").asInt())) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 			break;
 		}

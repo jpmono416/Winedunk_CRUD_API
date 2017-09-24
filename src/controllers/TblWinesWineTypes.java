@@ -102,7 +102,7 @@ public class TblWinesWineTypes extends HttpServlet {
 				try 
 				{ 
 					TblWinesWineType tblWinesWineType = this.mapper.treeToValue(json, TblWinesWineType.class); 
-					if(tblWinesWineTypesService.updateTblWinesWineType(tblWinesWineType)) { response.getWriter().println("True"); } 
+					if(tblWinesWineTypesService.updateTblWinesWineType(tblWinesWineType)) { response.getWriter().print("True"); } 
 				} catch (Exception e) {return;} 
 				break; 
 			} 
@@ -110,7 +110,7 @@ public class TblWinesWineTypes extends HttpServlet {
 			{ 
 				try 
 				{ 
-					if(tblWinesWineTypesService.deleteTblWinesWineType(json.get("id").asInt())) { response.getWriter().println("True"); } 
+					if(tblWinesWineTypesService.deleteTblWinesWineType(json.get("id").asInt())) { response.getWriter().print("True"); } 
 				} catch (Exception e) { return; } 
 				break; 
 			} 

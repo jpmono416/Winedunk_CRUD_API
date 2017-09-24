@@ -95,7 +95,7 @@ public class Shops extends HttpServlet {
 					tblShops shop = new tblShops();
 					shop = this.mapper.treeToValue(json, tblShops.class);
 					
-					if(shopService.addShop(shop)) { response.getWriter().println("True"); }
+					if(shopService.addShop(shop)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -107,7 +107,7 @@ public class Shops extends HttpServlet {
 					tblShops shop = new tblShops();
 					shop = this.mapper.treeToValue(json, tblShops.class);
 					
-					if(shopService.updateShop(shop)) { response.getWriter().println("True"); }
+					if(shopService.updateShop(shop)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -116,7 +116,7 @@ public class Shops extends HttpServlet {
 			{
 				try
 				{
-					if(shopService.deleteShop(json.get("id").asInt())) { response.getWriter().println("True"); }
+					if(shopService.deleteShop(json.get("id").asInt())) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

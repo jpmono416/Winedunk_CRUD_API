@@ -106,7 +106,7 @@ public class Regions extends HttpServlet {
 				{
 					tblRegions region = this.mapper.readValue(content, tblRegions.class);
 					Integer id = regionService.addRegion(region);
-					if(id!=null) { response.getWriter().println(id); }
+					if(id!=null) { response.getWriter().print(id); }
 					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the region "+region.getName()); }
 				} catch (Exception e) {return;}
 				break;
@@ -119,7 +119,7 @@ public class Regions extends HttpServlet {
 					tblRegions region = new tblRegions();
 					region = this.mapper.readValue(content, tblRegions.class);
 					
-					if(regionService.updateRegion(region)) { response.getWriter().println("True"); }
+					if(regionService.updateRegion(region)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -129,7 +129,7 @@ public class Regions extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(regionService.deleteRegion(id)) { response.getWriter().println("True"); }
+					if(regionService.deleteRegion(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

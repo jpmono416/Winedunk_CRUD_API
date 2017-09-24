@@ -103,7 +103,7 @@ public class TblPFCountryNameMappingTableController extends HttpServlet {
 			{ 
 				try 
 				{ 
-					if(countryNameMappingService.deleteMapping(json.get("id").asInt())) { response.getWriter().println(true); } 
+					if(countryNameMappingService.deleteMapping(json.get("id").asInt())) { response.getWriter().print(true); } 
 				} catch (Exception e) { return; } 
 				break; 
 			} 

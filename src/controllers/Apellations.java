@@ -111,7 +111,7 @@ public class Apellations extends HttpServlet {
 				    System.out.println("CONTENT: "+content);
 					tblAppellations apellation = this.mapper.readValue(content, tblAppellations.class);
 					Integer id = apellationService.addApellation(apellation);
-					if(id!=null) { response.getWriter().println(id); }
+					if(id!=null) { response.getWriter().print(id); }
 					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the appellation "+apellation.getName()); }
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -126,7 +126,7 @@ public class Apellations extends HttpServlet {
 				{
 					tblAppellations apellation = this.mapper.readValue(request.getInputStream(), tblAppellations.class);
 					
-					if(apellationService.updateApellation(apellation)) { response.getWriter().println("True"); }
+					if(apellationService.updateApellation(apellation)) { response.getWriter().print("True"); }
 				} catch (Exception e) {e.printStackTrace();}
 				return;
 			}
@@ -136,7 +136,7 @@ public class Apellations extends HttpServlet {
 				try
 				{
 					JsonNode json = this.mapper.readTree(request.getInputStream());
-					if(apellationService.deleteApellation(json.get("id").asInt())) { response.getWriter().println("True"); }
+					if(apellationService.deleteApellation(json.get("id").asInt())) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); }
 				break;
 			}

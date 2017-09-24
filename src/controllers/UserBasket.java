@@ -100,7 +100,7 @@ public class UserBasket extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userBasket = mapper.readValue(content, tblUserBasket.class);
 					
-					if(userBasketService.addUserBasket(userBasket)) { response.getWriter().println("True"); }
+					if(userBasketService.addUserBasket(userBasket)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class UserBasket extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userBasket = mapper.readValue(content, tblUserBasket.class);
 					
-					if(userBasketService.updateUserBasket(userBasket)) { response.getWriter().println("True"); }
+					if(userBasketService.updateUserBasket(userBasket)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class UserBasket extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(userBasketService.deleteUserBasket(id)) { response.getWriter().println("True"); }
+					if(userBasketService.deleteUserBasket(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

@@ -100,7 +100,7 @@ public class UsersGoogleLogin extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userGoogleLogin = mapper.readValue(content, tblUsersGoogleLogin.class);
 					
-					if(userGoogleLoginService.addUserGoogleLogin(userGoogleLogin)) { response.getWriter().println("True"); }
+					if(userGoogleLoginService.addUserGoogleLogin(userGoogleLogin)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class UsersGoogleLogin extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userGoogleLogin = mapper.readValue(content, tblUsersGoogleLogin.class);
 					
-					if(userGoogleLoginService.updateUserGoogleLogin(userGoogleLogin)) { response.getWriter().println("True"); }
+					if(userGoogleLoginService.updateUserGoogleLogin(userGoogleLogin)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}

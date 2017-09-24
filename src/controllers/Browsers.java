@@ -123,7 +123,7 @@ public class Browsers extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					browser = mapper.readValue(content, tblBrowsers.class);
 					
-					if(browserService.addBrowser(browser)) { response.getWriter().println("True"); }
+					if(browserService.addBrowser(browser)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -136,7 +136,7 @@ public class Browsers extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					browser = mapper.readValue(content, tblBrowsers.class);
 					
-					if(browserService.updateBrowser(browser)) { response.getWriter().println("True"); }
+					if(browserService.updateBrowser(browser)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -146,7 +146,7 @@ public class Browsers extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(browserService.deleteBrowser(id)) { response.getWriter().println("True"); }
+					if(browserService.deleteBrowser(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

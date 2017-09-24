@@ -110,7 +110,7 @@ public class Wineries extends HttpServlet {
 					tblWineries winery = new tblWineries();
 					winery = this.mapper.readValue(content, tblWineries.class);
 					Integer id = wineryService.addWinery(winery);
-					if(id!=null) { response.getWriter().println(id); }
+					if(id!=null) { response.getWriter().print(id); }
 					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting the winery "+winery.getName()); }
 				} catch (Exception e) {return;}
 				break;
@@ -123,7 +123,7 @@ public class Wineries extends HttpServlet {
 					tblWineries winery = new tblWineries();
 					winery = this.mapper.readValue(content, tblWineries.class);
 					
-					if(wineryService.updateWinery(winery)) { response.getWriter().println("True"); }
+					if(wineryService.updateWinery(winery)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -133,7 +133,7 @@ public class Wineries extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(wineryService.deleteWinery(id)) { response.getWriter().println("True"); }
+					if(wineryService.deleteWinery(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

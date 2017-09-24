@@ -98,7 +98,7 @@ public class Colours extends HttpServlet {
 				{
 					tblColours colour = this.mapper.treeToValue(json, tblColours.class);
 					Integer id = colourService.addColour(colour);
-					if(id!=null) { response.getWriter().println(id); }
+					if(id!=null) { response.getWriter().print(id); }
 					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting the colour "+colour.getName()); }
 				} catch (Exception e) {return;}
 				break;
@@ -111,7 +111,7 @@ public class Colours extends HttpServlet {
 					tblColours colour = new tblColours();
 					colour = this.mapper.treeToValue(json, tblColours.class);
 					
-					if(colourService.updateColour(colour)) { response.getWriter().println("True"); }
+					if(colourService.updateColour(colour)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -120,7 +120,7 @@ public class Colours extends HttpServlet {
 			{
 				try
 				{
-					if(colourService.deleteColour(json.get("id").asInt())) { response.getWriter().println("True"); }
+					if(colourService.deleteColour(json.get("id").asInt())) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}
