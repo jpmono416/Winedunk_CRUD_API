@@ -43,11 +43,7 @@ public class Shops extends HttpServlet {
 			case "getShops" :
 			{
 				try 
-				{ 
-					
-			    	//Set pretty printing of json
-			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
+				{
 					List<tblShops> shops = shopService.getShops();
 					String arrayToJson = this.mapper.writeValueAsString(shops);
 

@@ -65,7 +65,7 @@ public class WinesService {
     public tblWines getWineByNameBottleAndVintage(String name, Float bottleSize, Integer vintage)
     {
     	try {
-    		return em.createNamedQuery("tblWines.findByNameBottleAndVintage", tblWines.class)
+    		return em.createNamedQuery("tblWines.FindByNameBottleAndVintage", tblWines.class)
     			 .setParameter("name", name)
     			 .setParameter("bottleSize", bottleSize)
     			 .setParameter("vintage", vintage)

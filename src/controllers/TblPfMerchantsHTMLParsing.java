@@ -50,6 +50,10 @@ public class TblPfMerchantsHTMLParsing extends HttpServlet {
 					System.out.println(merchantParsingJson);
 					response.getWriter().write(merchantParsingJson);
 					return;
+				default:
+					System.out.println("Action "+request.getParameter("action")+" not recognised");
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action "+request.getParameter("action")+" not recognised");
+					return;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
