@@ -1,8 +1,17 @@
 package models;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -10,12 +19,14 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="tblPFStatusChangeLog")
 @NamedQuery(name="Tblpfstatuschangelog.findAll", query="SELECT t FROM Tblpfstatuschangelog t")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Tblpfstatuschangelog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private TblpfstatuschangelogPK id;
+	@Id
+	private Integer id;
 
 	private Timestamp dateTimeEvent;
 
@@ -32,11 +43,11 @@ public class Tblpfstatuschangelog implements Serializable {
 	public Tblpfstatuschangelog() {
 	}
 
-	public TblpfstatuschangelogPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(TblpfstatuschangelogPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

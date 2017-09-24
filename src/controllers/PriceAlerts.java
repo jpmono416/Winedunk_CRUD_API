@@ -100,7 +100,7 @@ public class PriceAlerts extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					priceAlert = mapper.readValue(content, tblUserPriceAlerts.class);
 					
-					if(priceAlertService.addPriceAlert(priceAlert)) { response.getWriter().println("True"); }
+					if(priceAlertService.addPriceAlert(priceAlert)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class PriceAlerts extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					priceAlert = mapper.readValue(content, tblUserPriceAlerts.class);
 					
-					if(priceAlertService.updatePriceAlert(priceAlert)) { response.getWriter().println("True"); }
+					if(priceAlertService.updatePriceAlert(priceAlert)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class PriceAlerts extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(priceAlertService.deletePriceAlert(id)) { response.getWriter().println("True"); }
+					if(priceAlertService.deletePriceAlert(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

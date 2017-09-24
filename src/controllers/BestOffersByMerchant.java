@@ -95,7 +95,7 @@ public class BestOffersByMerchant extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					BestOfferByMerchant = mapper.readValue(content, tblBestOffersbyMerchants.class);
 					
-					if(BestOffersByMerchantervice.addBestOfferByMerchant(BestOfferByMerchant)) { response.getWriter().println("True"); }
+					if(BestOffersByMerchantervice.addBestOfferByMerchant(BestOfferByMerchant)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			
@@ -106,7 +106,7 @@ public class BestOffersByMerchant extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					BestOfferByMerchant = mapper.readValue(content, tblBestOffersbyMerchants.class);
 					
-					if(BestOffersByMerchantervice.updateBestOfferByMerchant(BestOfferByMerchant)) { response.getWriter().println("True"); }
+					if(BestOffersByMerchantervice.updateBestOfferByMerchant(BestOfferByMerchant)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			
@@ -114,7 +114,7 @@ public class BestOffersByMerchant extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(BestOffersByMerchantervice.deleteBestOfferByMerchant(id)) { response.getWriter().println("True"); }
+					if(BestOffersByMerchantervice.deleteBestOfferByMerchant(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 		}

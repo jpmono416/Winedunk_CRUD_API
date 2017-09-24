@@ -100,7 +100,7 @@ public class UsersFacebookLogin extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userFacebookLogin = mapper.readValue(content, tblUsersFacebookLogin.class);
 					
-					if(userFacebookLoginService.addUserFacebookLogin(userFacebookLogin)) { response.getWriter().println("True"); }
+					if(userFacebookLoginService.addUserFacebookLogin(userFacebookLogin)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class UsersFacebookLogin extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userFacebookLogin = mapper.readValue(content, tblUsersFacebookLogin.class);
 					
-					if(userFacebookLoginService.updateUserFacebookLogin(userFacebookLogin)) { response.getWriter().println("True"); }
+					if(userFacebookLoginService.updateUserFacebookLogin(userFacebookLogin)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}

@@ -100,7 +100,7 @@ public class Newsletters extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					newsletter = mapper.readValue(content, tblNewsletters.class);
 					
-					if(newsletterService.addNewsletter(newsletter)) { response.getWriter().println("True"); }
+					if(newsletterService.addNewsletter(newsletter)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class Newsletters extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					newsletter = mapper.readValue(content, tblNewsletters.class);
 					
-					if(newsletterService.updateNewsletter(newsletter)) { response.getWriter().println("True"); }
+					if(newsletterService.updateNewsletter(newsletter)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class Newsletters extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(newsletterService.deleteNewsletter(id)) { response.getWriter().println("True"); }
+					if(newsletterService.deleteNewsletter(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

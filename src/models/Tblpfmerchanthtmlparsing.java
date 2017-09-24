@@ -1,7 +1,19 @@
 package models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -9,7 +21,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Tblpfmerchanthtmlparsing.findAll", query="SELECT t FROM Tblpfmerchanthtmlparsing t")
+@Table(name="tblPFMerchantHTMLParsing")
+@NamedQueries({
+	@NamedQuery(name="Tblpfmerchanthtmlparsing.findAll", query="SELECT t FROM Tblpfmerchanthtmlparsing t"),
+	@NamedQuery(name="Tblpfmerchanthtmlparsing.findByTblShops", query="SELECT t FROM Tblpfmerchanthtmlparsing t WHERE t.tblShops = :tblShops")
+})
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Tblpfmerchanthtmlparsing implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -17,7 +34,9 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	private int merchantId;
+	@ManyToOne
+	@JoinColumn(name="merchantId")
+	private tblShops tblShops;
 
 	private String nameInWeb;
 
@@ -31,8 +50,9 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@JoinColumn(name="extractionColumnsId")
 	private Tblpfextractioncolumn tblpfextractioncolumn;
 
-	public Tblpfmerchanthtmlparsing() {
-	}
+	private String specificTag;
+
+	public Tblpfmerchanthtmlparsing() {}
 
 	public int getId() {
 		return this.id;
@@ -42,12 +62,12 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 		this.id = id;
 	}
 
-	public int getMerchantId() {
-		return this.merchantId;
+	public tblShops getTblShops() {
+		return this.tblShops;
 	}
 
-	public void setMerchantId(int merchantId) {
-		this.merchantId = merchantId;
+	public void setTblShops(tblShops tblShops) {
+		this.tblShops = tblShops;
 	}
 
 	public String getNameInWeb() {
@@ -72,6 +92,14 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 
 	public void setTblpfextractioncolumn(Tblpfextractioncolumn tblpfextractioncolumn) {
 		this.tblpfextractioncolumn = tblpfextractioncolumn;
+	}
+
+	public String getSpecificTag() {
+		return specificTag;
+	}
+
+	public void setSpecificTag(String specificTag) {
+		this.specificTag = specificTag;
 	}
 
 }

@@ -100,7 +100,7 @@ public class UserEmails extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userEmail = mapper.readValue(content, tblUserEmails.class);
 					
-					if(userEmailService.addUserEmail(userEmail)) { response.getWriter().println("True"); }
+					if(userEmailService.addUserEmail(userEmail)) { response.getWriter().print("True"); }
 				} catch (Exception e) {e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class UserEmails extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userEmail = mapper.readValue(content, tblUserEmails.class);
 					
-					if(userEmailService.updateUserEmail(userEmail)) { response.getWriter().println("True"); }
+					if(userEmailService.updateUserEmail(userEmail)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class UserEmails extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(userEmailService.deleteUserEmail(id)) { response.getWriter().println("True"); }
+					if(userEmailService.deleteUserEmail(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace() ;return; }
 				break;
 			}

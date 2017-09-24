@@ -101,7 +101,7 @@ public class OperatingSystems extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					operatingSystem = mapper.readValue(content, tblOperatingSystems.class);
 					
-					if(operatingSystemService.addOperatingSystem(operatingSystem)) { response.getWriter().println("True"); }
+					if(operatingSystemService.addOperatingSystem(operatingSystem)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class OperatingSystems extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					operatingSystem = mapper.readValue(content, tblOperatingSystems.class);
 					
-					if(operatingSystemService.updateOperatingSystem(operatingSystem)) { response.getWriter().println("True"); }
+					if(operatingSystemService.updateOperatingSystem(operatingSystem)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +124,7 @@ public class OperatingSystems extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(operatingSystemService.deleteOperatingSystem(id)) { response.getWriter().println("True"); }
+					if(operatingSystemService.deleteOperatingSystem(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

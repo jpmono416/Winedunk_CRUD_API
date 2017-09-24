@@ -100,7 +100,7 @@ public class Partners extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					partner = mapper.readValue(content, tblPartners.class);
 					
-					if(partnerService.addPartner(partner)) { response.getWriter().println("True"); }
+					if(partnerService.addPartner(partner)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class Partners extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					partner = mapper.readValue(content, tblPartners.class);
 					
-					if(partnerService.updatePartner(partner)) { response.getWriter().println("True"); }
+					if(partnerService.updatePartner(partner)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class Partners extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(partnerService.deletePartner(id)) { response.getWriter().println("True"); }
+					if(partnerService.deletePartner(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

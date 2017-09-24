@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -23,6 +23,7 @@ import services.PartnersProductsService;
 @WebServlet("/partnersProductss")
 public class PartnersProducts extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final ObjectMapper mapper = new ObjectMapper();
 	
 	@EJB
 	PartnersProductsService partnersProductsService = new PartnersProductsService();
@@ -39,14 +40,12 @@ public class PartnersProducts extends HttpServlet {
 			{
 				try 
 				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblPartnersProducts> partnersProductss = partnersProductsService.getPartnersProducts();
-					String arrayToJson = objectMapper.writeValueAsString(partnersProductss);
-					
-					response.setStatus(200);
+					String arrayToJson = this.mapper.writeValueAsString(partnersProductss);
+
 					response.getWriter().write(arrayToJson);
 				} 
 				catch (Exception e) { e.printStackTrace(); }
@@ -59,18 +58,31 @@ public class PartnersProducts extends HttpServlet {
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
-					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+					//Set pretty printing of json
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblPartnersProducts partnersProducts = partnersProductsService.getPartnersProductById(id);
-					String arrayToJson = objectMapper.writeValueAsString(partnersProducts);
-					
-					response.setStatus(200);
+					String arrayToJson = this.mapper.writeValueAsString(partnersProducts);
+
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+			case "getByPartnerProductIdAndMerchantProductId":
+			{
+				for(String parameter : new String[] {"partnerProductId", "merchantProductId"})
+				{
+					if(request.getParameterMap().containsKey(parameter))
+					{
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing "+parameter);
+						return;
+					}
+				}
+
+				tblPartnersProducts result = partnersProductsService.getByPartnerProductIdAndMerchantProductId(Integer.valueOf(request.getParameter("partnerProductId")), Integer.valueOf(request.getParameter("merchanProductId")));
+				response.getWriter().write(this.mapper.writeValueAsString(result));
 				break;
 			}
 		}
@@ -79,54 +91,35 @@ public class PartnersProducts extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
-
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
-		String action = request.getParameter("action");
-		switch (action) 
+		switch (request.getParameter("action")) 
 		{
 			case "addPartnersProducts" :
-			{
 				try
 				{
-					tblPartnersProducts partnersProducts = new tblPartnersProducts();
-					ObjectMapper mapper = new ObjectMapper();
-					partnersProducts = mapper.readValue(content, tblPartnersProducts.class);
-					
-					if(partnersProductsService.addPartnersProduct(partnersProducts)) { response.getWriter().println("True"); }
-				} catch (Exception e) {return;}
+					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
+
+					Integer id = partnersProductsService.addPartnersProduct(partnersProducts);
+					if(id != null) { response.getWriter().print(id); }
+				} catch (Exception e) {e.printStackTrace(); return;}
 				break;
-			}
-			
+
 			case "updatePartnersProducts" :
-			{
 				try
 				{
-					tblPartnersProducts partnersProducts = new tblPartnersProducts();
-					ObjectMapper mapper = new ObjectMapper();
-					partnersProducts = mapper.readValue(content, tblPartnersProducts.class);
+					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
 					
-					if(partnersProductsService.updatePartnersProduct(partnersProducts)) { response.getWriter().println("True"); }
+					if(partnersProductsService.updatePartnersProduct(partnersProducts) != null) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
-			}
-			
+
 			case "deletePartnersProducts" :
-			{
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(partnersProductsService.deletePartnersProduct(id)) { response.getWriter().println("True"); }
+					JsonNode json = this.mapper.readTree(request.getInputStream());
+
+					if(partnersProductsService.deletePartnersProduct(json.get("id").asInt())) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
-			}
 		}
 	}
 

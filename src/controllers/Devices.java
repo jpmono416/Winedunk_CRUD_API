@@ -122,7 +122,7 @@ public class Devices extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					device = mapper.readValue(content, tblDevices.class);
 					
-					if(deviceService.addDevice(device)) { response.getWriter().println("True"); }
+					if(deviceService.addDevice(device)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -135,7 +135,7 @@ public class Devices extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					device = mapper.readValue(content, tblDevices.class);
 					
-					if(deviceService.updateDevice(device)) { response.getWriter().println("True"); }
+					if(deviceService.updateDevice(device)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -145,7 +145,7 @@ public class Devices extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(deviceService.deleteDevice(id)) { response.getWriter().println("True"); }
+					if(deviceService.deleteDevice(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

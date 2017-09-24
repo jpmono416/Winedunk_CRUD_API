@@ -23,10 +23,15 @@ import services.CountriesService;
 @WebServlet("/countries")
 public class Countries extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	ObjectMapper mapper;
+
 	@EJB
 	CountriesService countryService = new CountriesService();
-    public Countries() { super(); }
+
+	public Countries() {
+		super();
+		this.mapper = new ObjectMapper();
+	}
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,12 +45,11 @@ public class Countries extends HttpServlet {
 			{
 				try 
 				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblCountries> countries = countryService.getCountries();
-					String arrayToJson = objectMapper.writeValueAsString(countries);
+					String arrayToJson = this.mapper.writeValueAsString(countries);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -61,12 +65,12 @@ public class Countries extends HttpServlet {
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
 					
-					ObjectMapper objectMapper = new ObjectMapper();
+					
 			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblCountries country = countryService.getCountryById(id);
-					String arrayToJson = objectMapper.writeValueAsString(country);
+					String arrayToJson = mapper.writeValueAsString(country);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -74,6 +78,17 @@ public class Countries extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			case "getByName":
+				if(!request.getParameterMap().containsKey("name"))
+				{
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing name");
+					return;
+				}
+
+				tblCountries country = this.countryService.getCountryByName(request.getParameter("name"));
+				response.getWriter().write(this.mapper.writeValueAsString(country));
+				
+				break;
 		}
 	}
 
@@ -98,10 +113,10 @@ public class Countries extends HttpServlet {
 				try
 				{
 					tblCountries country = new tblCountries();
-					ObjectMapper mapper = new ObjectMapper();
-					country = mapper.readValue(content, tblCountries.class);
-					
-					if(countryService.addCountry(country)) { response.getWriter().println("True"); }
+					country = this.mapper.readValue(content, tblCountries.class);
+					Integer id = countryService.addCountry(country);
+					if(id!=null) { response.getWriter().print(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the country "+country.getName()); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -111,10 +126,9 @@ public class Countries extends HttpServlet {
 				try
 				{
 					tblCountries country = new tblCountries();
-					ObjectMapper mapper = new ObjectMapper();
-					country = mapper.readValue(content, tblCountries.class);
+					country = this.mapper.readValue(content, tblCountries.class);
 					
-					if(countryService.updateCountry(country)) { response.getWriter().println("True"); }
+					if(countryService.updateCountry(country)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +138,7 @@ public class Countries extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(countryService.deleteCountry(id)) { response.getWriter().println("True"); }
+					if(countryService.deleteCountry(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

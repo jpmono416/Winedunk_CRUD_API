@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -23,10 +23,15 @@ import services.ShopsService;
 @WebServlet("/shops")
 public class Shops extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private final ObjectMapper mapper = new ObjectMapper();
 	@EJB
 	ShopsService shopService = new ShopsService();
-    public Shops() { super(); }
+    public Shops() {
+    	super();
+
+    	//Set pretty printing of json
+    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,15 +43,10 @@ public class Shops extends HttpServlet {
 			case "getShops" :
 			{
 				try 
-				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
+				{
 					List<tblShops> shops = shopService.getShops();
-					String arrayToJson = objectMapper.writeValueAsString(shops);
-					
-					response.setStatus(200);
+					String arrayToJson = this.mapper.writeValueAsString(shops);
+
 					response.getWriter().write(arrayToJson);
 				} 
 				catch (Exception e) { e.printStackTrace(); }
@@ -59,19 +59,25 @@ public class Shops extends HttpServlet {
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
-					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblShops shop = shopService.getShopById(id);
-					String arrayToJson = objectMapper.writeValueAsString(shop);
-					
-					response.setStatus(200);
+					String arrayToJson = this.mapper.writeValueAsString(shop);
+
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				break;
+			}
+			case "getByName":
+				if(!request.getParameterMap().containsKey("name")) { return; }
+
+				tblShops shop = shopService.getByName(request.getParameter("name"));
+				response.getWriter().write(this.mapper.writeValueAsString(shop));
+				break;
+			default:
+			{
+				System.out.println("Unrecognized GET request "+action);
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unrecognized action "+request.getParameter("action"));
 			}
 		}
 	}
@@ -79,28 +85,17 @@ public class Shops extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 
-		StringBuilder sb = new StringBuilder();
-	    BufferedReader reader = request.getReader();
-	    String line;
-        
-	    while ((line = reader.readLine()) != null) 
-        { sb.append('\n').append(line); }
-	    reader.close();
-
-	    String content = sb.toString().replaceFirst("\n", "");
-	    
-		String action = request.getParameter("action");
-		switch (action) 
+		JsonNode json = this.mapper.readTree(request.getInputStream());
+		switch (request.getParameter("action")) 
 		{
 			case "addShop" :
 			{
 				try
 				{
 					tblShops shop = new tblShops();
-					ObjectMapper mapper = new ObjectMapper();
-					shop = mapper.readValue(content, tblShops.class);
+					shop = this.mapper.treeToValue(json, tblShops.class);
 					
-					if(shopService.addShop(shop)) { response.getWriter().println("True"); }
+					if(shopService.addShop(shop)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -110,10 +105,9 @@ public class Shops extends HttpServlet {
 				try
 				{
 					tblShops shop = new tblShops();
-					ObjectMapper mapper = new ObjectMapper();
-					shop = mapper.readValue(content, tblShops.class);
+					shop = this.mapper.treeToValue(json, tblShops.class);
 					
-					if(shopService.updateShop(shop)) { response.getWriter().println("True"); }
+					if(shopService.updateShop(shop)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -122,10 +116,14 @@ public class Shops extends HttpServlet {
 			{
 				try
 				{
-					Integer id = Integer.parseInt(content);
-					if(shopService.deleteShop(id)) { response.getWriter().println("True"); }
+					if(shopService.deleteShop(json.get("id").asInt())) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
+			}
+			default:
+			{
+				System.out.println("Unrecognized GET request "+request.getParameter("action"));
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unrecognized action "+request.getParameter("action"));
 			}
 		}
 	}

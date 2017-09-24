@@ -101,7 +101,7 @@ public class Currencies extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					currency = mapper.readValue(content, tblCurrencies.class);
 					
-					if(currencyService.addCurrency(currency)) { response.getWriter().println("True"); }
+					if(currencyService.addCurrency(currency)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class Currencies extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					currency = mapper.readValue(content, tblCurrencies.class);
 					
-					if(currencyService.updateCurrency(currency)) { response.getWriter().println("True"); }
+					if(currencyService.updateCurrency(currency)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +124,7 @@ public class Currencies extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(currencyService.deleteCurrency(id)) { response.getWriter().println("True"); }
+					if(currencyService.deleteCurrency(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

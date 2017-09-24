@@ -100,7 +100,7 @@ public class Visitors extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					visitor = mapper.readValue(content, tblVisitors.class);
 					
-					if(visitorService.addVisitor(visitor)) { response.getWriter().println("True"); }
+					if(visitorService.addVisitor(visitor)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class Visitors extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					visitor = mapper.readValue(content, tblVisitors.class);
 					
-					if(visitorService.updateVisitor(visitor)) { response.getWriter().println("True"); }
+					if(visitorService.updateVisitor(visitor)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class Visitors extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(visitorService.deleteVisitor(id)) { response.getWriter().println("True"); }
+					if(visitorService.deleteVisitor(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

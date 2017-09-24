@@ -103,7 +103,7 @@ public class UserWineRatings extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userWineRating = mapper.readValue(content, tblUserWinesRatings.class);
 					System.out.println("Arriving and mapped : " + userWineRating.toString()); //TODO DELETE
-					if(userWineRatingService.addUserWineRating(userWineRating)) { response.getWriter().println("True"); }
+					if(userWineRatingService.addUserWineRating(userWineRating)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace();return;}
 				break;
 			}
@@ -116,7 +116,7 @@ public class UserWineRatings extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userWineRating = mapper.readValue(content, tblUserWinesRatings.class);
 					
-					if(userWineRatingService.updateUserWineRating(userWineRating)) { response.getWriter().println("True"); }
+					if(userWineRatingService.updateUserWineRating(userWineRating)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return;}
 				break;
 			}
@@ -126,7 +126,7 @@ public class UserWineRatings extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(userWineRatingService.deleteUserWineRating(id)) { response.getWriter().println("True"); }
+					if(userWineRatingService.deleteUserWineRating(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}
@@ -141,7 +141,7 @@ public class UserWineRatings extends HttpServlet {
 					Integer userId = Integer.parseInt(splittedContent.get(0));
 					Integer wineId = Integer.parseInt(splittedContent.get(1));
 					
-					if(userWineRatingService.userHasReviewed(userId, wineId)) { response.getWriter().println("True"); }
+					if(userWineRatingService.userHasReviewed(userId, wineId)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

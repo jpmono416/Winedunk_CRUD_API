@@ -101,7 +101,7 @@ public class UserSearches extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userSearch = mapper.readValue(content, tblUserSearches.class);
 					
-					if(userSearchService.addUserSearch(userSearch)) { response.getWriter().println("True"); }
+					if(userSearchService.addUserSearch(userSearch)) { response.getWriter().print("True"); }
 				} catch (Exception e) {e.printStackTrace(); return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class UserSearches extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userSearch = mapper.readValue(content, tblUserSearches.class);
 					
-					if(userSearchService.updateUserSearch(userSearch)) { response.getWriter().println("True"); }
+					if(userSearchService.updateUserSearch(userSearch)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -124,7 +124,7 @@ public class UserSearches extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(userSearchService.deleteUserSearch(id)) { response.getWriter().println("True"); }
+					if(userSearchService.deleteUserSearch(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace() ;return; }
 				break;
 			}

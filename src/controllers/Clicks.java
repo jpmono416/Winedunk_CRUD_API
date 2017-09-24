@@ -100,7 +100,7 @@ public class Clicks extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					click = mapper.readValue(content, tblClicks.class);
 					
-					if(clickService.addClick(click)) { response.getWriter().println("True"); }
+					if(clickService.addClick(click)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); return;}
 				break;
 			}
@@ -113,7 +113,7 @@ public class Clicks extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					click = mapper.readValue(content, tblClicks.class);
 					
-					if(clickService.updateClick(click)) { response.getWriter().println("True"); }
+					if(clickService.updateClick(click)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -123,7 +123,7 @@ public class Clicks extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(clickService.deleteClick(id)) { response.getWriter().println("True"); }
+					if(clickService.deleteClick(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}

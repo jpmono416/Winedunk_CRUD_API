@@ -117,7 +117,7 @@ public class Users extends HttpServlet {
 					 try 
 					 { 
 						 Integer userId = userService.addUser(user);
-						 response.getWriter().println(userId);
+						 response.getWriter().print(userId);
 					 } catch (Exception e) {e.printStackTrace(); return;} 
 				} catch (Exception e) {e.printStackTrace(); return;}
 			break;
@@ -129,7 +129,7 @@ public class Users extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					user = mapper.readValue(content, tblUsers.class);
 					
-					if(userService.updateUser(user)) { response.getWriter().println("True"); }
+					if(userService.updateUser(user)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 			break;
 			
@@ -137,7 +137,7 @@ public class Users extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(userService.deleteUser(id)) { response.getWriter().println("True"); }
+					if(userService.deleteUser(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 			break;
 			
@@ -187,7 +187,7 @@ public class Users extends HttpServlet {
 					tblUsers user = userService.getUserById(userId);
 					user.setLoginPassword(password);
 					
-					if(userService.updateUser(user)) { response.getWriter().println("True"); }
+					if(userService.updateUser(user)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); }
 			break;
 		}

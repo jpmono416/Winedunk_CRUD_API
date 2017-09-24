@@ -95,7 +95,7 @@ public class WinesByMerchant extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					WineByMerchant = mapper.readValue(content, tblWinesbyMerchants.class);
 					
-					if(WinesByMerchantervice.addWineByMerchant(WineByMerchant)) { response.getWriter().println("True"); }
+					if(WinesByMerchantervice.addWineByMerchant(WineByMerchant)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			
@@ -106,7 +106,7 @@ public class WinesByMerchant extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					WineByMerchant = mapper.readValue(content, tblWinesbyMerchants.class);
 					
-					if(WinesByMerchantervice.updateWineByMerchant(WineByMerchant)) { response.getWriter().println("True"); }
+					if(WinesByMerchantervice.updateWineByMerchant(WineByMerchant)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			
@@ -114,7 +114,7 @@ public class WinesByMerchant extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(WinesByMerchantervice.deleteWineByMerchant(id)) { response.getWriter().println("True"); }
+					if(WinesByMerchantervice.deleteWineByMerchant(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 		}

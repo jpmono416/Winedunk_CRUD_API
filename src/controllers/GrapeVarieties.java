@@ -101,7 +101,7 @@ public class GrapeVarieties extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					grapeVariety = mapper.readValue(content, tblGrapeVarieties.class);
 					
-					if(grapeVarietyService.addGrapeVariety(grapeVariety)) { response.getWriter().println("True"); }
+					if(grapeVarietyService.addGrapeVariety(grapeVariety)) { response.getWriter().print("True"); }
 				} catch (Exception e) {return;}
 				break;
 			}
@@ -114,7 +114,7 @@ public class GrapeVarieties extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					grapeVariety = mapper.readValue(content, tblGrapeVarieties.class);
 					
-					if(grapeVarietyService.updateGrapeVariety(grapeVariety)) { response.getWriter().println("True"); }
+					if(grapeVarietyService.updateGrapeVariety(grapeVariety)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}
@@ -124,7 +124,7 @@ public class GrapeVarieties extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(grapeVarietyService.deleteGrapeVariety(id)) { response.getWriter().println("True"); }
+					if(grapeVarietyService.deleteGrapeVariety(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}
