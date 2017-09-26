@@ -59,4 +59,8 @@ public class tblColours {
     public tblColours(String name) {
         this.name = name;
     }
+	@Override
+	public String toString() {
+		return "tblColours [id=" + id + ", name=" + name + ", deleted=" + deleted + ", wines=" + wines + "]";
+	}
 }

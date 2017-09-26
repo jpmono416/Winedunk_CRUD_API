@@ -59,4 +59,8 @@ public class tblClosures {
     public tblClosures(String name) {
         this.name = name;
     }
+	@Override
+	public String toString() {
+		return "tblClosures [id=" + id + ", name=" + name + ", deleted=" + deleted + ", wines=" + wines + "]";
+	}
 }

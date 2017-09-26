@@ -217,4 +217,13 @@ public class tblCountries {
 	public tblCountries(String name) {
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+		return "tblCountries [id=" + id + ", name=" + name + ", isoAlpha2Code=" + isoAlpha2Code + ", isoAlpha3Code="
+				+ isoAlpha3Code + ", isoNumericCode=" + isoNumericCode + ", deleted=" + deleted + ", currencies="
+				+ currencies + ", languages=" + languages + ", timeZones=" + timeZones + ", users=" + users
+				+ ", regions=" + regions + ", tblPFCountryNameMappingTables=" + tblPFCountryNameMappingTables
+				+ ", countriesWithWines=" + countriesWithWines + ", tblWineries=" + tblWineries + ", appellations="
+				+ appellations + "]";
+	}
 }
