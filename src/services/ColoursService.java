@@ -50,7 +50,7 @@ public class ColoursService {
         	em.persist(colour);
         	em.flush();
         	return colour.getId();
-        } catch (Exception e) { return null; }
+        } catch (Exception e) { e.printStackTrace(); return null; }
     }
 
     public Boolean updateColour(tblColours colour)

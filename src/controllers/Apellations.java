@@ -71,10 +71,12 @@ public class Apellations extends HttpServlet {
 					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblAppellations apellation = apellationService.getApellationById(id);
-					String arrayToJson = this.mapper.writeValueAsString(apellation);
 					
-					response.setStatus(200);
-					response.getWriter().write(arrayToJson);
+					if(apellation!=null)
+					{
+						String arrayToJson = this.mapper.writeValueAsString(apellation);
+						response.getWriter().write(arrayToJson);
+					}
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				return;
@@ -84,7 +86,9 @@ public class Apellations extends HttpServlet {
 					return;
 
 				tblAppellations appellation = this.apellationService.getApellationByName(request.getParameter("name"));
-				response.getWriter().write(this.mapper.writeValueAsString(appellation));
+
+				if(appellation!=null)
+					response.getWriter().write(this.mapper.writeValueAsString(appellation));
 				
 				return;
 		}

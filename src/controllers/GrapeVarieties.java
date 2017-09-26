@@ -23,10 +23,17 @@ import services.GrapeVarietiesService;
 @WebServlet("/grapevarieties")
 public class GrapeVarieties extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	ObjectMapper mapper = new ObjectMapper();
 	
 	@EJB
 	GrapeVarietiesService grapeVarietyService = new GrapeVarietiesService();
-    public GrapeVarieties() { super(); }
+
+	public GrapeVarieties() {
+		super();
+
+		//Set pretty printing of json
+		this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+	}
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,13 +46,9 @@ public class GrapeVarieties extends HttpServlet {
 			case "getGrapeVarieties" :
 			{
 				try 
-				{ 
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
+				{		    	
 					List<tblGrapeVarieties> grapeVarieties = grapeVarietyService.getGrapeVarieties();
-					String arrayToJson = objectMapper.writeValueAsString(grapeVarieties);
+					String arrayToJson = this.mapper.writeValueAsString(grapeVarieties);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -60,13 +63,9 @@ public class GrapeVarieties extends HttpServlet {
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
-					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblGrapeVarieties grapeVariety = grapeVarietyService.getGrapeVarietyById(id);
-					String arrayToJson = objectMapper.writeValueAsString(grapeVariety);
+					String arrayToJson = this.mapper.writeValueAsString(grapeVariety);
 					
 					response.setStatus(200);
 					response.getWriter().write(arrayToJson);
@@ -100,8 +99,10 @@ public class GrapeVarieties extends HttpServlet {
 					tblGrapeVarieties grapeVariety = new tblGrapeVarieties();
 					ObjectMapper mapper = new ObjectMapper();
 					grapeVariety = mapper.readValue(content, tblGrapeVarieties.class);
-					
-					if(grapeVarietyService.addGrapeVariety(grapeVariety)) { response.getWriter().print("True"); }
+
+					Integer id = grapeVarietyService.addGrapeVariety(grapeVariety);
+					if(id!=null) { response.getWriter().print(id); }
+					else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting new grape variety"); }
 				} catch (Exception e) {return;}
 				break;
 			}
