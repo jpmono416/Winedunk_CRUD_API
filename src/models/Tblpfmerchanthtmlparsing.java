@@ -52,6 +52,8 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 
 	private String specificTag;
 
+	private Integer numberOfTags;
+
 	public Tblpfmerchanthtmlparsing() {}
 
 	public int getId() {
@@ -100,6 +102,21 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 
 	public void setSpecificTag(String specificTag) {
 		this.specificTag = specificTag;
+	}
+
+	public Integer getNumberOfTags() {
+		return this.numberOfTags;
+	}
+
+	public void setNumberOfTags(Integer numberOfTags) {
+		this.numberOfTags = numberOfTags;
+	}
+
+	@Override
+	public String toString() {
+		return "Tblpfmerchanthtmlparsing [id=" + id + ", tblShops=" + tblShops + ", nameInWeb=" + nameInWeb
+				+ ", tblpfparsingextractionmethod=" + tblpfparsingextractionmethod + ", tblpfextractioncolumn="
+				+ tblpfextractioncolumn + ", specificTag=" + specificTag + ", numberOfTags=" + numberOfTags + "]";
 	}
 
 }
