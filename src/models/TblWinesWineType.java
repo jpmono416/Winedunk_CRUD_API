@@ -10,6 +10,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name="tblWinesWineTypes")
 @NamedQueries(value = {
@@ -22,6 +25,7 @@ import javax.persistence.Table;
 		@NamedQuery(name="TblWinesWineType.findByWineTypeId", query="SELECT t FROM TblWinesWineType t WHERE t.tblWineTypes.id = :id"),
 		@NamedQuery(name="TblWinesWineType.findByWineIdAndWineTypeId", query="SELECT t FROM TblWinesWineType t WHERE t.tblWines.id = :wineId AND t.tblWineTypes.id = :wineTypeId")
 })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class TblWinesWineType {
 
 	@Id

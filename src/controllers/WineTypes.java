@@ -97,7 +97,7 @@ public class WineTypes extends HttpServlet {
 					tblWineTypes wineType = this.mapper.readValue(request.getInputStream(), tblWineTypes.class);
 					System.out.println(wineType);
 					Integer id = wineTypeService.addWineType(wineType);
-					System.out.println(id);
+
 					if(id!=null)
 						response.getWriter().write(id);
 					else

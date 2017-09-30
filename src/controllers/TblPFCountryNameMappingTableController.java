@@ -58,9 +58,10 @@ public class TblPFCountryNameMappingTableController extends HttpServlet {
 					Integer id = Integer.parseInt(request.getParameter("id")); 
  
 					TblPFCountryNameMappingTable mapping = countryNameMappingService.getById(id); 
-					String arrayToJson = this.mapper.writeValueAsString(mapping); 
-					response.setStatus(200); 
-					response.getWriter().write(arrayToJson); 
+					String arrayToJson = this.mapper.writeValueAsString(mapping);
+
+					if(arrayToJson!=null)
+						response.getWriter().write(arrayToJson); 
 				} 
 				catch (Exception e) { e.printStackTrace(); } 
 				return; 
@@ -73,9 +74,10 @@ public class TblPFCountryNameMappingTableController extends HttpServlet {
 					return; 
 				} 
 				try { 
-					TblPFCountryNameMappingTable mapping = this.countryNameMappingService.getByName(request.getParameter("name")); 
-					response.getWriter().write(this.mapper.writeValueAsString(mapping)); 
-				} catch (Exception e) { 
+					TblPFCountryNameMappingTable mapping = this.countryNameMappingService.getByName(request.getParameter("name"));
+					if(mapping!=null)
+						response.getWriter().write(this.mapper.writeValueAsString(mapping));
+				} catch (Exception e) {
 					e.printStackTrace(); 
 				} 
 				return; 
