@@ -65,8 +65,8 @@ public class PartnersProductsService {
     {
     	try {
     		return em.createNamedQuery("tblPartnersProducts.findByPartProdIdAndMercProdId", tblPartnersProducts.class)
-    				 .setParameter(0, partnerProductId)
-    				 .setParameter(1, merchantProductId)
+    				 .setParameter("ppId", partnerProductId)
+    				 .setParameter("mpId", merchantProductId)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
     		return null;
