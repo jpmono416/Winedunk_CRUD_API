@@ -35,7 +35,7 @@ public class UserSavedSearchesService {
     {
     	Query query = em.createNativeQuery("SELECT * FROM tblUserSavedSearches WHERE `userId` = ?1 ", tblUserSavedSearches.class);
     	query.setParameter(1, userId);
-    	
+
     	@SuppressWarnings("unchecked")
 		List<tblUserSavedSearches> results = query.getResultList();
 		

@@ -135,7 +135,6 @@ public class UserSavedSearches extends HttpServlet {
 				{
 					Integer id = Integer.parseInt(content);
 					List<tblUserSavedSearches> searches = userSavedSearchService.getSearchesForUser(id);
-					
 					ObjectMapper mapper = new ObjectMapper();
 					String jsonResult = "{ \"SavedSearches\" : " + mapper.writeValueAsString(searches) + " }";
 					
