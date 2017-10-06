@@ -402,14 +402,10 @@ public class tblWines {
 	@Override
 	public String toString() {
 		return "tblWines [id=" + id + ", country=" + country + ", region=" + region + ", appellation=" + appellation
-				+ ", colour=" + colour + ", tblWinesWineType=" + tblWinesWineType + ", winery=" + winery + ", closure="
-				+ closure + ", tblWinesGrapeVariety=" + tblWinesGrapeVariety + ", name=" + name
+				+ ", colour=" + colour + ", winery=" + winery + ", closure=" + closure + ", name=" + name
 				+ ", defaultDescription=" + defaultDescription + ", shortDescription=" + shortDescription
 				+ ", bottleSize=" + bottleSize + ", vintage=" + vintage + ", abv=" + abv + ", imageURL=" + imageURL
 				+ ", gtin=" + gtin + ", minimumPrice=" + minimumPrice + ", minimumPriceShopId=" + minimumPriceShopId
-				+ ", deleted=" + deleted + ", favouriteWines=" + favouriteWines + ", wineRatings=" + wineRatings
-				+ ", reviews=" + reviews + ", winesViewed=" + winesViewed + ", clicks=" + clicks + ", userPriceAlerts="
-				+ userPriceAlerts + ", recommendedWines=" + recommendedWines + ", winesByMerchant=" + winesByMerchant
-				+ ", bestOffersByType=" + bestOffersByType + ", avgRating=" + avgRating + "]";
+				+ ", deleted=" + deleted + "]";
 	}
 }

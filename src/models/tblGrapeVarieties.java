@@ -62,4 +62,9 @@ public class tblGrapeVarieties {
     public tblGrapeVarieties(String name) {
         this.name = name;
     }
+
+    @Override
+	public String toString() {
+		return "tblGrapeVarieties [id=" + id + ", name=" + name + ", deleted=" + deleted + "]";
+	}
 }

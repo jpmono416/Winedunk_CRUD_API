@@ -95,11 +95,10 @@ public class WineTypes extends HttpServlet {
 				try
 				{
 					tblWineTypes wineType = this.mapper.readValue(request.getInputStream(), tblWineTypes.class);
-					System.out.println(wineType);
 					Integer id = wineTypeService.addWineType(wineType);
 
 					if(id!=null)
-						response.getWriter().write(id);
+						response.getWriter().print(id);
 					else
 						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong inserting the wine type in the database "+wineType.getName());
 				} catch (Exception e) {return;}

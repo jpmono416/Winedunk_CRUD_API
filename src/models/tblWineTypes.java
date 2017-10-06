@@ -101,7 +101,6 @@ public class tblWineTypes {
 
 	@Override
 	public String toString() {
-		return "tblWineTypes [id=" + id + ", name=" + name + ", deleted=" + deleted + ", bestOffersByType="
-				+ bestOffersByType + "]";
+		return "tblWineTypes [id=" + id + ", name=" + name + ", deleted=" + deleted + "]";
 	}
 }
