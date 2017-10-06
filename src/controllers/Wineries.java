@@ -65,10 +65,12 @@ public class Wineries extends HttpServlet {
 					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblWineries winery = wineryService.getWineryById(id);
-					String arrayToJson = this.mapper.writeValueAsString(winery);
-					
-					response.setStatus(200);
-					response.getWriter().write(arrayToJson);
+
+					if(winery!=null)
+					{
+						String arrayToJson = this.mapper.writeValueAsString(winery);
+						response.getWriter().write(arrayToJson);
+					}
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				break;
@@ -80,7 +82,8 @@ public class Wineries extends HttpServlet {
 
 				tblWineries winery = this.wineryService.getByName(request.getParameter("name"));
 				
-				response.getWriter().write(this.mapper.writeValueAsString(winery));
+				if(winery!=null)
+					response.getWriter().write(this.mapper.writeValueAsString(winery));
 				return;
 			}
 		}
@@ -106,7 +109,6 @@ public class Wineries extends HttpServlet {
 			{
 				try
 				{
-					System.out.println("Started");
 					tblWineries winery = new tblWineries();
 					winery = this.mapper.readValue(content, tblWineries.class);
 					Integer id = wineryService.addWinery(winery);

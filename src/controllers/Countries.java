@@ -70,10 +70,11 @@ public class Countries extends HttpServlet {
 					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblCountries country = countryService.getCountryById(id);
-					String arrayToJson = mapper.writeValueAsString(country);
-					
-					response.setStatus(200);
-					response.getWriter().write(arrayToJson);
+					if(country!=null)
+					{
+						String arrayToJson = mapper.writeValueAsString(country);
+						response.getWriter().write(arrayToJson);
+					}
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				break;
@@ -86,8 +87,9 @@ public class Countries extends HttpServlet {
 				}
 
 				tblCountries country = this.countryService.getCountryByName(request.getParameter("name"));
-				response.getWriter().write(this.mapper.writeValueAsString(country));
-				
+
+				if(country!=null)
+					response.getWriter().write(this.mapper.writeValueAsString(country));
 				break;
 		}
 	}

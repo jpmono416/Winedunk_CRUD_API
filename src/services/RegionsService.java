@@ -47,6 +47,7 @@ public class RegionsService {
         {
         	if(device.getId() != null) { device.setId(null); }
         	em.persist(device);
+        	em.flush();
         	return device.getId();
         } catch (Exception e) { return null; }
     }

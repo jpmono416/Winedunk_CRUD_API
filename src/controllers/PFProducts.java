@@ -61,11 +61,11 @@ public class PFProducts extends HttpServlet {
 				this.productsService.updateProduct(this.mapper.treeToValue(json, Tblpfproduct.class)); 
 				response.getWriter().write("true"); 
 				return; 
-			case "addProduct": 
+			case "addProduct":
 				System.out.println(json.asText()); 
 				Integer id = this.productsService.addProduct(this.mapper.treeToValue(json, Tblpfproduct.class)); 
  
-				response.getWriter().write(id); 
+				response.getWriter().print(id); 
 				return;
     	} 
 	} 

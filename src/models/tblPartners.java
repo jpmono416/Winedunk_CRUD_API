@@ -40,7 +40,7 @@ public class tblPartners {
     public void setName(String name) { this.name = name; }
 
     @Column(name= "deleted")
-    private Boolean deleted;
+    private Boolean deleted = false;
     public Boolean isDeleted() { return deleted; }
     public void setDeleted(Boolean deleted) { this.deleted = deleted; }
     
@@ -61,8 +61,12 @@ public class tblPartners {
 	private List<tblClicks> clicks;
 	public List<tblClicks> getClicks() { return clicks; }
 	public void setClicks(List<tblClicks> clicks) { this.clicks = clicks; }
-	
-	
+
+	@OneToMany(mappedBy = "partnerId", targetEntity = Tblpf.class)
+	private List<Tblpf> tblPfs;
+	public List<Tblpf> getTblpfs() { return tblPfs; }
+	public void setTblpfs(List<Tblpf> tblPfs) { this.tblPfs = tblPfs; }
+
 	public tblPartners(Integer id) { this.id = id;}
     public tblPartners()
     {
@@ -70,14 +74,13 @@ public class tblPartners {
         this.name = null;
         this.deleted = null;
         this.partnerTypeId = null;
-        
     }
     public tblPartners(String name) { this.name = name; }
-    
 	@Override
 	public String toString() {
-		return "tblPartners [id=" + id + ", name=" + name + ", deleted=" + deleted + "]";
+		return "tblPartners [id=" + id + ", name=" + name + ", deleted=" + deleted + ", partnerTypeId=" + partnerTypeId + "]";
 	}
+
     
 }
  

@@ -79,7 +79,9 @@ public class Regions extends HttpServlet {
 					return;
 
 				tblRegions region = this.regionService.getRegionByName(request.getParameter("name"));
-				response.getWriter().write(this.mapper.writeValueAsString(region));
+
+				if(region!=null)
+					response.getWriter().write(this.mapper.writeValueAsString(region));
 			}
 		}
 	}

@@ -3,6 +3,8 @@ package models;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,15 +20,17 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  *
  */
 @Entity
-@Table(name="tblWinesGrapesVarieties")
+@Table(name="tblWinesGrapeVarieties")
 @NamedQueries({
-	@NamedQuery(name="tblWinesGrapesVarieties.finAll", query="SELECT wg FROM TblWinesGrapeVariety wg")
+	@NamedQuery(name="tblWinesGrapeVarieties.findAll", query="SELECT wg FROM TblWinesGrapeVariety wg"),
+	@NamedQuery(name="tblWinesGrapeVarieties.findByWineAndGrape", query="SELECT wg FROM TblWinesGrapeVariety wg WHERE wg.wine = :wine AND wg.grapeVariety = :grape")
 })
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class TblWinesGrapeVariety implements Serializable {	
 	private static final long serialVersionUID = 1L;
 
    @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Integer id;
 
    @ManyToOne

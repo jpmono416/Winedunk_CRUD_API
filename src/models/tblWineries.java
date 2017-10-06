@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,6 +26,7 @@ public class tblWineries {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -69,4 +72,9 @@ public class tblWineries {
     public tblWineries(String name) {
         this.name = name;
     }
+	@Override
+	public String toString() {
+		return "tblWineries [id=" + id + ", name=" + name + ", tblCountry=" + tblCountry + ", regionId=" + regionId
+				+ ", appellationId=" + appellationId + ", deleted=" + deleted + ", wines=" + wines + "]";
+	}
 }

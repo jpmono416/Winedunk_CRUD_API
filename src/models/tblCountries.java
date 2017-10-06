@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,7 +24,6 @@ public class tblCountries {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	public Integer getId() {
@@ -216,5 +213,14 @@ public class tblCountries {
 
 	public tblCountries(String name) {
 		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "tblCountries [id=" + id + ", name=" + name + ", isoAlpha2Code=" + isoAlpha2Code + ", isoAlpha3Code="
+				+ isoAlpha3Code + ", isoNumericCode=" + isoNumericCode + ", deleted=" + deleted + ", currencies="
+				+ currencies + ", languages=" + languages + ", timeZones=" + timeZones + ", users=" + users
+				+ ", regions=" + regions + ", tblPFCountryNameMappingTables=" + tblPFCountryNameMappingTables
+				+ ", countriesWithWines=" + countriesWithWines + ", tblWineries=" + tblWineries + ", appellations="
+				+ appellations + "]";
 	}
 }

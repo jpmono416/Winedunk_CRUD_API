@@ -45,8 +45,10 @@ public class Closures extends HttpServlet {
 					return;
 	
 				tblClosures closure = this.closureService.getByName(request.getParameter("name"));
-				
-				response.getWriter().write(this.mapper.writeValueAsString(closure));
+
+				if(closure!=null)
+					response.getWriter().write(this.mapper.writeValueAsString(closure));
+
 				return;
 			}
 		}

@@ -1,9 +1,10 @@
 package controllers;
 
-import java.util.List;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,8 @@ import services.ProductFeedsService;
 public class ProductFeeds extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@EJB
+	ProductFeedsService pfService;
     public ProductFeeds() {
         super();
     }
@@ -36,8 +39,7 @@ public class ProductFeeds extends HttpServlet {
 
 		switch(request.getParameter("action"))
 		{
-			case "getProductFeeds":				
-				final ProductFeedsService pfService = new ProductFeedsService();
+			case "getAll":				
 				final List<Tblpf> productFeeds = pfService.getAllProductFeeds();
 
 				final StringWriter outputString = new StringWriter();
