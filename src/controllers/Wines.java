@@ -106,6 +106,10 @@ public class Wines extends HttpServlet {
 				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
 				break;
 			}
+			case "setMinimumPrices":
+			{
+				response.getWriter().print(this.wineService.setMinimumPrices());
+			}
 		}
 	}
 

@@ -118,4 +118,14 @@ public class WinesService {
         }
         return false;
     }
+
+	public boolean setMinimumPrices()
+	{
+		try {
+			return this.em.createNamedStoredProcedureQuery("setMinimumPrices").execute();		
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
