@@ -28,7 +28,7 @@ public class BestOffersByWineTypeView extends HttpServlet {
     
     EncodeURL urlEncoder = new EncodeURL();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
