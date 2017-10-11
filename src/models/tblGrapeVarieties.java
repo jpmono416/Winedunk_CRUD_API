@@ -48,7 +48,7 @@ public class tblGrapeVarieties {
     @OneToMany(mappedBy = "grapeVariety", targetEntity = TblWinesGrapeVariety.class)
     @JsonBackReference("variety_winesvarieties")
     private List<TblWinesGrapeVariety> tblWinesGrapeVariety;
-    public List<TblWinesGrapeVariety> getWTblWinesGrapeVariety() { return tblWinesGrapeVariety; }
+    public List<TblWinesGrapeVariety> getTblWinesGrapeVariety() { return tblWinesGrapeVariety; }
 	public void setTblWinesGrapeVariety(List<TblWinesGrapeVariety> TblWinesGrapeVariety) { this.tblWinesGrapeVariety = TblWinesGrapeVariety; }
 
     public tblGrapeVarieties(Integer id) { this.id = id; }
