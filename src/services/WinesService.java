@@ -122,7 +122,8 @@ public class WinesService {
 	public boolean setMinimumPrices()
 	{
 		try {
-			return this.em.createNamedStoredProcedureQuery("setMinimumPrices").execute();		
+			this.em.createNamedStoredProcedureQuery("setMinimumPrices").execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
