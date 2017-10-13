@@ -47,7 +47,6 @@ public class TblPfMerchantsHTMLParsing extends HttpServlet {
 					return;
 				case "getByMerchant":
 					String merchantParsingJson = this.mapper.writeValueAsString(this.merchantParsingService.getByMerchant(json.get("id").asInt()));
-					System.out.println(merchantParsingJson);
 					response.getWriter().write(merchantParsingJson);
 					return;
 				default:

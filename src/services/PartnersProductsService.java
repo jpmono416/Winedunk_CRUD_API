@@ -61,7 +61,7 @@ public class PartnersProductsService {
         return false;
     }
     
-    public tblPartnersProducts getByPartnerProductIdAndMerchantProductId(Integer partnerProductId, Integer merchantProductId)
+    public tblPartnersProducts getByPartnerProductIdAndMerchantProductId(String partnerProductId, String merchantProductId)
     {
     	try {
     		return em.createNamedQuery("tblPartnersProducts.findByPartProdIdAndMercProdId", tblPartnersProducts.class)
@@ -69,6 +69,9 @@ public class PartnersProductsService {
     				 .setParameter("mpId", merchantProductId)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
+    		return new tblPartnersProducts();
+    	} catch(Exception e) {
+    		e.printStackTrace();
     		return null;
     	}
     }

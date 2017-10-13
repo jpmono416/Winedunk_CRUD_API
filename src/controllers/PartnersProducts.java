@@ -74,14 +74,14 @@ public class PartnersProducts extends HttpServlet {
 			{
 				for(String parameter : new String[] {"partnerProductId", "merchantProductId"})
 				{
-					if(request.getParameterMap().containsKey(parameter))
+					if(!request.getParameterMap().containsKey(parameter))
 					{
 						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing "+parameter);
 						return;
 					}
 				}
 
-				tblPartnersProducts result = partnersProductsService.getByPartnerProductIdAndMerchantProductId(Integer.valueOf(request.getParameter("partnerProductId")), Integer.valueOf(request.getParameter("merchanProductId")));
+				tblPartnersProducts result = partnersProductsService.getByPartnerProductIdAndMerchantProductId(request.getParameter("partnerProductId"), request.getParameter("merchantProductId"));
 				response.getWriter().write(this.mapper.writeValueAsString(result));
 				break;
 			}

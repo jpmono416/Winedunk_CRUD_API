@@ -62,7 +62,6 @@ public class PFProducts extends HttpServlet {
 				response.getWriter().write("true"); 
 				return; 
 			case "addProduct":
-				System.out.println(json.asText()); 
 				Integer id = this.productsService.addProduct(this.mapper.treeToValue(json, Tblpfproduct.class)); 
  
 				response.getWriter().print(id); 

@@ -112,7 +112,6 @@ public class Apellations extends HttpServlet {
 				    reader.close();
 
 				    String content = sb.toString().replaceFirst("\n", "");
-				    System.out.println("CONTENT: "+content);
 					tblAppellations apellation = this.mapper.readValue(content, tblAppellations.class);
 					Integer id = apellationService.addApellation(apellation);
 					if(id!=null) { response.getWriter().print(id); }
