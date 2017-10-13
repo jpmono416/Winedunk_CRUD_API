@@ -109,7 +109,7 @@ public class PartnersProducts extends HttpServlet {
 					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
 					
 					if(partnersProductsService.updatePartnersProduct(partnersProducts) != null) { response.getWriter().print("True"); }
-				} catch (Exception e) {return;}
+				} catch (Exception e) {e.printStackTrace(); return;}
 				break;
 
 			case "deletePartnersProducts" :
@@ -118,7 +118,7 @@ public class PartnersProducts extends HttpServlet {
 					JsonNode json = this.mapper.readTree(request.getInputStream());
 
 					if(partnersProductsService.deletePartnersProduct(json.get("id").asInt())) { response.getWriter().print("True"); }
-				} catch (Exception e) { return; }
+				} catch (Exception e) {e.printStackTrace(); return; }
 				break;
 		}
 	}
