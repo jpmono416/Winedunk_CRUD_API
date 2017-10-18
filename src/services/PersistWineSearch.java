@@ -184,14 +184,14 @@ public class PersistWineSearch {
 			/* ---- MODIFICADO ---- */
 			//if(!typeId.equals("")) 					{ queryWhere += " AND (`t`.`id` = " + typeId + ") "; }
 			// si se selecciona un solo tipo:
-			if(!typeId.isEmpty())						{ queryWhere += " AND (`w`.`id` in (SELECT DISTINCT `wineId` FROM `tblWinesWineTypes` WHERE `typeId` = " + typeId + "))"; }  
+			if(!typeId.isEmpty())						{ queryWhere += " AND (`w`.`wineId` in (SELECT DISTINCT `wineId` FROM `tblWinesWineTypes` WHERE `typeId` = " + typeId + "))"; }  
 			// si se selecciona más de un tipo, se crea un string con todos los tipos separados por coma (e.g.: "1, 5, 10"): 
 			//if(!typesIdCommaSeparated.equals(""))		{ queryWhere += " AND (`w`.`id` in (SELECT DISTINCT `wineId` FROM `tblWinesWineTypes` WHERE `typeId` IN (" + typesIdCommaSeparated + ")))"; }  
 			
 			
 			//if(!grapeVarietyId.equals("")) 			{ queryWhere += " AND (`v`.`id` = " + grapeVarietyId + ") "; }
 			// si se selecciona una sola variedad:
-			if(!grapeVarietyId.equals(""))				{ queryWhere += " AND (`w`.`id` in (SELECT DISTINCT `wineId` FROM `tblWinesGrapeVarieties` WHERE `grapeVarietyId` = " + grapeVarietyId + "))"; }  
+			if(!grapeVarietyId.equals(""))				{ queryWhere += " AND (`w`.`wineId` in (SELECT DISTINCT `wineId` FROM `tblWinesGrapeVarieties` WHERE `grapeVarietyId` = " + grapeVarietyId + "))"; }  
 			// si se selecciona más de una variedad, se crea un string con todos IDs de variedad separados por coma (e.g.: "1, 5, 10"): 
 			//if(!grapeVarietyIdCommaSeparated.equals(""))	{ queryWhere += " AND (`w`.`id` in (SELECT DISTINCT `wineId` FROM `tblWinesGrapeVarieties` WHERE `grapeVarietyId` IN (" + grapeVarietyIdCommaSeparated + ")))"; }  
 			
