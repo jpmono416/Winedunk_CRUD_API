@@ -43,7 +43,7 @@ public class ProductFeeds extends HttpServlet {
 			}
 			case "getById":
 			{
-				if(request.getParameterMap().containsKey("id"))
+				if(!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
 					return;
@@ -51,60 +51,67 @@ public class ProductFeeds extends HttpServlet {
 				Tblpf pf = this.pfService.getById(Integer.parseInt(request.getParameter("id")));
 				if(pf!=null)
 					response.getWriter().print(this.mapper.writeValueAsString(pf));
+				break;
 			}
 			case "failStandardisation":
 			{
-				if(request.getParameterMap().containsKey("id"))
+				if(!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
 					return;
 				}
 				this.pfService.failStandardisation(Integer.parseInt(request.getParameter("id")));
+				break;
 			}
 			case "okStandardisation":
 			{
-				if(request.getParameterMap().containsKey("id"))
+				if(!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
 					return;
 				}
 				this.pfService.okStandardisation(Integer.parseInt(request.getParameter("id")));
+				break;
 			}
 			case "processingStandardisation":
 			{
-				if(request.getParameterMap().containsKey("id"))
+				if(!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
 					return;
 				}
 				this.pfService.processingStandardisation(Integer.parseInt(request.getParameter("id")));
+				break;
 			}
 			case "failImportation":
 			{
-				if(request.getParameterMap().containsKey("id"))
+				if(!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
 					return;
 				}
 				this.pfService.failStandardisation(Integer.parseInt(request.getParameter("id")));
+				break;
 			}
 			case "okImportation":
 			{
-				if(request.getParameterMap().containsKey("id"))
+				if(!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
 					return;
 				}
 				this.pfService.okStandardisation(Integer.parseInt(request.getParameter("id")));
+				break;
 			}
 			case "processingImportation":
 			{
-				if(request.getParameterMap().containsKey("id"))
+				if(!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing id");
 					return;
 				}
 				this.pfService.processingStandardisation(Integer.parseInt(request.getParameter("id")));
+				break;
 			}
 		}
 	}
@@ -120,6 +127,7 @@ public class ProductFeeds extends HttpServlet {
 			{
 				Tblpf pf = this.mapper.readValue(request.getInputStream(), Tblpf.class);
 				response.getWriter().print(this.pfService.update(pf));
+				break;
 			}
 		}
 	}
