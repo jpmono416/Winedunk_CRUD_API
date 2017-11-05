@@ -21,6 +21,8 @@ public class Tblpfextractioncolumn implements Serializable {
 
 	private String columnName;
 
+	private String replaceRegularExpression;
+
 	//bi-directional many-to-one association to Tblpfmerchanthtmlparsing
 	@OneToMany(mappedBy="tblpfextractioncolumn")
 	private List<Tblpfmerchanthtmlparsing> tblpfmerchanthtmlparsings;
@@ -64,6 +66,20 @@ public class Tblpfextractioncolumn implements Serializable {
 		tblpfmerchanthtmlparsing.setTblpfextractioncolumn(null);
 
 		return tblpfmerchanthtmlparsing;
+	}
+
+	public String getReplaceRegularExpression() {
+		return replaceRegularExpression;
+	}
+
+	public void setReplaceRegularExpression(String replaceRegularExpression) {
+		this.replaceRegularExpression = replaceRegularExpression;
+	}
+
+	@Override
+	public String toString() {
+		return "Tblpfextractioncolumn [id=" + id + ", columnName=" + columnName + ", replaceRegularExpression="
+				+ replaceRegularExpression + ", tblpfmerchanthtmlparsings=" + tblpfmerchanthtmlparsings + "]";
 	}
 
 }

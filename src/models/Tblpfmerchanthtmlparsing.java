@@ -56,6 +56,8 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 
 	private Boolean mustMatch;
 
+	private String htmlTagType;
+
 	public Tblpfmerchanthtmlparsing() {}
 
 	public int getId() {
@@ -122,12 +124,19 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 		this.mustMatch = mustMatch;
 	}
 
+	public String getHtmlTagType() {
+		return htmlTagType;
+	}
+
+	public void setHtmlTagType(String htmlTagType) {
+		this.htmlTagType = htmlTagType;
+	}
+
 	@Override
 	public String toString() {
 		return "Tblpfmerchanthtmlparsing [id=" + id + ", tblShops=" + tblShops + ", nameInWeb=" + nameInWeb
 				+ ", tblpfparsingextractionmethod=" + tblpfparsingextractionmethod + ", tblpfextractioncolumn="
 				+ tblpfextractioncolumn + ", specificTag=" + specificTag + ", numberOfTags=" + numberOfTags
-				+ ", mustMatch=" + mustMatch + "]";
+				+ ", mustMatch=" + mustMatch + ", htmlTagType=" + htmlTagType + "]";
 	}
-
 }
