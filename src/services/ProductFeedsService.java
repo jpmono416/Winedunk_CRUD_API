@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import constants.PfStatus;
 import models.Tblpf;
 import models.Tblpfstatus;
 
@@ -42,17 +43,17 @@ public class ProductFeedsService {
 
 	public boolean failStandardisation(Integer id)
 	{
-		return this.setStandardisationStatus("Errors", id);
+		return this.setStandardisationStatus(PfStatus.ERROR, id);
 	}
 
 	public boolean okStandardisation(Integer id)
 	{
-		return this.setStandardisationStatus("Ok", id);
+		return this.setStandardisationStatus(PfStatus.OK, id);
 	}
 	
 	public boolean processingStandardisation(Integer id)
 	{
-		return this.setStandardisationStatus("Processing", id);
+		return this.setStandardisationStatus(PfStatus.PROCESSING, id);
 	}
 
 	private boolean setStandardisationStatus(String statusName, Integer id)
