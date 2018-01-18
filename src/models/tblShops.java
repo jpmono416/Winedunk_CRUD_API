@@ -5,11 +5,14 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -32,6 +35,7 @@ public class tblShops {
 	public Integer getId() { return id; }
 	public void setId(Integer id) { this.id = id; }
 
+	@NotNull
 	@Column(name= "name")
 	private String name;
 	public String getName() { return name; }
@@ -51,6 +55,13 @@ public class tblShops {
 	private String genericProductPage;
 	public String getGenericProductPage() { return genericProductPage; }
 	public void setGenericProductPage(String genericProductPage) { this.genericProductPage = genericProductPage; }
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "dataSource")
+	private DataSource dataSource;
+	public DataSource getDataSource() { return this.dataSource; }
+	public void setDataSource(DataSource dataSource) { this.dataSource = dataSource;}
 
 	@Column(name= "deleted")
 	private Boolean deleted;
@@ -82,6 +93,7 @@ public class tblShops {
 
 	public tblShops(Integer id) { this.id = id; }
 	public tblShops(String name) { this.name = name; }
+
 	public tblShops()
 	{
 		this.id = null;
@@ -93,5 +105,12 @@ public class tblShops {
 		this.clicks = null;
 		this.wines = null;
 		this.winesByMerchant = null;
+	}
+
+	@Override
+	public String toString() {
+		return "tblShops [id=" + id + ", name=" + name + ", logo=" + logo + ", homePage=" + homePage
+				+ ", genericProductPage=" + genericProductPage + ", dataSource=" + dataSource + ", deleted=" + deleted
+				+ "]";
 	}
 }

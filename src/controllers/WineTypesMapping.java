@@ -46,8 +46,11 @@ public class WineTypesMapping extends HttpServlet {
 				}
 
 				TblPFWineTypeMappingTable wineType = service.getByWineType(request.getParameter("type"));
+
 				if(wineType!=null)
+				{
 					response.getWriter().print(mapper.writeValueAsString(wineType.getWineType()));
+				}
 
 				break;
 		}

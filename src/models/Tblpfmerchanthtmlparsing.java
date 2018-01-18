@@ -58,6 +58,8 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 
 	private String htmlTagType;
 
+	private String attribute;
+
 	public Tblpfmerchanthtmlparsing() {}
 
 	public int getId() {
@@ -130,6 +132,14 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 
 	public void setHtmlTagType(String htmlTagType) {
 		this.htmlTagType = htmlTagType;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 
 	@Override
