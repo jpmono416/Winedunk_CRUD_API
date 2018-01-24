@@ -73,6 +73,18 @@ public class GrapeVarieties extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			case "getByName":
+			{
+				if(!request.getParameterMap().containsKey("name"))
+					return;
+
+				tblGrapeVarieties variety = this.grapeVarietyService.getByName(request.getParameter("name"));
+
+				if(variety!=null)
+					response.getWriter().write(this.mapper.writeValueAsString(variety));
+
+				return;
+			}
 		}
 	}
 
