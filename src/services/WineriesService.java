@@ -39,7 +39,7 @@ public class WineriesService {
     				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
-    		return null;
+    		return new tblWineries();
     	}
     }
 

@@ -38,7 +38,7 @@ public class RegionsService {
    		    	 	 .setParameter("name", regionName)
    		    	 	 .getSingleResult();
     	} catch ( Exception e) {
-    		return null;
+    		return new tblRegions();
     	}
     }
 

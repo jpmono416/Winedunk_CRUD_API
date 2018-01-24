@@ -37,7 +37,7 @@ public class CountriesService {
     	try {
     		return em.createNamedQuery("tblCountries.findByName", tblCountries.class).setParameter("name", name).getSingleResult();
     	} catch (NoResultException noResExc) {
-    		return null;
+    		return new tblCountries();
     	}
     }
 

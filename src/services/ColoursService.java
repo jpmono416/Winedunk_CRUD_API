@@ -39,7 +39,7 @@ public class ColoursService {
     				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
-    		return null;
+    		return new tblColours();
     	}
     }
 
