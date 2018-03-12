@@ -35,7 +35,7 @@ public class WineTypesMapping extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action parameter");
 			return;
 		}
-		
+
 		switch(request.getParameter("action"))
 		{
 			case "getByWineType":
@@ -47,9 +47,9 @@ public class WineTypesMapping extends HttpServlet {
 
 				TblPFWineTypeMappingTable wineType = service.getByWineType(request.getParameter("type"));
 
-				if(wineType!=null)
+				if(wineType.getWineType()!=null)
 				{
-					response.getWriter().print(mapper.writeValueAsString(wineType.getWineType()));
+					response.getWriter().write(mapper.writeValueAsString(wineType.getWineType()));
 				}
 
 				break;

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -28,7 +29,7 @@ public class GrapeVarietiesService {
     public tblGrapeVarieties getGrapeVarietyById(Integer id)
     {
     	try { return em.find(tblGrapeVarieties.class, id); }
-    	catch (Exception e) { e.printStackTrace(); return null; }
+    	catch (Exception e) { e.printStackTrace(); return new tblGrapeVarieties(); }
     }
 
     public Integer addGrapeVariety(tblGrapeVarieties grapeVariety) {
@@ -39,6 +40,19 @@ public class GrapeVarietiesService {
         	em.flush();
         	return grapeVariety.getId();
         } catch (Exception e) { return null; }
+    }
+
+    public tblGrapeVarieties getByName(String varietyName)
+    {
+    	try {
+    		return em.createNamedQuery("tblGrapeVarieties.findByName", tblGrapeVarieties.class)
+		    		 .setParameter("name", varietyName)
+		    		 .getSingleResult();
+    	} catch(Exception e) {
+    		if(!e.getClass().equals(NoResultException.class))
+    			e.printStackTrace();
+			return new tblGrapeVarieties();
+    	}
     }
 
     public Boolean updateGrapeVariety(tblGrapeVarieties grapeVariety)

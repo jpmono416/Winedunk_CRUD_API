@@ -40,7 +40,7 @@ public class ClosuresService extends DefaultServiceClass {
     				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (NoResultException noResExc) {
-    		return null;
+    		return new tblClosures();
     	}
     }
 

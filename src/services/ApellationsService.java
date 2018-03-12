@@ -38,7 +38,7 @@ public class ApellationsService {
     				 .setParameter("name", name)
     				 .getSingleResult();
     	} catch (Exception e) {
-    		return null;
+    		return new tblAppellations();
     	}
     	
     }

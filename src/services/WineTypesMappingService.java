@@ -5,7 +5,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import models.TblPFWineTypeMappingTable;
 
@@ -22,14 +21,13 @@ public class WineTypesMappingService {
 	public TblPFWineTypeMappingTable getByWineType(String typeName)
 	{
 		try {
-			TypedQuery<TblPFWineTypeMappingTable> query = em.createNamedQuery("TblPFWineTypeMappingTable.findByWineType", TblPFWineTypeMappingTable.class);
-			 query.setParameter("wineType", typeName);
-
-			 return query.getSingleResult();
+			return em.createNamedQuery("TblPFWineTypeMappingTable.findByWineType", TblPFWineTypeMappingTable.class)
+					 .setParameter("wineType", typeName)
+					 .getSingleResult();
 		} catch (Exception e) {
 			if(e.getClass()!=NoResultException.class)
 				e.printStackTrace();
-			return null;
+			return new TblPFWineTypeMappingTable();
 		}
 	}
 }
