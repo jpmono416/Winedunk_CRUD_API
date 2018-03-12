@@ -35,7 +35,7 @@ public class WineTypesMapping extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action parameter");
 			return;
 		}
-		
+
 		switch(request.getParameter("action"))
 		{
 			case "getByWineType":
