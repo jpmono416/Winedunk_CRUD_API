@@ -18,8 +18,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
@@ -66,7 +64,7 @@ public class tblUsers {
     public void setName(String name) { this.name = name; }
 
     @Column(name = "preferredEmail", nullable = false)
-    @NotNull @Email
+    @NotNull
     private String preferredEmail;
     public String getPreferredEmail() { return preferredEmail; }
 	public void setPreferredEmail(String preferredEmail) { this.preferredEmail = preferredEmail; }
@@ -84,7 +82,7 @@ public class tblUsers {
     public void setDoB(Date doB) { DoB = doB; }
 
     @Column(name = "loginEmail")
-    @NotNull @Email
+    @NotNull
     private String loginEmail;
     public String getLoginEmail() { return loginEmail; }
 	public void setLoginEmail(String loginEmail) { this.loginEmail = loginEmail; }
@@ -100,7 +98,7 @@ public class tblUsers {
 	public void setLoginToken(String loginToken) { this.loginToken = loginToken; }
 	
     @Column(name = "recoveringPassEmail")
-    @NotNull @Email
+    @NotNull
     private String recoveringPassEmail;
     public String getRecoveringPassEmail() { return recoveringPassEmail; }
     public void setRecoveringPassEmail(String recoveringPassEmail) { this.recoveringPassEmail = recoveringPassEmail; }

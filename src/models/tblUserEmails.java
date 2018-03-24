@@ -9,8 +9,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
-
 @Entity
 @Table(name = "tblUserEmails")
 public class tblUserEmails {
@@ -25,7 +23,7 @@ public class tblUserEmails {
 
 
 	@Column(name= "emailAddress", nullable = false)
-    @Email @NotNull
+    @NotNull
     private String emailAddress;
     public String getEmailAddress() { return emailAddress; }
     public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
