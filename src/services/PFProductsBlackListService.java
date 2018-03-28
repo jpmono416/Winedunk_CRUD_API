@@ -21,9 +21,7 @@ public class PFProductsBlackListService {
     /**
      * Default constructor. 
      */
-    public PFProductsBlackListService() {
-        // TODO Auto-generated constructor stub
-    }
+    public PFProductsBlackListService() {}
 
 	@PersistenceContext(unitName = "Winedunk")
 	private EntityManager em;
