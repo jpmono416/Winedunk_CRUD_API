@@ -89,6 +89,23 @@ public class PartnersProducts extends HttpServlet {
 				response.getWriter().write(this.mapper.writeValueAsString(result));
 				break;
 			}
+			// aripe 2018-03-31
+			
+			case "getByPartnerIdAndPartnerProductId": 	
+			{
+				for(String parameter : new String[] {"partnerId", "partnerProductId"})
+				{
+					if(!request.getParameterMap().containsKey(parameter))
+					{
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing "+parameter);
+						return;
+					}
+				}
+		    	
+				tblPartnersProducts result = partnersProductsService.getByPartnerIdAndPartnerProductId(request.getParameter("partnerId"), request.getParameter("partnerProductId"));
+				response.getWriter().write(this.mapper.writeValueAsString(result));
+				break;
+			}
 			default:
 			{
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action parameter: "+action);
