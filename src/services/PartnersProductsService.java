@@ -75,4 +75,24 @@ public class PartnersProductsService {
     		return null;
     	}
     }
+    
+
+	// aripe 2018-03-31
+    public tblPartnersProducts getByPartnerIdAndPartnerProductId(String partnerId, String partnerProductId) {
+    	if ((partnerId != null) && (partnerProductId != null)) {
+    		try {
+        		return em.createNamedQuery("tblPartnersProducts.findByPartnerIdAndPartnerProductId", tblPartnersProducts.class)
+        				 .setParameter("partnerId", partnerId)
+        				 .setParameter("partnerProductId", partnerProductId)
+        				 .getSingleResult();
+        	} catch (NoResultException noResExc) {
+        		return new tblPartnersProducts();
+        	} catch(Exception e) {
+        		e.printStackTrace();
+        		return null;
+        	}	
+    	} else {
+    		return null;
+    	}
+    }
 }

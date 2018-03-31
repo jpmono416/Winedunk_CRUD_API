@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,9 +22,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "tblPartnersProducts")
-@NamedQuery(name="tblPartnersProducts.findByPartProdIdAndMercProdId", query="SELECT pp FROM tblPartnersProducts pp "
-																		  + "WHERE pp.partnerProductId = :ppId "
-																		  	+ "AND pp.partnerMerchantProductId = :mpId")
+// aripe 2018-03-31 - "tblPartnersProducts.findByPartnerIdAndPartnerProductId" added
+@NamedQueries({
+	@NamedQuery(name="tblPartnersProducts.findByPartProdIdAndMercProdId", query="SELECT pp FROM tblPartnersProducts pp "
+			  + "WHERE pp.partnerProductId = :ppId "
+			  	+ "AND pp.partnerMerchantProductId = :mpId"),
+	@NamedQuery(name="tblPartnersProducts.findByPartnerIdAndPartnerProductId", query="SELECT pp FROM tblPartnersProducts pp "
+			  + "WHERE pp.partnerId = :partnerId "
+			  	+ "AND pp.partnerProductId = :partnerProductId") })
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class tblPartnersProducts {
 
