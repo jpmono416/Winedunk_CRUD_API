@@ -85,7 +85,10 @@ public class PartnersProducts extends HttpServlet {
 				response.getWriter().write(this.mapper.writeValueAsString(result));
 				break;
 			}
-			case "getByPartnerIdAndPartnerProductId": 	// aripe 2018-03-31
+			
+			// aripe 2018-03-31
+			
+			case "getByPartnerIdAndPartnerProductId": 	
 			{
 				for(String parameter : new String[] {"partnerId", "partnerProductId"})
 				{
@@ -95,7 +98,7 @@ public class PartnersProducts extends HttpServlet {
 						return;
 					}
 				}
-
+		    	
 				tblPartnersProducts result = partnersProductsService.getByPartnerIdAndPartnerProductId(request.getParameter("partnerId"), request.getParameter("partnerProductId"));
 				response.getWriter().write(this.mapper.writeValueAsString(result));
 				break;

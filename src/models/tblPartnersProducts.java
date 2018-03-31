@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 			  + "WHERE pp.partnerProductId = :ppId "
 			  	+ "AND pp.partnerMerchantProductId = :mpId"),
 	@NamedQuery(name="tblPartnersProducts.findByPartnerIdAndPartnerProductId", query="SELECT pp FROM tblPartnersProducts pp "
-			  + "WHERE pp.partnerId = :partnerId "
+			  + "WHERE pp.partnerId.id = :partnerId "
 			  	+ "AND pp.partnerProductId = :partnerProductId") })
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class tblPartnersProducts {
