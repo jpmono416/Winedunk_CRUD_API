@@ -27,21 +27,29 @@ public class PartnersProducts extends HttpServlet {
 	
 	@EJB
 	PartnersProductsService partnersProductsService = new PartnersProductsService();
-    public PartnersProducts() { super(); }
+    public PartnersProducts()
+    {
+    	super();
+
+    	//Set pretty printing of json
+    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameterMap().containsKey("action")) { return; }
+		if(!request.getParameterMap().containsKey("action"))
+		{
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action parameter");
+			return;
+		}
 		
 		String action = request.getParameter("action");
 		switch(action) 
 		{
 			case "getPartnersProductss" :
 			{
-				try 
+				try
 				{ 
-			    	//Set pretty printing of json
-			    	this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					List<tblPartnersProducts> partnersProductss = partnersProductsService.getPartnersProducts();
 					String arrayToJson = this.mapper.writeValueAsString(partnersProductss);
@@ -51,26 +59,22 @@ public class PartnersProducts extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
-			
 			case "getPartnersProducts" :
 			{
-				try 
-				{
+				try {
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
-
-					//Set pretty printing of json
-					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 					tblPartnersProducts partnersProducts = partnersProductsService.getPartnersProductById(id);
 					String arrayToJson = this.mapper.writeValueAsString(partnersProducts);
 
 					response.getWriter().write(arrayToJson);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
-			case "getByPartnerProductIdAndMerchantProductId":
+			case "getByPartnerProductIdAndMerchantProductId" :
 			{
 				for(String parameter : new String[] {"partnerProductId", "merchantProductId"})
 				{
@@ -85,40 +89,51 @@ public class PartnersProducts extends HttpServlet {
 				response.getWriter().write(this.mapper.writeValueAsString(result));
 				break;
 			}
+			default:
+			{
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action parameter: "+action);
+			}
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameterMap().containsKey("action")) { return; }
+		if(!request.getParameterMap().containsKey("action"))
+		{
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action parameter");
+			return;
+		}
 
 		switch (request.getParameter("action")) 
 		{
 			case "addPartnersProducts" :
-				try
-				{
+				try {
 					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
 
 					Integer id = partnersProductsService.addPartnersProduct(partnersProducts);
 					if(id != null) { response.getWriter().print(id); }
-				} catch (Exception e) {e.printStackTrace(); return;}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "updatePartnersProducts" :
-				try
-				{
+				try {
 					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
 					
 					if(partnersProductsService.updatePartnersProduct(partnersProducts) != null) { response.getWriter().print("True"); }
-				} catch (Exception e) {e.printStackTrace(); return;}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "deletePartnersProducts" :
-				try
-				{
+				try {
 					JsonNode json = this.mapper.readTree(request.getInputStream());
 
 					if(partnersProductsService.deletePartnersProduct(json.get("id").asInt())) { response.getWriter().print("True"); }
-				} catch (Exception e) {e.printStackTrace(); return; }
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 		}
 	}
