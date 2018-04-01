@@ -42,17 +42,11 @@ public class tblRecommendedWines {
 	public Date getDateTo() { return dateTo; }
 	public void setDateTo(Date dateTo) { this.dateTo = dateTo; }
 
-    @Column(name = "comments")
-    private String comments;
-    public String getComments() { return comments; }
-    public void setComments(String comments) { this.comments = comments; }
-
     public tblRecommendedWines()
     {
         this.id = null;
         this.wineId = null;
         this.dateFrom = null;
         this.dateTo = null;
-        this.comments = null;
     }
 }
