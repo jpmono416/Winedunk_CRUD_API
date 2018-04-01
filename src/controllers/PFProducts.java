@@ -53,6 +53,12 @@ public class PFProducts extends HttpServlet {
 			case "findByPartnerProductIdAndMerchantProductId": 
 				response.getWriter().write(this.mapper.writeValueAsString(this.productsService.findByPartnerIdAndMerchantId(json.get("partnerProductId").asText(), json.get("merchantProductId").asText()))); 
 				return; 
+				
+			// aripe 2018-03-31, findByPartnerIdAndPartnerProductId added
+			case "findByPartnerIdAndPartnerProductId": 
+				response.getWriter().write(this.mapper.writeValueAsString(this.productsService.findByPartnerIdAndPartnerProductId(json.get("partnerId").asText(), json.get("partnerProductId").asText()))); 
+				return; 
+				
 			case "deleteProduct": 
 				if(this.productsService.deleteProduct(json.get("id").asInt())) 
 					response.getWriter().write("true"); 

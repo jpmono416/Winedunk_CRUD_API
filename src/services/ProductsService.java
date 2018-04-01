@@ -47,6 +47,22 @@ public class ProductsService {
 			return new Tblpfproduct(); 
 		} 
 	} 
+	
+	// aripe 2018-03-31, findByPartnerIdAndPartnerProductId added
+
+	public Tblpfproduct findByPartnerIdAndPartnerProductId(String partnerId, String partnerProductId) 
+	{ 
+		try { 
+			int partnerIdInt = Integer.parseInt(partnerId);
+			return em.createNamedQuery("Tblpfproduct.findByPartnerIdAndMerchantId", Tblpfproduct.class) 
+					 .setParameter("partnerId", partnerIdInt) 
+					 .setParameter("partnerProductId", partnerProductId) 
+					 .getSingleResult(); 
+		} catch (NoResultException noResExc) { 
+			System.out.println("Couldn't find already existing product"); 
+			return new Tblpfproduct(); 
+		} 
+	} 
 
 	public Integer addProduct(Tblpfproduct product) 
 	{ 
