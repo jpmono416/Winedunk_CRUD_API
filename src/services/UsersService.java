@@ -44,6 +44,7 @@ public class UsersService extends DefaultServiceClass {
     		Query query = em.createQuery("SELECT u FROM viewUsers u WHERE u.loginEmail = :email", viewUsers.class).setParameter("email", email);
     		System.out.println("Query: " + query.toString()); //TODO DEL
     		viewUsers user = (viewUsers) query.getSingleResult();
+    		
         	return user;
     	} catch (Exception e) { e.printStackTrace();  return null; } 
     }
@@ -52,9 +53,7 @@ public class UsersService extends DefaultServiceClass {
     {
     	try
     	{
-    		System.out.println("Auth on class: " + auth);//TODO
     		String queryString = "SELECT * FROM viewUsers WHERE loginToken = \"" + auth + "\"";
-    		System.out.println("String: " + queryString); //TODO
     		Query query = em.createNativeQuery(queryString, viewUsers.class);
     		System.out.println("Query: " + query.toString());
     		viewUsers user = (viewUsers) query.getSingleResult();
@@ -66,19 +65,20 @@ public class UsersService extends DefaultServiceClass {
         try
         {
         	if(user.getId() != null) { user.setId(null); }
-        	em.persist(user);
-        	em.getEntityManagerFactory().getCache().evictAll();
-        	viewUsers persistedUser = getUserByEmail(user.getPreferredEmail());
-        	return persistedUser.getId();
+        	if(persistUserAndRefresh(user)) 
+        	{ 
+	        	viewUsers persistedUser = getUserByEmail(user.getPreferredEmail());
+	        	return persistedUser.getId();
+        	}
+        	return 0;
         } catch (Exception e) { e.printStackTrace(); return 0; }
     }
 
     public Boolean updateUser(tblUsers user)
     {
     	if(user == null || user.getId() == null) { return false; }
-        em.merge(user);
-        em.getEntityManagerFactory().getCache().evictAll();
-        return true;
+    	if(persistUserAndRefresh(user)) { return true; }
+    	return false;
     }
 
     public Boolean deleteUser(Integer id)
@@ -86,11 +86,29 @@ public class UsersService extends DefaultServiceClass {
         tblUsers user = getUserById(id);
         if(user != null)
         {
-            user.setDeleted(true);
-            em.merge(user);
+        	user.setDeleted(true);
+            if(persistUserAndRefresh(user)) { return true; }
+        }
+        return false;
+    }
+    
+    public Boolean updatePasswordRecoveryToken(Integer id, String token)
+    {
+    	tblUsers user =  getUserById(id);
+        if(user != null)
+        {
+        	user.setRecoveringPassToken(token);
+        	em.merge(user);
             em.getEntityManagerFactory().getCache().evictAll();
             return true;
         }
-        return false;
+    	return false;
+    }
+    
+    public Boolean persistUserAndRefresh(tblUsers user)
+    {
+    	em.merge(user);
+        em.getEntityManagerFactory().getCache().evictAll();
+        return true;
     }
 }

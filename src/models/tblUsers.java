@@ -210,8 +210,29 @@ public class tblUsers {
     public List<tblUserPriceAlerts> getUserPriceAlerts() { return userPriceAlerts; }
 	public void setUserPriceAlerts(List<tblUserPriceAlerts> userPriceAlerts) { this.userPriceAlerts = userPriceAlerts; }
 	
+	// Fields not included in the DB
+	@Transient
+	private Integer numericCountryId;
+	public Integer getNumericCountryId() { return numericCountryId; }
+	public void setNumericCountryId(Integer numericCountryId) { this.numericCountryId = numericCountryId; }
 	
-    public tblUsers()
+	@Transient
+	private Integer numericCurrencyId;
+	public Integer getNumericCurrencyId() { return numericCurrencyId;  }
+	public void setNumericCurrencyId(Integer numericCurrencyId) { this.numericCurrencyId = numericCurrencyId; }
+	
+	@Transient
+	private Integer numericTimeZoneId;
+	public Integer getNumericTimeZoneId() { return numericTimeZoneId; }
+	public void setNumericTimeZoneId(Integer numericTimeZoneId) { this.numericTimeZoneId = numericTimeZoneId; }
+	
+	@Transient
+	private Integer numericLanguageId;
+	public Integer getNumericLanguageId() { return numericLanguageId; }
+	public void setNumericLanguageId(Integer numericLanguageId) { this.numericLanguageId = numericLanguageId; }
+	
+	
+	public tblUsers()
     {
         this.id = null;
         this.countryId = null;
