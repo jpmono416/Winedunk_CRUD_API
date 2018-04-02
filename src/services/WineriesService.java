@@ -35,8 +35,11 @@ public class WineriesService {
     	catch (Exception e) { e.printStackTrace(); return null; }
     }
     
-    // aripe 2018-04-02, the following NamedQuery is wrong because a name can't univocally identify a winery
-    // but at least a combination of country + region + appellation + name
+    /*
+	 * aripe 2018-04-02 get a single winery by using just name does not work
+	 * we need also countryId, regionId, appellarionId
+	*/
+    
     /*
     public tblWineries getByName(String name)
     {
