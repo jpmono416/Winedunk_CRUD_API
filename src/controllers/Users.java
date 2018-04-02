@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -127,10 +128,11 @@ public class Users extends HttpServlet {
 				{
 					tblUsers user = new tblUsers();
 					ObjectMapper mapper = new ObjectMapper();
+					mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 					user = mapper.readValue(content, tblUsers.class);
 					
 					if(userService.updateUser(user)) { response.getWriter().print("True"); }
-				} catch (Exception e) {return;}
+				} catch (Exception e) {e.printStackTrace(); return;}
 			break;
 			
 			case "deleteUser" :
@@ -190,6 +192,36 @@ public class Users extends HttpServlet {
 					if(userService.updateUser(user)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); }
 			break;
+			
+			case "setRecoveryToken" :
+				try
+				{
+					List<String> splittedContent;					
+					splittedContent = new ArrayList<String>(Arrays.asList(content.split(",")));
+					Integer userId = Integer.parseInt(splittedContent.get(0));
+					String token = splittedContent.get(1);
+					
+					if(userService.updatePasswordRecoveryToken(userId, token)) { response.getWriter().print("True"); }
+				} catch (Exception e) { e.printStackTrace(); }
+				
+			case "deleteTokenAndSaveUser" :
+				try
+				{
+					List<String> splittedContent;					
+					splittedContent = new ArrayList<String>(Arrays.asList(content.split(",")));
+					
+					Integer userId = Integer.parseInt(splittedContent.get(0));
+					String token = splittedContent.get(1);
+					String newEncryptedPassword = splittedContent.get(2);
+					
+					tblUsers user = userService.getUserById(userId);
+					
+					if (user == null) { return; }
+					if(!user.getRecoveringPassToken().equals(token)) { return; }
+					
+					user.setLoginPassword(newEncryptedPassword);
+					if(userService.persistUserAndRefresh(user)) { response.getWriter().print("True"); }
+				} catch (Exception e) { e.printStackTrace(); }
 		}
 	}
 
