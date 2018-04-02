@@ -78,46 +78,30 @@ public class Wineries extends HttpServlet {
 			case "getByName":
 			{
 				/*
-				 * aripe 2018-04-02 get a single winery by using just name does not work
-				 * we need also countryId, regionId, appellarionId
-				 */
-				/*
+				 * aripe 2018-04-02 
+				*/
+				
 				if(!request.getParameterMap().containsKey("name"))
 					return;
 
-				tblWineries winery = this.wineryService.getByName(request.getParameter("name"));
+				String name = request.getParameter("name");
+				String countryId = "";
+				String regionId = "";
+				String appellationId = "";
 				
-				if(winery!=null)
-					response.getWriter().write(this.mapper.writeValueAsString(winery));
-				return;
-			    */
+				if(request.getParameterMap().containsKey("countryId")) {
+					countryId = request.getParameter("countryId");
+				} 
 				
-				if ( (!request.getParameterMap().containsKey("countryId")) || (!request.getParameterMap().containsKey("regionId"))
-				  || (!request.getParameterMap().containsKey("appellationId")) || (!request.getParameterMap().containsKey("name")) ) {
-					return;
-				}
-				Integer countryId;
-				try {
-					countryId = Integer.parseInt(request.getParameter("countryId"));
-				} catch (Exception e){
-					countryId = 0;
-				}
-
-				Integer regionId;
-				try {
-					regionId = Integer.parseInt(request.getParameter("regionId"));
-				} catch (Exception e){
-					regionId = 0;
-				}
+				if(request.getParameterMap().containsKey("regionId")) {
+					regionId = request.getParameter("regionId");
+				} 
 				
-				Integer appellationId;
-				try {
-					appellationId = Integer.parseInt(request.getParameter("appellationId"));
-				} catch (Exception e){
-					appellationId = 0;
-				}
-
-				tblWineries winery = this.wineryService.getByName(countryId, regionId, appellationId, request.getParameter("name"));
+				if(request.getParameterMap().containsKey("appellationId")) {
+					appellationId = request.getParameter("appellationId");
+				} 
+				
+				tblWineries winery = this.wineryService.getByName(countryId, regionId, appellationId, name);
 				
 				if(winery!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(winery));

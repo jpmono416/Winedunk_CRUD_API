@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 //@NamedQuery(name="tblWineries.findByName", query="SELECT t FROM tblWineries t WHERE t.name = :name")
 @NamedQueries({
 	@NamedQuery(name="tblWineries.findAllByName", query="SELECT x FROM tblWineries x WHERE x.name = :name"),
-	@NamedQuery(name="tblWineries.findOneByName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId AND x.appellationId = :appellationId AND x.name = :name")
+	@NamedQuery(name="tblWineries.findOneByCountryAndRegionAndAppellationAndName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId AND x.appellationId = :appellationId AND x.name = :name"),
+	@NamedQuery(name="tblWineries.findOneByCountryAndRegionAndName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId AND x.name = :name"),
+	@NamedQuery(name="tblWineries.findOneByCountryAndName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.name = :name"),
+	@NamedQuery(name="tblWineries.findOneByName", query="SELECT x FROM tblWineries x WHERE x.name = :name")
 })
 public class tblWineries {
 
