@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +20,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblWineries")
-@NamedQuery(name="tblWineries.findByName", query="SELECT t FROM tblWineries t WHERE t.name = :name")
+// aripe 2018-04-02, the following NamedQuery is wrong because a name can't univocally identify a winery but at least a combination of country + region + appellation + name
+//@NamedQuery(name="tblWineries.findByName", query="SELECT t FROM tblWineries t WHERE t.name = :name")
+@NamedQueries({
+	@NamedQuery(name="tblWineries.findAllByName", query="SELECT x FROM tblWineries x WHERE x.name = :name"),
+	@NamedQuery(name="tblWineries.findOneByName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId AND x.appellationId = :appellationId AND x.name = :name")
+})
 public class tblWineries {
 
     @Transient
