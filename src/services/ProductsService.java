@@ -47,15 +47,12 @@ public class ProductsService {
 			return new Tblpfproduct(); 
 		} 
 	} 
-	
-	// aripe 2018-03-31, findByPartnerIdAndPartnerProductId added
 
-	public Tblpfproduct findByPartnerIdAndPartnerProductId(String partnerId, String partnerProductId) 
+	public Tblpfproduct findByPartnerIdAndPartnerProductId(Integer partnerId, String partnerProductId) 
 	{
 		try { 
-			int partnerIdInt = Integer.parseInt(partnerId);
-			return em.createNamedQuery("Tblpfproduct.findByPartnerIdAndMerchantId", Tblpfproduct.class) 
-					 .setParameter("partnerId", partnerIdInt) 
+			return em.createNamedQuery("Tblpfproduct.findByPartnerIdAndPartnerProductId", Tblpfproduct.class) 
+					 .setParameter("partnerId", partnerId) 
 					 .setParameter("partnerProductId", partnerProductId) 
 					 .getSingleResult(); 
 		} catch (NoResultException noResExc) { 

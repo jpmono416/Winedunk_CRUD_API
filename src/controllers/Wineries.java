@@ -77,14 +77,36 @@ public class Wineries extends HttpServlet {
 			}
 			case "getByName":
 			{
+				/*
+				 * aripe 2018-04-02 
+				*/
+				
 				if(!request.getParameterMap().containsKey("name"))
 					return;
 
-				tblWineries winery = this.wineryService.getByName(request.getParameter("name"));
+				String name = request.getParameter("name");
+				String countryId = "";
+				String regionId = "";
+				String appellationId = "";
+				
+				if(request.getParameterMap().containsKey("countryId")) {
+					countryId = request.getParameter("countryId");
+				} 
+				
+				if(request.getParameterMap().containsKey("regionId")) {
+					regionId = request.getParameter("regionId");
+				} 
+				
+				if(request.getParameterMap().containsKey("appellationId")) {
+					appellationId = request.getParameter("appellationId");
+				} 
+				
+				tblWineries winery = this.wineryService.getByName(countryId, regionId, appellationId, name);
 				
 				if(winery!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(winery));
 				return;
+							
 			}
 		}
 	}

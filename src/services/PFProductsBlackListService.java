@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -35,6 +36,8 @@ public class PFProductsBlackListService {
 			try {
 				TblPFProductsBlackList TblPFProductsBlackList = typedQuery.getSingleResult();
 				return ((TblPFProductsBlackList != null) && (TblPFProductsBlackList.getId() > 0));
+			} catch (NoResultException noResExc) { 
+				return false; 
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
@@ -52,6 +55,8 @@ public class PFProductsBlackListService {
 			try {
 				TblPFProductsBlackList singleResult = typedQuery.getSingleResult();
 				return singleResult;
+			} catch (NoResultException noResExc) { 
+				return new TblPFProductsBlackList(); 
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -99,6 +104,8 @@ public class PFProductsBlackListService {
 			try {
 				TblPFProductsBlackList singleResult = typedQuery.getSingleResult();
 				return singleResult;
+			} catch (NoResultException noResExc) { 
+				return new TblPFProductsBlackList(); 
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;

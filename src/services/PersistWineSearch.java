@@ -83,6 +83,9 @@ public class PersistWineSearch {
 	private String sortingMethod;
 	public void setSortingMethod(String sortingMethod) { this.sortingMethod = sortingMethod; }
 
+	private String ratingValue;
+	public void setRatingValue(String ratingValue) { this.ratingValue = ratingValue; }
+	
 	private Integer totalPages;
 	public Integer getTotalPages() { return totalPages; }
 	public void setTotalPages(Integer totalPages) { this.totalPages = totalPages; }
@@ -106,7 +109,8 @@ public class PersistWineSearch {
 			+ " `w`.`wineBottleSize`, "
 			+ " `w`.`wineAbv`, "
 			+ " `w`.`wineClosureName`, "
-			+ " `w`.`wineMinimumPrice` ";
+			+ " `w`.`wineMinimumPrice`, "
+			+ " `w`.`avgRating` ";
 	
 	private String querySelect = "SELECT DISTINCT `w`.`wineId` AS `wineId`, "
 			+ " `w`.`wineImageURL` AS `wineImageURL`, " 
@@ -123,6 +127,7 @@ public class PersistWineSearch {
 			+ " `w`.`wineAbv` AS `wineAbv`, "
 			+ " `w`.`wineClosureName` AS `wineClosureName`, "
 			+ " `w`.`wineMinimumPrice` AS `wineMinimumPrice`, "
+			+ " `w`.`avgRating` as `avgRating`, "
 			+ " GROUP_CONCAT(DISTINCT `t`.`name`) AS `wineTypeName`,"
 			+ " GROUP_CONCAT(DISTINCT `v`.`name`) AS `grapeVarietyName`"
 			+ " FROM "; 
@@ -180,7 +185,8 @@ public class PersistWineSearch {
 			if(!minPrice.equals("")) 					{ queryWhere += " AND (`w`.`wineMinimumPrice` BETWEEN " + minPrice + " AND " + maxPrice +") ";  }
 			if(!closureId.equals("")) 					{ queryWhere += " AND (`w`.`wineClosureId` = " + closureId + ") "; }
 			if(!vintageMin.equals("")) 					{ queryWhere += " AND (`w`.`wineVintage` BETWEEN " + vintageMin + " AND " + vintageMax + ") "; }
-
+			if(!ratingValue.equals(""))					{ queryWhere += " AND (`w`.`avgRating` >= " + ratingValue + ") "; }
+			
 			/* ---- MODIFICADO ---- */
 			//if(!typeId.equals("")) 					{ queryWhere += " AND (`t`.`id` = " + typeId + ") "; }
 			// si se selecciona un solo tipo:
@@ -259,6 +265,7 @@ public class PersistWineSearch {
 		this.queryWhere = " WHERE (`w`.`wineDeleted` = 0) AND (`wineMinimumPrice` IS NOT NULL) AND (`wineMinimumPrice` > 0) ";
 		this.pageNumber = 0;
 		this.sortingMethod = "";
+		this.ratingValue = "";
 		this.querySelect = "SELECT DISTINCT `w`.`wineId` AS `wineId`, "
 				+ " `w`.`wineImageURL` AS `wineImageURL`, " 
 				+ " `w`.`wineName` AS `wineName`, "
@@ -274,6 +281,7 @@ public class PersistWineSearch {
 				+ " `w`.`wineAbv` AS `wineAbv`, "
 				+ " `w`.`wineClosureName` AS `wineClosureName`, "
 				+ " `w`.`wineMinimumPrice` AS `wineMinimumPrice`, "
+				+ " `w`.`avgRating` as `avgRating`, "
 				+ " GROUP_CONCAT(DISTINCT `t`.`name`) AS `wineTypeName`,"
 				+ " GROUP_CONCAT(DISTINCT `v`.`name`) AS `grapeVarietyName`"
 				+ " FROM "; 
