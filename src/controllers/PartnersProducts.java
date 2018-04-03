@@ -135,12 +135,20 @@ public class PartnersProducts extends HttpServlet {
 
 			case "updatePartnersProducts" :
 				try {
-					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
+					final JsonNode json = this.mapper.readTree(request.getInputStream());
+					final Integer id = json.get("id").asInt();
+					final Float price = json.get("price").floatValue();
 					
-					if(partnersProductsService.updatePartnersProduct(partnersProducts) != null) { response.getWriter().print("True"); }
+					if(partnersProductsService.updatePartnersProduct(id, price) != null)
+					{
+						response.getWriter().print("True");
+						return;
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
+				response.getWriter().print("False");
 				break;
 
 			case "deletePartnersProducts" :

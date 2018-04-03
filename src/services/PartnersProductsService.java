@@ -42,10 +42,14 @@ public class PartnersProductsService {
         } catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public Boolean updatePartnersProduct(tblPartnersProducts device)
+    public Boolean updatePartnersProduct(Integer id, Float price)
     {
-    	if(device == null || device.getId() == null) { return false; }
-        em.merge(device);
+    	if(id == null || price == null)
+    		return false;
+
+    	tblPartnersProducts partnerProduct = em.find(tblPartnersProducts.class, id);
+        partnerProduct.setPartnerProductPrice(price);
+
         return true;
     }
 

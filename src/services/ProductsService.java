@@ -26,14 +26,14 @@ public class ProductsService {
 	} 
 
 	public List<Tblpfproduct> findByTblpf(Integer tblpfId) 
-	{ 
+	{
 		try { 
 			return em.createNamedQuery("Tblpfproduct.findByTblpfId", Tblpfproduct.class).setParameter("id", tblpfId).getResultList(); 
 		} catch(Exception e) { 
 			e.printStackTrace(); 
 			return null; 
 		} 
-	} 
+	}
 
 	public Tblpfproduct findByPartnerIdAndMerchantId(String partnerProductId, String merchantProductId) 
 	{ 
@@ -51,7 +51,7 @@ public class ProductsService {
 	// aripe 2018-03-31, findByPartnerIdAndPartnerProductId added
 
 	public Tblpfproduct findByPartnerIdAndPartnerProductId(String partnerId, String partnerProductId) 
-	{ 
+	{
 		try { 
 			int partnerIdInt = Integer.parseInt(partnerId);
 			return em.createNamedQuery("Tblpfproduct.findByPartnerIdAndMerchantId", Tblpfproduct.class) 
