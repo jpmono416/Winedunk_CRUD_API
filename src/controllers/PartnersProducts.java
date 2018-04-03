@@ -136,8 +136,17 @@ public class PartnersProducts extends HttpServlet {
 			case "updatePartnersProducts" :
 				try {
 					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
-					
 					if(partnersProductsService.updatePartnersProduct(partnersProducts) != null) { response.getWriter().print("True"); }
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
+
+			case "updatePartnersProductsPrice" :
+				// aripe 2018-04-03
+				try {
+					tblPartnersProducts partnersProducts = this.mapper.readValue(request.getInputStream(), tblPartnersProducts.class);
+					if(partnersProductsService.updatePartnersProductsPrice(partnersProducts) != null) { response.getWriter().print("True"); }
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

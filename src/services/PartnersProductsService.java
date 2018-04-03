@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import models.tblPartnersProducts;
+import models.tblUsers;
 
 @Stateless
 @LocalBean
@@ -47,6 +48,23 @@ public class PartnersProductsService {
     	if(device == null || device.getId() == null) { return false; }
         em.merge(device);
         return true;
+    }
+
+    public Boolean updatePartnersProductsPrice(tblPartnersProducts newPartnersProducts)
+    {
+    	// aripe 2018-04-03
+    	
+    	if(newPartnersProducts == null || newPartnersProducts.getId() == null || newPartnersProducts.getPartnerProductPrice() == null) { return false; }
+        
+    	tblPartnersProducts partnersProducts = getPartnersProductById(newPartnersProducts.getId());
+        if(partnersProducts != null)
+        {
+        	partnersProducts.setPartnerProductPrice(newPartnersProducts.getPartnerProductPrice());
+        	em.merge(partnersProducts);
+            em.getEntityManagerFactory().getCache().evictAll();
+            return true;
+        }
+    	return false;
     }
 
     public Boolean deletePartnersProduct(Integer id)
