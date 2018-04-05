@@ -66,6 +66,15 @@ public class tblPartners {
 	private List<Tblpf> tblPfs;
 	public List<Tblpf> getTblpfs() { return tblPfs; }
 	public void setTblpfs(List<Tblpf> tblPfs) { this.tblPfs = tblPfs; }
+	
+	// aripe 2018-04-05
+	//bi-directional many-to-one association to tblPartnersMerchants
+	@OneToMany(mappedBy = "partner", targetEntity = tblPartnersMerchants.class)
+	@JsonBackReference
+	private List<tblPartnersMerchants> partnersMerchants;
+	public List<tblPartnersMerchants> getPartnersMerchants() { return partnersMerchants; }
+	public void setPartnersMerchants(List<tblPartnersMerchants> partnersMerchants) { this.partnersMerchants = partnersMerchants; }
+	
 
 	public tblPartners(Integer id) { this.id = id;}
     public tblPartners()
