@@ -12,7 +12,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -37,7 +36,6 @@ public class tblPartnersMerchants {
 	//bi-directional many-to-one association to tblShops
 	@ManyToOne
 	@JoinColumn(name="shopId")
-	@JsonManagedReference
 	private tblShops shop;
 	public tblShops getShop() { return shop; }
 	public void setShop(tblShops shop) { this.shop = shop; }
@@ -45,7 +43,6 @@ public class tblPartnersMerchants {
 	//bi-directional many-to-one association to tblPartners
 	@ManyToOne
 	@JoinColumn(name="partnerId")
-	@JsonManagedReference
 	private tblPartners partner;
 	public tblPartners getPartner() { return partner; }
 	public void setPartner(tblPartners partner) { this.partner = partner; }
