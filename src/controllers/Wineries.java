@@ -32,7 +32,11 @@ public class Wineries extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(!request.getParameterMap().containsKey("action")) { return; }
+		if(!request.getParameterMap().containsKey("action"))
+		{
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing 'action' parameter");
+			return;
+		}
 		
 		String action = request.getParameter("action");
 		switch(action) 
@@ -76,15 +80,14 @@ public class Wineries extends HttpServlet {
 				break;
 			}
 			case "getByName":
-			{
-				/*
-				 * aripe 2018-04-02 
-				*/
-				
+			{				
 				if(!request.getParameterMap().containsKey("name"))
+				{
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing 'name' parameter");
 					return;
+				}
 
-				String name = request.getParameter("name");
+				final String name = request.getParameter("name");
 				String countryId = "";
 				String regionId = "";
 				String appellationId = "";
@@ -105,6 +108,7 @@ public class Wineries extends HttpServlet {
 				
 				if(winery!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(winery));
+
 				return;
 							
 			}

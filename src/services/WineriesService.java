@@ -6,11 +6,9 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import models.tblWineries;
 
@@ -103,52 +101,50 @@ public class WineriesService {
     
     public tblWineries getByName(String countryIdStr, String regionIdStr, String appellationIdStr, String name)
     {	
-    	if (name != "") {
-        	Integer countryId = 0;
-        	Integer regionId = 0;
-        	Integer appellationId = 0;
-        	
-        	tblWineries winery = null;
-        	
-        	try {
-        		countryId = Integer.parseInt(countryIdStr);
-        	} catch (Exception e) {
-        		countryId = -1; // I want to differentiate "0" from "" / "anything else"
-        	}
-        	
-        	try {
-        		regionId = Integer.parseInt(regionIdStr);
-        	} catch (Exception e) {
-        		regionId = -1; // I want to differentiate "0" from "" / "anything else"
-        	}
-        	
-        	try {
-        		appellationId = Integer.parseInt(appellationIdStr);
-        	} catch (Exception e) {
-        		appellationId = -1; // I want to differentiate "0" from "" / "anything else"
-        	}
-        	
-        	if ( (countryId >= 0) && (regionId >= 0) && (appellationId >= 0) ) {
-        		winery = getWineryByCountryAndRegionAndAppellationAndName(countryId, regionId, appellationId, name);
-        	} 
-        	
-        	if ( (winery == null) && (countryId >= 0) && (regionId >= 0) ) {
-        		winery = getWineryByCountryAndRegionAndName(countryId, regionId, name);
-        	} 
-
-        	if ( (winery == null) && (countryId >= 0) ) {
-        		winery = getWineryByCountryAndName(countryId, name);
-        	} 
-
-        	if (winery == null)  {
-        		winery = getWineryByName(name);
-        	} 
-        	
-        	return winery;
-
-    	} else {
+    	if (name.isEmpty())
     		return null;
+
+    	Integer countryId = 0;
+    	Integer regionId = 0;
+    	Integer appellationId = 0;
+    	
+    	tblWineries winery = null;
+    	
+    	try {
+    		countryId = Integer.parseInt(countryIdStr);
+    	} catch (Exception e) {
+    		countryId = -1; // I want to differentiate "0" from "" / "anything else"
     	}
+    	
+    	try {
+    		regionId = Integer.parseInt(regionIdStr);
+    	} catch (Exception e) {
+    		regionId = -1; // I want to differentiate "0" from "" / "anything else"
+    	}
+    	
+    	try {
+    		appellationId = Integer.parseInt(appellationIdStr);
+    	} catch (Exception e) {
+    		appellationId = -1; // I want to differentiate "0" from "" / "anything else"
+    	}
+    	
+    	if ( (countryId >= 0) && (regionId >= 0) && (appellationId >= 0) ) {
+    		winery = getWineryByCountryAndRegionAndAppellationAndName(countryId, regionId, appellationId, name);
+    	} 
+    	
+    	if ( (winery == null) && (countryId >= 0) && (regionId >= 0) ) {
+    		winery = getWineryByCountryAndRegionAndName(countryId, regionId, name);
+    	} 
+
+    	if ( (winery == null) && (countryId >= 0) ) {
+    		winery = getWineryByCountryAndName(countryId, name);
+    	} 
+
+    	if (winery == null)  {
+    		winery = getWineryByName(name);
+    	} 
+    	
+    	return winery;
 
     }
 
