@@ -19,7 +19,7 @@ public class RecommendedWinesViewService {
     @SuppressWarnings("unchecked")
 	public List<viewRecommendedWines> getRecommendedWines()
     {
-        Query query	= em.createNativeQuery("SELECT * FROM viewRecommendedWines LIMIT 6", viewRecommendedWines.class);
+        Query query	= em.createNativeQuery("SELECT * FROM viewRecommendedWines", viewRecommendedWines.class);
         try { return (List<viewRecommendedWines>) query.getResultList(); }
         catch (Exception e) { e.printStackTrace(); return null; }
     }
