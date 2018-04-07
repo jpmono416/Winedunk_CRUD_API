@@ -70,6 +70,74 @@ public class StoredProcedures extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+		
+			case "callSPUpdateRecommendedWines" :
+			{
+				try 
+				{ 
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	boolean result = storedProcedures.callSPUpdateRecommendedWines();
+					
+					response.setStatus(200);
+					response.getWriter().write("{\"result\" = \"" + result + "\"}");
+				} 
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+		
+			case "callSPUpdateBestOffersbyCountry" :
+			{
+				try 
+				{ 
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	boolean result = storedProcedures.callSPUpdateBestOffersbyCountry();
+					
+					response.setStatus(200);
+					response.getWriter().write("{\"result\" = \"" + result + "\"}");
+				} 
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+		
+			case "callSPUpdateBestOffersbyMerchants" :
+			{
+				try 
+				{ 
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	boolean result = storedProcedures.callSPUpdateBestOffersbyMerchants();
+					
+					response.setStatus(200);
+					response.getWriter().write("{\"result\" = \"" + result + "\"}");
+				} 
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+		
+			case "callSPUpdateBestOffersbyWineType" :
+			{
+				try 
+				{ 
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	boolean result = storedProcedures.callSPUpdateBestOffersbyWineType();
+					
+					response.setStatus(200);
+					response.getWriter().write("{\"result\" = \"" + result + "\"}");
+				} 
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
 			
 		}
 	}
