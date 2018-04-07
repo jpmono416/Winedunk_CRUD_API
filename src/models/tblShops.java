@@ -90,6 +90,14 @@ public class tblShops {
 	private List<Tblpfmerchanthtmlparsing> parsingByMerchant;
 	public List<Tblpfmerchanthtmlparsing> getTblpfmerchanthtmlparsing() { return parsingByMerchant; }
 	public void setTblpfmerchanthtmlparsing(List<Tblpfmerchanthtmlparsing> parsingByMerchant) { this.parsingByMerchant = parsingByMerchant; }
+	
+	// aripe 2018-04-05
+	//bi-directional many-to-one association to tblPartnersMerchants
+	@OneToMany(mappedBy = "shop", targetEntity = tblPartnersMerchants.class)
+	@JsonBackReference
+	private List<tblPartnersMerchants> partnersMerchants;
+	public List<tblPartnersMerchants> getPartnersMerchants() { return partnersMerchants; }
+	public void setPartnersMerchants(List<tblPartnersMerchants> partnersMerchants) { this.partnersMerchants = partnersMerchants; }
 
 	public tblShops(Integer id) { this.id = id; }
 	public tblShops(String name) { this.name = name; }

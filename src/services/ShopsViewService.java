@@ -8,19 +8,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import views.viewRecommendedWines;
+import views.viewShops;
 
 @Stateless
 @LocalBean
-public class RecommendedWinesViewService {
+public class ShopsViewService {
 	@PersistenceContext(unitName = "Winedunk")
 	EntityManager em;
 
     @SuppressWarnings("unchecked")
-	public List<viewRecommendedWines> getRecommendedWines()
+	public List<viewShops> getShops()
     {
-        Query query	= em.createNativeQuery("SELECT * FROM viewRecommendedWines", viewRecommendedWines.class);
-        try { return (List<viewRecommendedWines>) query.getResultList(); }
+        Query query	= em.createQuery("SELECT b FROM viewShops b");
+        try { return (List<viewShops>) query.getResultList(); }
         catch (Exception e) { e.printStackTrace(); return null; }
     }
 }
