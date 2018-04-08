@@ -9,7 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import models.tblAppellations;
+import models.tblCountries;
+import models.tblRegions;
 import models.tblWineries;
 
 @Stateless
@@ -99,34 +103,80 @@ public class WineriesService {
     	}
     }
     
-    public tblWineries getByName(String countryIdStr, String regionIdStr, String appellationIdStr, String name)
+    private Integer getCountryIdByName(String name) {
+
+		TypedQuery<tblCountries> typedQuery = em.createNamedQuery("tblCountries.findByName", tblCountries.class);
+		typedQuery.setParameter("name", name);
+		try {
+			tblCountries singleResult = typedQuery.getSingleResult();
+			if (singleResult != null) {
+				return singleResult.getId();
+			} else {
+				return 0;
+			}
+		} catch (NoResultException nre) {
+			return 0;
+		}
+		  catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+
+	}
+    
+    private Integer getRegionIdByName(String name) {
+
+		TypedQuery<tblRegions> typedQuery = em.createNamedQuery("tblRegions.findByName", tblRegions.class);
+		typedQuery.setParameter("name", name);
+		try {
+			tblRegions singleResult = typedQuery.getSingleResult();
+			if (singleResult != null) {
+				return singleResult.getId();
+			} else {
+				return 0;
+			}
+		} catch (NoResultException nre) {
+			return 0;
+		}
+		  catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+
+	}
+    
+    private Integer getAppellationIdByName(String name) {
+
+		TypedQuery<tblAppellations> typedQuery = em.createNamedQuery("tblAppellations.findByName", tblAppellations.class);
+		typedQuery.setParameter("name", name);
+		try {
+			tblAppellations singleResult = typedQuery.getSingleResult();
+			if (singleResult != null) {
+				return singleResult.getId();
+			} else {
+				return 0;
+			}
+		} catch (NoResultException nre) {
+			return 0;
+		}
+		  catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+
+	}
+    
+    public tblWineries getByName(String countryName, String regionNane, String appellationName, String name)
     {	
     	if (name.isEmpty())
     		return null;
 
-    	Integer countryId = 0;
-    	Integer regionId = 0;
-    	Integer appellationId = 0;
+    	Integer countryId = this.getCountryIdByName(countryName);
+    	Integer regionId = this.getRegionIdByName(regionNane);
+    	Integer appellationId = this.getAppellationIdByName(appellationName);
     	
     	tblWineries winery = null;
     	
-    	try {
-    		countryId = Integer.parseInt(countryIdStr);
-    	} catch (Exception e) {
-    		countryId = -1; // I want to differentiate "0" from "" / "anything else"
-    	}
-    	
-    	try {
-    		regionId = Integer.parseInt(regionIdStr);
-    	} catch (Exception e) {
-    		regionId = -1; // I want to differentiate "0" from "" / "anything else"
-    	}
-    	
-    	try {
-    		appellationId = Integer.parseInt(appellationIdStr);
-    	} catch (Exception e) {
-    		appellationId = -1; // I want to differentiate "0" from "" / "anything else"
-    	}
     	
     	if ( (countryId >= 0) && (regionId >= 0) && (appellationId >= 0) ) {
     		winery = getWineryByCountryAndRegionAndAppellationAndName(countryId, regionId, appellationId, name);

@@ -88,23 +88,23 @@ public class Wineries extends HttpServlet {
 				}
 
 				final String name = request.getParameter("name");
-				String countryId = "";
-				String regionId = "";
-				String appellationId = "";
+				String countryName = "";
+				String regionName = "";
+				String appellationName = "";
 				
-				if(request.getParameterMap().containsKey("countryId")) {
-					countryId = request.getParameter("countryId");
+				if(request.getParameterMap().containsKey("countryName")) {
+					countryName = request.getParameter("countryName");
 				} 
 				
-				if(request.getParameterMap().containsKey("regionId")) {
-					regionId = request.getParameter("regionId");
+				if(request.getParameterMap().containsKey("regionName")) {
+					regionName = request.getParameter("regionName");
 				} 
 				
-				if(request.getParameterMap().containsKey("appellationId")) {
-					appellationId = request.getParameter("appellationId");
+				if(request.getParameterMap().containsKey("appellationName")) {
+					appellationName = request.getParameter("appellationName");
 				} 
 				
-				tblWineries winery = this.wineryService.getByName(countryId, regionId, appellationId, name);
+				tblWineries winery = this.wineryService.getByName(countryName, regionName, appellationName, name);
 				
 				if(winery!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(winery));
