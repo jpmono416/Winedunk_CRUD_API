@@ -84,6 +84,6 @@ public class tblWineries {
 	@Override
 	public String toString() {
 		return "tblWineries [id=" + id + ", name=" + name + ", tblCountry=" + tblCountry + ", regionId=" + regionId
-				+ ", appellationId=" + appellationId + ", deleted=" + deleted + ", wines=" + wines + "]";
+				+ ", appellationId=" + appellationId + ", deleted=" + deleted + "]";
 	}
 }

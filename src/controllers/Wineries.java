@@ -88,29 +88,28 @@ public class Wineries extends HttpServlet {
 				}
 
 				final String name = request.getParameter("name");
-				String countryName = "";
-				String regionName = "";
-				String appellationName = "";
-				
-				if(request.getParameterMap().containsKey("countryName")) {
-					countryName = request.getParameter("countryName");
-				} 
-				
-				if(request.getParameterMap().containsKey("regionName")) {
-					regionName = request.getParameter("regionName");
-				} 
-				
-				if(request.getParameterMap().containsKey("appellationName")) {
-					appellationName = request.getParameter("appellationName");
-				} 
-				
+
+				final String countryName = request.getParameterMap().containsKey("countryName") ? request.getParameter("countryName") : "";
+				final String regionName = request.getParameterMap().containsKey("regionName") ? request.getParameter("regionName") : "";
+				final String appellationName = request.getParameterMap().containsKey("appellationName") ? request.getParameter("appellationName") : "";
+
+				System.out.println(countryName);
+				System.out.println(regionName);
+				System.out.println(appellationName);
+
 				tblWineries winery = this.wineryService.getByName(countryName, regionName, appellationName, name);
-				
+
+				System.out.println(winery);
+
 				if(winery!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(winery));
 
 				return;
 							
+			}
+			default:
+			{
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action");
 			}
 		}
 	}

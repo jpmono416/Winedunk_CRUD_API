@@ -167,34 +167,21 @@ public class WineriesService {
 	}
     
     public tblWineries getByName(String countryName, String regionNane, String appellationName, String name)
-    {	
-    	if (name.isEmpty())
-    		return null;
-
+    {
     	Integer countryId = this.getCountryIdByName(countryName);
     	Integer regionId = this.getRegionIdByName(regionNane);
     	Integer appellationId = this.getAppellationIdByName(appellationName);
     	
-    	tblWineries winery = null;
+    	if ( (countryId >= 0) && (regionId >= 0) && (appellationId >= 0) )
+    		return getWineryByCountryAndRegionAndAppellationAndName(countryId, regionId, appellationId, name);
     	
-    	
-    	if ( (countryId >= 0) && (regionId >= 0) && (appellationId >= 0) ) {
-    		winery = getWineryByCountryAndRegionAndAppellationAndName(countryId, regionId, appellationId, name);
-    	} 
-    	
-    	if ( (winery == null) && (countryId >= 0) && (regionId >= 0) ) {
-    		winery = getWineryByCountryAndRegionAndName(countryId, regionId, name);
-    	} 
+    	if ((countryId >= 0) && (regionId >= 0) )
+    		return getWineryByCountryAndRegionAndName(countryId, regionId, name);
 
-    	if ( (winery == null) && (countryId >= 0) ) {
-    		winery = getWineryByCountryAndName(countryId, name);
-    	} 
+    	if ( (countryId >= 0) )
+    		return getWineryByCountryAndName(countryId, name);
 
-    	if (winery == null)  {
-    		winery = getWineryByName(name);
-    	} 
-    	
-    	return winery;
+   		return getWineryByName(name);
 
     }
 
