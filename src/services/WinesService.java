@@ -96,7 +96,7 @@ public class WinesService {
      * @return
      */
     public Boolean updateWine(tblWines wine)
-    {
+    {	
     	if(wine == null || wine.getId() == null) { return false; }
         em.merge(wine);
         return true;
