@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -65,6 +66,48 @@ public class UsersService extends DefaultServiceClass {
         try
         {
         	if(user.getId() != null) { user.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = user.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (user.getName() != null && user.getName().length() > maxColumnLength) {
+        		user.setName( user.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = user.getClass().getDeclaredField("preferredEmail").getAnnotation(Column.class).length();
+        	if (user.getPreferredEmail() != null && user.getPreferredEmail().length() > maxColumnLength) {
+        		user.setPreferredEmail( user.getPreferredEmail().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = user.getClass().getDeclaredField("preferredPhoneNumber").getAnnotation(Column.class).length();
+        	if (user.getPreferredPhoneNumber() != null && user.getPreferredPhoneNumber().length() > maxColumnLength) {
+        		user.setPreferredPhoneNumber( user.getPreferredPhoneNumber().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = user.getClass().getDeclaredField("loginEmail").getAnnotation(Column.class).length();
+        	if (user.getLoginEmail() != null && user.getLoginEmail().length() > maxColumnLength) {
+        		user.setLoginEmail( user.getLoginEmail().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = user.getClass().getDeclaredField("loginPassword").getAnnotation(Column.class).length();
+        	if (user.getLoginPassword() != null && user.getLoginPassword().length() > maxColumnLength) {
+        		user.setLoginPassword( user.getLoginPassword().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = user.getClass().getDeclaredField("loginToken").getAnnotation(Column.class).length();
+        	if (user.getLoginToken() != null && user.getLoginToken().length() > maxColumnLength) {
+        		user.setLoginToken( user.getLoginToken().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = user.getClass().getDeclaredField("recoveringPassEmail").getAnnotation(Column.class).length();
+        	if (user.getRecoveringPassEmail() != null && user.getRecoveringPassEmail().length() > maxColumnLength) {
+        		user.setRecoveringPassEmail( user.getRecoveringPassEmail().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = user.getClass().getDeclaredField("recoveringPassToken").getAnnotation(Column.class).length();
+        	if (user.getRecoveringPassToken() != null && user.getRecoveringPassToken().length() > maxColumnLength) {
+        		user.setRecoveringPassToken( user.getRecoveringPassToken().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	if(persistUserAndRefresh(user)) 
         	{ 
 	        	viewUsers persistedUser = getUserByEmail(user.getPreferredEmail());

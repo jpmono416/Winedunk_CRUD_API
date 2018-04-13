@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -34,6 +35,13 @@ public class BrowsersService {
         try
         {
         	if(browser.getId() != null) { browser.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = browser.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (browser.getName() != null && browser.getName().length() > maxColumnLength) {
+        		browser.setName( browser.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(browser);
         	return true;
         } catch (Exception e) { return false; }

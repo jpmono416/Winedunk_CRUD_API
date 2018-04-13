@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,13 @@ public class OperatingSystemsService {
         try
         {
         	if(device.getId() != null) { device.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = device.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (device.getName() != null && device.getName().length() > maxColumnLength) {
+        		device.setName( device.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(device);
         	return true;
         } catch (Exception e) { return false; }

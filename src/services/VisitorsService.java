@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,18 @@ public class VisitorsService {
         try
         {
         	if(device.getId() != null) { device.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = device.getClass().getDeclaredField("referrerURL").getAnnotation(Column.class).length();
+        	if (device.getReferrerURL() != null && device.getReferrerURL().length() > maxColumnLength) {
+        		device.setReferrerURL( device.getReferrerURL().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = device.getClass().getDeclaredField("userAgent").getAnnotation(Column.class).length();
+        	if (device.getUserAgent() != null && device.getUserAgent().length() > maxColumnLength) {
+        		device.setUserAgent( device.getUserAgent().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(device);
         	return true;
         } catch (Exception e) { e.printStackTrace(); return false; }

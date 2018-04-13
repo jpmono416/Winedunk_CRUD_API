@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -39,8 +40,14 @@ public class UserEmailsService {
     public Boolean addUserEmail(tblUserEmails userEmail) {
         try
         {
-        	System.out.println("UserEmail: " + userEmail.toString()); //TODO DELETE
         	if(userEmail.getId() != null) { userEmail.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = userEmail.getClass().getDeclaredField("emailAddress").getAnnotation(Column.class).length();
+        	if (userEmail.getEmailAddress() != null && userEmail.getEmailAddress().length() > maxColumnLength) {
+        		userEmail.setEmailAddress( userEmail.getEmailAddress().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(userEmail);
         	return true;
         } catch (Exception e) { return false; }

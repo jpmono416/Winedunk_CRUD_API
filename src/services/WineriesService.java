@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -203,6 +204,13 @@ public class WineriesService {
         try
         {
         	if(winery.getId() != null) { winery.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = winery.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (winery.getName() != null && winery.getName().length() > maxColumnLength) {
+        		winery.setName( winery.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(winery);
         	em.flush();
         	return winery.getId();

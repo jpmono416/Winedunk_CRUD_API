@@ -28,16 +28,20 @@ public class DataSource {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name="loginUrl")
+	// aripe length attribute added
+	@Column(name= "loginUrl", length = 200)
 	private String loginUrl;
 
-	@Column(name="tokenField")
+	// aripe length attribute added
+	@Column(name= "tokenField", length = 50)
 	private String tokenField;
 
-	@Column(name="authField")
+	// aripe length attribute added
+	@Column(name= "authField", length = 50)
 	private String authField;
 
-	@Column(name="dataUrl")
+	// aripe length attribute added
+	@Column(name= "dataUrl", length = 400)
 	private String dataUrl;
 
 	@NotNull

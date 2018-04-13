@@ -21,8 +21,9 @@ public class tblUserPhoneNumbers {
     private Integer id;
     public Integer getId() { return id; }
 	public void setId(Integer id) { this.id = id; }
-
-	@Column(name= "userPhoneNumber", nullable = false)
+	
+	// aripe length attribute added
+	@Column(name= "userPhoneNumber", length = 20, nullable = false)
     @NotNull
     private String userPhoneNumber;
     public String getPhoneNumber() { return userPhoneNumber; }

@@ -66,7 +66,8 @@ public class tblClicks {
 	public Date getTimestamp() { return timestamp; }
 	public void setTimestamp(Date timestamp) { this.timestamp = timestamp; }
 	
-	@Column(name = "destinationURL")
+	// aripe length attribute added
+	@Column(name= "destinationURL", length = 400)
 	private String destinationURL;
 	public String getDestinationURL() { return destinationURL; }
 	public void setDestinationURL(String destinationURL) { this.destinationURL = destinationURL; }

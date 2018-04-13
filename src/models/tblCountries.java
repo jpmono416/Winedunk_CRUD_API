@@ -34,7 +34,8 @@ public class tblCountries {
 		return this;
 	}
 
-	@Column(name = "name")
+	// aripe length attribute added
+	@Column(name= "name", length = 45)
 	private String name;
 	public String getName() {
 		return name;
@@ -44,7 +45,8 @@ public class tblCountries {
 		return this;
 	}
 
-	@Column(name = "`isoAlpha-2-Code`")
+	// aripe length attribute added
+	@Column(name= "`isoAlpha-2-Code`", length = 2)
 	private String isoAlpha2Code;
 	public String getIsoAlpha2Code() {
 		return isoAlpha2Code;
@@ -54,7 +56,8 @@ public class tblCountries {
 		return this;
 	}
 
-	@Column(name = "`isoAlpha-3-Code`")
+	// aripe length attribute added
+	@Column(name= "`isoAlpha-3-Code`", length = 3)
 	private String isoAlpha3Code;
 	public String getIsoAlpha3Code() {
 		return isoAlpha3Code;

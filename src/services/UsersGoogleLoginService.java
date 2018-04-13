@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,13 @@ public class UsersGoogleLoginService {
         try
         {
         	if(device.getId() != null) { device.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = device.getClass().getDeclaredField("googleIdToken").getAnnotation(Column.class).length();
+        	if (device.getGoogleIdToken() != null && device.getGoogleIdToken().length() > maxColumnLength) {
+        		device.setGoogleIdToken( device.getGoogleIdToken().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(device);
         	return true;
         } catch (Exception e) { e.printStackTrace(); return false; }

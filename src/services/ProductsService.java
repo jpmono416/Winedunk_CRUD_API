@@ -1,7 +1,8 @@
 package services; 
 import java.util.List; 
 import javax.ejb.LocalBean; 
-import javax.ejb.Stateless; 
+import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager; 
 import javax.persistence.NoResultException; 
 import javax.persistence.PersistenceContext; 
@@ -65,6 +66,54 @@ public class ProductsService {
 	{ 
 		product.setId(null); 
 		try { 
+			
+			// aripe 2018-04-12
+	    	
+	    	Integer maxColumnLength = product.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+	    	if (product.getName() != null && product.getName().length() > maxColumnLength) {
+	    		product.setName( product.getName().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+	    	
+	    	maxColumnLength = product.getClass().getDeclaredField("clicktag").getAnnotation(Column.class).length();
+	    	if (product.getClicktag() != null && product.getClicktag().length() > maxColumnLength) {
+	    		product.setClicktag( product.getClicktag().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+
+	    	maxColumnLength = product.getClass().getDeclaredField("productURL").getAnnotation(Column.class).length();
+	    	if (product.getProductURL() != null && product.getProductURL().length() > maxColumnLength) {
+	    		product.setProductURL( product.getProductURL().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+
+	    	maxColumnLength = product.getClass().getDeclaredField("partnerProductId").getAnnotation(Column.class).length();
+	    	if (product.getPartnerProductId() != null && product.getPartnerProductId().length() > maxColumnLength) {
+	    		product.setPartnerProductId( product.getPartnerProductId().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+
+	    	maxColumnLength = product.getClass().getDeclaredField("productType").getAnnotation(Column.class).length();
+	    	if (product.getProductType() != null && product.getProductType().length() > maxColumnLength) {
+	    		product.setProductType( product.getProductType().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+
+	    	maxColumnLength = product.getClass().getDeclaredField("partnerMerchantId").getAnnotation(Column.class).length();
+	    	if (product.getPartnerMerchantId() != null && product.getPartnerMerchantId().length() > maxColumnLength) {
+	    		product.setPartnerMerchantId( product.getPartnerMerchantId().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+
+	    	maxColumnLength = product.getClass().getDeclaredField("merchantName").getAnnotation(Column.class).length();
+	    	if (product.getMerchantName() != null && product.getMerchantName().length() > maxColumnLength) {
+	    		product.setMerchantName( product.getMerchantName().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+
+	    	maxColumnLength = product.getClass().getDeclaredField("merchantProductId").getAnnotation(Column.class).length();
+	    	if (product.getMerchantProductId() != null && product.getMerchantProductId().length() > maxColumnLength) {
+	    		product.setMerchantProductId( product.getMerchantProductId().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+
+	    	maxColumnLength = product.getClass().getDeclaredField("imageURL").getAnnotation(Column.class).length();
+	    	if (product.getImageURL() != null && product.getImageURL().length() > maxColumnLength) {
+	    		product.setImageURL( product.getImageURL().substring(0, maxColumnLength - 3).concat("...") );
+	    	}
+	    	
 			em.persist(product); 
 			em.flush(); 
 			return product.getId(); 

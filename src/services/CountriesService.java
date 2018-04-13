@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -45,6 +46,23 @@ public class CountriesService {
         try
         {
         	if(country.getId() != null) { country.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = country.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (country.getName() != null && country.getName().length() > maxColumnLength) {
+        		country.setName( country.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = country.getClass().getDeclaredField("isoAlpha-2-Code").getAnnotation(Column.class).length();
+        	if (country.getIsoAlpha2Code() != null && country.getIsoAlpha2Code().length() > maxColumnLength) {
+        		country.setIsoAlpha2Code( country.getIsoAlpha2Code().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = country.getClass().getDeclaredField("isoAlpha-3-Code").getAnnotation(Column.class).length();
+        	if (country.getIsoAlpha3Code() != null && country.getIsoAlpha3Code().length() > maxColumnLength) {
+        		country.setIsoAlpha3Code( country.getIsoAlpha3Code().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(country);
         	em.flush();
         	return country.getId();

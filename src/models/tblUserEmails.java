@@ -22,7 +22,8 @@ public class tblUserEmails {
     public void setId(Integer id) { this.id = id; }
 
 
-	@Column(name= "emailAddress", nullable = false)
+	// aripe length attribute added
+	@Column(name= "emailAddress", length = 200, nullable = false)
     @NotNull
     private String emailAddress;
     public String getEmailAddress() { return emailAddress; }

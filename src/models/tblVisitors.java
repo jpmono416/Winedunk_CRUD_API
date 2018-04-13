@@ -45,12 +45,14 @@ public class tblVisitors {
     public Date getTimeStamp() { return timeStamp; }
     public void setTimeStamp(Date timeStamp) { this.timeStamp = timeStamp; }
 
-    @Column(name = "referrerURL")
+    // aripe length attribute added
+    @Column(name= "referrerURL", length = 200)
     private String referrerURL;
     public String getReferrerURL() { return referrerURL; }
     public void setReferrerURL(String referrerURL) { this.referrerURL = referrerURL; }
 
-    @Column(name = "userAgent")
+    // aripe length attribute added
+    @Column(name= "userAgent", length = 200)
     private String userAgent;
     public String getUserAgent() { return userAgent; }
     public void setUserAgent(String userAgent) { this.userAgent = userAgent; }

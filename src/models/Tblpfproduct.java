@@ -2,6 +2,7 @@ package models;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,29 +47,47 @@ public class Tblpfproduct implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
+	// aripe annotation added
+	@Column(name= "clicktag", length = 100)
 	private String clicktag;
 
 	private Float deliveryCost;
 
+	// aripe annotation added
+	@Column(name= "imageURL", length = 400)
 	private String imageURL;
 
+	// aripe annotation added
+	@Column(name= "merchantName", length = 100)
 	private String merchantName;
 
+	// aripe annotation added
+	@Column(name= "merchantProductId", length = 30)
 	private String merchantProductId;
 
+	// aripe annotation added
+	@Column(name= "name", length = 100)
 	private String name;
 
+	// aripe annotation added
+	@Column(name= "partnerMerchantId", length = 20)
 	private String partnerMerchantId;
 
 	@Lob
 	private String partnerProductDescription;
 
+	// aripe annotation added
+	@Column(name= "partnerProductId", length = 30)
 	private String partnerProductId;
 
 	private Float price;
 
+	// aripe annotation added
+	@Column(name= "productType", length = 100)
 	private String productType;
 
+	// aripe annotation added
+	@Column(name= "productURL", length = 400)
 	private String productURL;
 
 	//bi-directional many-to-one association to Tblpf

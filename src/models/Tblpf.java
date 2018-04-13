@@ -47,7 +47,8 @@ public class Tblpf implements Serializable {
 		this.id = id;
 	}
 
-	@Column(nullable = false)
+	// aripe name and length attributes added
+	@Column(name= "description", length = 45, nullable = false)
 	private String description;
 
 	public String getDescription() {
@@ -59,7 +60,8 @@ public class Tblpf implements Serializable {
 		return this;
 	}
 
-	@Column(nullable = false)
+	// aripe name and length attributes added
+	@Column(name= "downloadURL", length = 500, nullable = false)
 	private String downloadURL;
 
 	public String getDownloadURL() {
@@ -130,7 +132,8 @@ public class Tblpf implements Serializable {
 		return this;
 	}
 
-	@Column(nullable = false)
+	// aripe length attribute added
+	@Column(name= "timePeriod", length = 13, nullable = false)
 	private String timePeriod;
 
 	public String getTimePeriod() {
@@ -289,7 +292,8 @@ public class Tblpf implements Serializable {
 	}
 
 	// force back ticks as "separator" is a reserved word by MySQL
-	@Column(name = "`separator`", nullable = false)
+	// aripe length attribute added
+	@Column(name = "`separator`", length = 10, nullable = false)
 	private String separator;
 
 	public String getSeparator() {

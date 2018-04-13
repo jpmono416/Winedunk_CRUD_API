@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,18 @@ public class UserBasketsService {
         try
         {
         	//if(device.getId() != null) { device.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = device.getClass().getDeclaredField("partnerProductId").getAnnotation(Column.class).length();
+        	if (device.getPartnerProductId() != null && device.getPartnerProductId().length() > maxColumnLength) {
+        		device.setPartnerProductId( device.getPartnerProductId().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = device.getClass().getDeclaredField("destinationURL").getAnnotation(Column.class).length();
+        	if (device.getDestinationURL() != null && device.getDestinationURL().length() > maxColumnLength) {
+        		device.setDestinationURL( device.getDestinationURL().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(device);
         	return true;
         } catch (Exception e) { e.printStackTrace(); return false; }

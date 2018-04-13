@@ -25,12 +25,14 @@ public class tblCurrencies {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
-    @Column(name = "name")
+    // aripe length attribute added
+    @Column(name= "name", length = 45)
     private String name;
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    @Column(name = "code")
+    // aripe length attribute added
+    @Column(name= "code", length = 3)
     private String code;
     public String getCode() { return code; }
 	public void setCode(String code) { this.code = code; }

@@ -50,7 +50,14 @@ public class tblUserWineReviews {
     public Date getAddedTimestamp() { return addedTimestamp; }
     public void setAddedTimestamp(Date addedTimestamp) { this.addedTimestamp = addedTimestamp; }
 
-    @Column(name = "comments")
+    // aripe the whole `title` attribute was missing
+    @Column(name= "title", length = 100)
+    private String title;
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    
+    // aripe length attribute added
+    @Column(name= "comments", length = 1000)
     private String comments;
     public String getComments() { return comments; }
     public void setComments(String comments) { this.comments = comments; }
@@ -75,6 +82,6 @@ public class tblUserWineReviews {
 	public String toString() {
 		return "{ \"id\" : " + id + " , \"userId\" : " + userId + " , \"wineId\" : " + wineId
 				+ " , \"addedDate\" : \"" + addedDate + "\" , \"addedTimestamp\" : \"" + addedTimestamp
-				+ "\" , \"comments\" : \"" + comments + "\" , \"numericWineId\" : " + numericWineId + " }";
+				+ "\" , \"title\" : \"" + title + "\" , \"comments\" : \"" + comments + "\" , \"numericWineId\" : " + numericWineId + " }";
 	}
 }

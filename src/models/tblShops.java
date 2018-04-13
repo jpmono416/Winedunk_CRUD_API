@@ -36,22 +36,26 @@ public class tblShops {
 	public void setId(Integer id) { this.id = id; }
 
 	@NotNull
-	@Column(name= "name")
+	// aripe length attribute added
+	@Column(name= "name", length = 45)
 	private String name;
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
 
-	@Column(name = "logo")
+	// aripe length attribute added
+	@Column(name= "Logo", length = 200)
 	private String logo;
 	public String getLogo() { return logo; }
 	public void setLogo(String logo) { this.logo = logo; }
 	
-	@Column(name = "homePage")
+	// aripe length attribute added
+	@Column(name= "homePage", length = 1000)
 	private String homePage;
 	public String getHomePage() { return homePage; }
 	public void setHomePage(String homePage) { this.homePage = homePage; }
 	
-	@Column(name = "genericProductPage")
+	// aripe length attribute added
+	@Column(name= "genericProductPage", length = 1000)
 	private String genericProductPage;
 	public String getGenericProductPage() { return genericProductPage; }
 	public void setGenericProductPage(String genericProductPage) { this.genericProductPage = genericProductPage; }

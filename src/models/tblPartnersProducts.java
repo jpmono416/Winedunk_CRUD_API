@@ -80,7 +80,8 @@ public class tblPartnersProducts {
 		return this;
 	}
 
-	@Column(name = "partnerProductId")
+	// aripe length attribute added
+	@Column(name= "partnerProductId", length = 45)
 	private String partnerProductId;
 	public String getPartnerProductId() {
 		return partnerProductId;
@@ -100,7 +101,8 @@ public class tblPartnersProducts {
 		return this;
 	}
 
-	@Column(name = "partnerDestinationUrl")
+	// aripe length attribute added
+	@Column(name= "partnerDestinationURL", length = 1000)
 	private String partnerDestinationUrl;
 	public String getPartnerDestinationUrl() {
 		return partnerDestinationUrl;
@@ -110,7 +112,8 @@ public class tblPartnersProducts {
 		return this;
 	}
 
-	@Column(name = "partnerMerchantId")
+	// aripe length attribute added
+	@Column(name= "partnerMerchantId", length = 20)
 	private String partnerMerchantId;
 	public String getPartnerMerchantId() {
 		return partnerMerchantId;
@@ -120,7 +123,8 @@ public class tblPartnersProducts {
 		return this;
 	}
 
-	@Column(name = "partnerMerchantProductId")
+	// aripe length attribute added
+	@Column(name= "partnerMerchantProductId", length = 45)
 	private String partnerMerchantProductId;
 	public String getPartnerMerchantProductId() {
 		return partnerMerchantProductId;
@@ -162,7 +166,8 @@ public class tblPartnersProducts {
 		return this;
 	}
 
-	@Column(name = "lastMD5")
+	// aripe length attribute added
+	@Column(name= "lastMD5", length = 32)
 	private String lastMD5;
 	public String getLastMD5() {
 		return lastMD5;

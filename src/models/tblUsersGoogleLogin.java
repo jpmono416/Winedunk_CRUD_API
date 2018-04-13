@@ -26,7 +26,8 @@ public class tblUsersGoogleLogin {
 	public tblUsers getUserId() { return userId; }
 	public void setUserId(tblUsers userId) { this.userId = userId; }
 	
-	@Column(name = "googleIdToken")
+	// aripe length attribute added
+	@Column(name= "googleIdToken", length = 45)
 	private String googleIdToken;
 	public String getGoogleIdToken() { return googleIdToken; }
 	public void setGoogleIdToken(String googleIdToken) { this.googleIdToken = googleIdToken; }

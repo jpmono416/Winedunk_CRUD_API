@@ -47,12 +47,14 @@ public class tblPartnersMerchants {
 	public tblPartners getPartner() { return partner; }
 	public void setPartner(tblPartners partner) { this.partner = partner; }
 
-	@Column(name = "partnerMerchantId")
+	// aripe length attribute added
+	@Column(name= "partnerMerchantId", length = 20)
 	private String partnerMerchantId;
 	public String getPartnerMerchantId() { return partnerMerchantId; }
 	public void setPartnerMerchantId(String partnerMerchantId) { this.partnerMerchantId = partnerMerchantId; }
 	
-	@Column(name = "partnerMerchantName")
+	// aripe length attribute added
+	@Column(name= "partnerMerchantName", length = 45)
 	private String partnerMerchantName;
 	public String getPartnerMerchantName() { return partnerMerchantName; }
 	public void setPartnerMerchantName(String partnerMerchantName) { this.partnerMerchantName = partnerMerchantName; }

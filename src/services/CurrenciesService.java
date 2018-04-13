@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,18 @@ public class CurrenciesService {
         try
         {
         	if(currency.getId() != null) { currency.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = currency.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (currency.getName() != null && currency.getName().length() > maxColumnLength) {
+        		currency.setName( currency.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = currency.getClass().getDeclaredField("code").getAnnotation(Column.class).length();
+        	if (currency.getCode() != null && currency.getCode().length() > maxColumnLength) {
+        		currency.setCode( currency.getCode().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(currency);
         	return true;
         } catch (Exception e) { return false; }

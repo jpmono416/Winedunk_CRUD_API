@@ -58,18 +58,21 @@ public class tblUsers {
     public tblLanguages getPreferredLanguageId() { return preferredLanguageId; }
     public void setPreferredLanguageId(tblLanguages preferredLanguageId) { this.preferredLanguageId = preferredLanguageId; }
 
-    @Column(name= "name")
+ 	// aripe length attribute added
+    @Column(name= "name", length = 45)
     private String name;
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    @Column(name = "preferredEmail", nullable = false)
+ // aripe length attribute added
+    @Column(name= "preferredEmail", length = 200, nullable = false)
     @NotNull
     private String preferredEmail;
     public String getPreferredEmail() { return preferredEmail; }
 	public void setPreferredEmail(String preferredEmail) { this.preferredEmail = preferredEmail; }
 	
-    @Column(name = "preferredPhoneNumber")
+	// aripe length attribute added
+	@Column(name= "preferredPhoneNumber", length = 20)
     private String preferredPhoneNumber;
     public String getPreferredPhoneNumber() { return preferredPhoneNumber; }
 	public void setPreferredPhoneNumber(String preferredPhoneNumber) { this.preferredPhoneNumber = preferredPhoneNumber; }
@@ -81,29 +84,34 @@ public class tblUsers {
     public Date getDoB() { return DoB; }
     public void setDoB(Date doB) { DoB = doB; }
 
-    @Column(name = "loginEmail")
+    // aripe length attribute added
+    @Column(name= "loginEmail", length = 200)
     @NotNull
     private String loginEmail;
     public String getLoginEmail() { return loginEmail; }
 	public void setLoginEmail(String loginEmail) { this.loginEmail = loginEmail; }
 	
-	@Column(name = "loginPassword")
+	// aripe length attribute added
+	@Column(name= "loginPassword", length = 32)
 	private String loginPassword;
 	public String getLoginPassword() { return loginPassword; }
 	public void setLoginPassword(String loginPassword) { this.loginPassword = loginPassword; }
 	
-	@Column(name = "loginToken")
+	// aripe length attribute added
+	@Column(name= "loginToken", length = 32)
 	private String loginToken;
 	public String getLoginToken() { return loginToken; }
 	public void setLoginToken(String loginToken) { this.loginToken = loginToken; }
 	
-    @Column(name = "recoveringPassEmail")
+	// aripe length attribute added
+	@Column(name= "recoveringPassEmail", length = 200)
     @NotNull
     private String recoveringPassEmail;
     public String getRecoveringPassEmail() { return recoveringPassEmail; }
     public void setRecoveringPassEmail(String recoveringPassEmail) { this.recoveringPassEmail = recoveringPassEmail; }
 
-    @Column(name = "recoveringPassToken")
+    // aripe length attribute added
+    @Column(name= "recoveringPassToken", length = 32)
     private String recoveringPassToken;
     public String getRecoveringPassToken() { return recoveringPassToken; }
 	public void setRecoveringPassToken(String recoveringPassToken) { this.recoveringPassToken = recoveringPassToken; }

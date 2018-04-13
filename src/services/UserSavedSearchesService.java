@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -46,6 +47,18 @@ public class UserSavedSearchesService {
         try
         {
         	if(userSavedSearch.getId() != null) { userSavedSearch.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = userSavedSearch.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (userSavedSearch.getName() != null && userSavedSearch.getName().length() > maxColumnLength) {
+        		userSavedSearch.setName( userSavedSearch.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = userSavedSearch.getClass().getDeclaredField("urlString").getAnnotation(Column.class).length();
+        	if (userSavedSearch.getUrlString() != null && userSavedSearch.getUrlString().length() > maxColumnLength) {
+        		userSavedSearch.setUrlString( userSavedSearch.getUrlString().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(userSavedSearch);
         	return true;
         } catch (Exception e) { return false; }

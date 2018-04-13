@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -37,6 +38,35 @@ public class PartnersProductsService {
         try
         {
         	if(product.getId() != null) { product.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = product.getClass().getDeclaredField("partnerProductId").getAnnotation(Column.class).length();
+        	if (product.getPartnerProductId() != null && product.getPartnerProductId().length() > maxColumnLength) {
+        		product.setPartnerProductId( product.getPartnerProductId().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = product.getClass().getDeclaredField("partnerDestinationURL").getAnnotation(Column.class).length();
+        	if (product.getPartnerDestinationUrl() != null && product.getPartnerDestinationUrl().length() > maxColumnLength) {
+        		product.setPartnerDestinationUrl( product.getPartnerDestinationUrl().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = product.getClass().getDeclaredField("partnerMerchantId").getAnnotation(Column.class).length();
+        	if (product.getPartnerMerchantId() != null && product.getPartnerMerchantId().length() > maxColumnLength) {
+        		product.setPartnerMerchantId( product.getPartnerMerchantId().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+
+        	
+        	maxColumnLength = product.getClass().getDeclaredField("partnerMerchantProductId").getAnnotation(Column.class).length();
+        	if (product.getPartnerMerchantProductId() != null && product.getPartnerMerchantProductId().length() > maxColumnLength) {
+        		product.setPartnerMerchantProductId( product.getPartnerMerchantProductId().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+
+        	
+        	maxColumnLength = product.getClass().getDeclaredField("lastMD5").getAnnotation(Column.class).length();
+        	if (product.getLastMD5() != null && product.getLastMD5().length() > maxColumnLength) {
+        		product.setLastMD5( product.getLastMD5().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(product);
         	em.flush();
         	return product.getId();

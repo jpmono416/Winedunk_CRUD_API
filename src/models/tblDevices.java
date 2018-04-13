@@ -28,7 +28,8 @@ public class tblDevices {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     
-    @Column(name= "name")
+    // aripe length attribute added
+    @Column(name= "name", length = 45)
     private String name;
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -54,7 +55,8 @@ public class tblDevices {
     public List<tblBrowsers> getBrowsers() { return browsers; }
     public void setBrowsers(List<tblBrowsers> browsers) { this.browsers = browsers; }
 
-    @Column(name = "deviceId")
+    // aripe length attribute added
+    @Column(name= "deviceId", length = 100)
     private String deviceId;
     public String getDeviceId() { return deviceId; }
     public void setDeviceId(String deviceId) { this.deviceId = deviceId; }

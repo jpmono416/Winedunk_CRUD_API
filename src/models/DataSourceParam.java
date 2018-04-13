@@ -30,13 +30,15 @@ public class DataSourceParam {
 	@JoinColumn(name="shop")
 	private tblShops tblShops	;
 
-	@Column(name="paramName")
+	// aripe length attribute added
+	@Column(name= "paramName", length = 45)
 	private String paramName;
 
 	@Column(name="pathSection")
 	private Short pathSection;
 
-	@Column(name="variablesName")
+	// aripe length attribute added
+	@Column(name= "variablesName", length = 45)
 	private String variablesName;
 
 	public DataSourceParam() {

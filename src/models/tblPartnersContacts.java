@@ -27,32 +27,38 @@ public class tblPartnersContacts {
     public tblPartners getPartner() { return partner; }
 	public void setPartner(tblPartners partner) { this.partner = partner; }
 	
-    @Column(name= "name")
+	// aripe length attribute added
+	@Column(name= "name", length = 45)
     private String name;
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    @Column(name= "position")
+    // aripe length attribute added
+    @Column(name= "position", length = 45)
     private String position;
     public String getPosition() { return position; }
 	public void setPosition(String position) { this.position = position; }
 
-	@Column(name= "primaryEmail")
+	// aripe length attribute added
+	@Column(name= "primaryEmail", length = 45)
 	private String primaryEmail;
 	public String getPrimaryEmail() { return primaryEmail; }
 	public void setPrimaryEmail(String primaryEmail) { this.primaryEmail = primaryEmail; }
 	
-	@Column(name= "primaryPhoneNumber")
+	// aripe length attribute added
+	@Column(name= "primaryPhoneNumber", length = 20)
 	private String primaryPhoneNumber;
 	public String getPrimaryPhoneNumber() { return primaryPhoneNumber; }
 	public void setPrimaryPhoneNumber(String primaryPhoneNumber) { this.primaryPhoneNumber = primaryPhoneNumber; }
 	
-	@Column(name= "secondaryEmail")
+	// aripe length attribute added
+	@Column(name= "secondaryEmail", length = 45)
 	private String secondaryEmail;
 	public String getSecondaryEmail() { return secondaryEmail; }
 	public void setSecondaryEmail(String secondaryEmail) { this.secondaryEmail = secondaryEmail; }
 	
-	@Column(name= "secondaryPhoneNumber")
+	// aripe length attribute added
+	@Column(name= "secondaryPhoneNumber", length = 45)
 	private String secondaryPhoneNumber;
 	public String getSecondaryPhoneNumber() { return secondaryPhoneNumber; }
 	public void setSecondaryPhoneNumber(String secondaryPhoneNumber) { this.secondaryPhoneNumber = secondaryPhoneNumber; }

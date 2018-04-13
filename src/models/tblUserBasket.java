@@ -63,7 +63,8 @@ public class tblUserBasket {
 	public Date getTimestamp() { return timestamp; }
 	public void setTimestamp(Date timestamp) { this.timestamp = timestamp; }
 	
-	@Column(name = "destinationURL")
+	// aripe length attribute added
+	@Column(name= "destinationURL", length = 400)
 	private String destinationURL;
 	public String getDestinationURL() { return destinationURL; }
 	public void setDestinationURL(String destinationURL) { this.destinationURL = destinationURL; }
@@ -73,7 +74,8 @@ public class tblUserBasket {
 	public Float getProductPrice() { return productPrice; }
 	public void setProductPrice(Float productPrice) { this.productPrice = productPrice; }
 	 
-	@Column(name = "partnerProductId")
+	// aripe length attribute added
+	@Column(name= "partnerProductId", length = 45)
 	private String partnerProductId;
 	public String getPartnerProductId() { return partnerProductId; } 
 	public void setPartnerProductId(String partnerProductId) {this.partnerProductId = partnerProductId; }

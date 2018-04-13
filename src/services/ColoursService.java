@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -47,6 +48,13 @@ public class ColoursService {
         try
         {
         	if(colour.getId() != null) { colour.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = colour.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (colour.getName() != null && colour.getName().length() > maxColumnLength) {
+        		colour.setName( colour.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(colour);
         	em.flush();
         	return colour.getId();

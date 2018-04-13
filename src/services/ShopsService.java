@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -49,6 +50,28 @@ public class ShopsService {
         try
         {
         	if(shop.getId() != null) { shop.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = shop.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (shop.getName() != null && shop.getName().length() > maxColumnLength) {
+        		shop.setName( shop.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = shop.getClass().getDeclaredField("Logo").getAnnotation(Column.class).length();
+        	if (shop.getLogo() != null && shop.getLogo().length() > maxColumnLength) {
+        		shop.setLogo( shop.getLogo().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = shop.getClass().getDeclaredField("homePage").getAnnotation(Column.class).length();
+        	if (shop.getHomePage() != null && shop.getHomePage().length() > maxColumnLength) {
+        		shop.setHomePage( shop.getHomePage().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = shop.getClass().getDeclaredField("genericProductPage").getAnnotation(Column.class).length();
+        	if (shop.getGenericProductPage() != null && shop.getGenericProductPage().length() > maxColumnLength) {
+        		shop.setGenericProductPage( shop.getGenericProductPage().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(shop);
         	return true;
         } catch (Exception e) { return false; }

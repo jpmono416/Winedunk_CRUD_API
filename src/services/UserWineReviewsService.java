@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -33,6 +34,18 @@ public class UserWineReviewsService {
         try
         {
         	if(userWineReview.getId() != null) { userWineReview.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = userWineReview.getClass().getDeclaredField("title").getAnnotation(Column.class).length();
+        	if (userWineReview.getTitle() != null && userWineReview.getTitle().length() > maxColumnLength) {
+        		userWineReview.setTitle( userWineReview.getTitle().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = userWineReview.getClass().getDeclaredField("comments").getAnnotation(Column.class).length();
+        	if (userWineReview.getComments() != null && userWineReview.getComments().length() > maxColumnLength) {
+        		userWineReview.setComments( userWineReview.getComments().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(userWineReview);
         	return true;
         } catch (Exception e) { e.printStackTrace(); return false; }

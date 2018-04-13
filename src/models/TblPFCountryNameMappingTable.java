@@ -40,7 +40,9 @@ public class TblPFCountryNameMappingTable implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="countryId")
 	private tblCountries tblCountries;
-	@Column(name="mechantName")
+
+	// aripe length attribute added
+	@Column(name= "mechantName", length = 200)
 	private String merchantCountryName;
 
 	public TblPFCountryNameMappingTable() {

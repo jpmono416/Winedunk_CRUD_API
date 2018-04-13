@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -36,6 +37,13 @@ public class GrapeVarietiesService {
         try
         {
         	if(grapeVariety.getId() != null) { grapeVariety.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = grapeVariety.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (grapeVariety.getName() != null && grapeVariety.getName().length() > maxColumnLength) {
+        		grapeVariety.setName( grapeVariety.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(grapeVariety);
         	em.flush();
         	return grapeVariety.getId();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,13 @@ public class PartnersTypesService {
         try
         {
         	if(partnerType.getId() != null) { partnerType.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = partnerType.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (partnerType.getName() != null && partnerType.getName().length() > maxColumnLength) {
+        		partnerType.setName( partnerType.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(partnerType);
         	return true;
         } catch (Exception e) { return false; }

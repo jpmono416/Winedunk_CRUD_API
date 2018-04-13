@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -35,6 +36,13 @@ public class NewslettersService {
         try
         {
         	if(newsletter.getId() != null) { newsletter.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = newsletter.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (newsletter.getName() != null && newsletter.getName().length() > maxColumnLength) {
+        		newsletter.setName( newsletter.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(newsletter);
         	return true;
         } catch (Exception e) { e.printStackTrace(); return false; }

@@ -26,12 +26,14 @@ public class tblUsersFacebookLogin {
 	public tblUsers getUserId() { return userId; }
 	public void setUserId(tblUsers userId) { this.userId = userId; }
 	
-	@Column(name = "fbAccessToken")
+	// aripe length attribute added
+	@Column(name= "fbAccessToken", length = 45)
 	private String fbAccessToken;
 	public String getFbAccessToken() { return fbAccessToken; }
 	public void setFbAccessToken(String fbAccessToken) { this.fbAccessToken = fbAccessToken; }
 	
-	@Column(name = "fbUserID")
+	// aripe length attribute added
+	@Column(name= "fbUserID", length = 45)
 	private String fbUserID;
 	public String getFbUserID() { return fbUserID; }
 	public void setFbUserID(String fbUserID) { this.fbUserID = fbUserID; }

@@ -153,7 +153,8 @@ public class tblWines {
 		this.tblWinesGrapeVariety = tblWinesGrapeVariety;
 	}
 
-	@Column(name = "name", nullable = false)
+	// aripe length attribute added
+	@Column(name= "name", length = 450, nullable = false)
 	@NotNull
 	private String name;
 
@@ -178,7 +179,8 @@ public class tblWines {
 		return this;
 	}
 
-	@Column(name = "shortDescription")
+	// aripe length attribute added
+	@Column(name= "shortDescription", length = 170)
 	private String shortDescription;
 
 	public String getShortDescription() {
@@ -226,7 +228,8 @@ public class tblWines {
 		return this;
 	}
 
-	@Column(name = "imageURL")
+	// aripe length attribute added
+	@Column(name= "imageURL", length = 1000)
 	private String imageURL;
 
 	public String getImageURL() {
@@ -238,7 +241,8 @@ public class tblWines {
 		return this;
 	}
 
-	@Column(name = "gtin")
+	// aripe length attribute added
+	@Column(name= "gtin", length = 14)
 	private String gtin;
 
 	public String getGtin() {

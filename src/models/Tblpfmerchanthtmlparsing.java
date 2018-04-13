@@ -2,6 +2,7 @@ package models;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +39,8 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@JoinColumn(name="merchantId")
 	private tblShops tblShops;
 
+	// aripe annotation added
+	@Column(name= "nameInWeb", length = 45)
 	private String nameInWeb;
 
 	//bi-directional many-to-one association to Tblpfparsingextractionmethod
@@ -50,14 +53,20 @@ public class Tblpfmerchanthtmlparsing implements Serializable {
 	@JoinColumn(name="extractionColumnsId")
 	private Tblpfextractioncolumn tblpfextractioncolumn;
 
+	// aripe annotation added
+	@Column(name= "specificTag", length = 45)
 	private String specificTag;
 
 	private Integer numberOfTags;
 
 	private Boolean mustMatch;
 
+	// aripe annotation added
+	@Column(name= "htmlTagType", length = 50)
 	private String htmlTagType;
 
+	// aripe annotation added
+	@Column(name= "attribute", length = 50)
 	private String attribute;
 
 	public Tblpfmerchanthtmlparsing() {}

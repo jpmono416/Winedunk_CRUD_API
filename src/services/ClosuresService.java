@@ -2,12 +2,15 @@ package services;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.metamodel.Metamodel;
 
 import models.tblClosures;
 
@@ -48,6 +51,13 @@ public class ClosuresService extends DefaultServiceClass {
         try
         {
         	if(closure.getId() != null) { closure.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = closure.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (closure.getName() != null && closure.getName().length() > maxColumnLength) {
+        		closure.setName( closure.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(closure);
         	em.flush();
         	return closure.getId();

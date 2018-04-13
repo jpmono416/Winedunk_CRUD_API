@@ -28,6 +28,8 @@ public class TblPFProductsBlackList implements Serializable {
 
 	private int partnerId;
 
+	// aripe annotation added
+	@Column(name= "partnerProductId", length = 45)
 	private String partnerProductId;
 
 	public TblPFProductsBlackList() {

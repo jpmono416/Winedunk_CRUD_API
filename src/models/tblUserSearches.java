@@ -54,7 +54,8 @@ public class tblUserSearches {
     public Date getTimeStamp() { return timeStamp; }
     public void setTimeStamp(Date timeStamp) { this.timeStamp = timeStamp; }
 
-    @Column(name = "keyWords")
+    // aripe length attribute added
+    @Column(name= "keyWords", length = 400)
     private String keyWords;
     public String getKeyWords() { return keyWords; }
     public void setKeyWords(String keyWords) { this.keyWords = keyWords; }

@@ -27,7 +27,8 @@ public class tblUserSavedSearches {
 	public void setId(Integer id) { this.id = id; }
 
 	@NotNull
-    @Column(name = "name", nullable = false)
+	// aripe length attribute added
+	@Column(name= "name", length = 45, nullable = false)
     private String name;
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -45,7 +46,8 @@ public class tblUserSavedSearches {
     public Date getCreated() { return created; }
     public void setCreated(Date created) { this.created = created; }
 
-    @Column(name = "urlString")
+    // aripe length attribute added
+    @Column(name= "urlString", length = 400)
     private String urlString;
     public String getUrlString() { return urlString; }
 	public void setUrlString(String urlString) { this.urlString = urlString; }

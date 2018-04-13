@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -40,6 +41,13 @@ public class UserPhoneNumbersService {
         try
         {
         	if(userPhoneNumber.getId() != null) { userPhoneNumber.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = userPhoneNumber.getClass().getDeclaredField("userPhoneNumber").getAnnotation(Column.class).length();
+        	if (userPhoneNumber.getPhoneNumber() != null && userPhoneNumber.getPhoneNumber().length() > maxColumnLength) {
+        		userPhoneNumber.setPhoneNumber( userPhoneNumber.getPhoneNumber().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(userPhoneNumber);
         	return true;
         } catch (Exception e) { return false; }

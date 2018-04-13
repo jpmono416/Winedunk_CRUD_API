@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,8 @@ public class Tblpfstatus implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
+	// aripe annotation added
+	@Column(name= "name", length = 45)
 	private String name;
 
 	//bi-directional many-to-one association to Tblpf

@@ -18,6 +18,8 @@ public class Tbldownloadmethod implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
+	// aripe whole @Column annotation added
+	@Column(name= "name", length = 45)
 	private String name;
 
 	public Tbldownloadmethod() {

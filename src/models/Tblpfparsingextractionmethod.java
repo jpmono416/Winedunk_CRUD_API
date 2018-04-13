@@ -19,6 +19,8 @@ public class Tblpfparsingextractionmethod implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
+	// aripe annotation added
+	@Column(name= "method", length = 45)
 	private String method;
 
 	//bi-directional many-to-one association to Tblpfmerchanthtmlparsing

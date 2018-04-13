@@ -38,7 +38,8 @@ public class tblWineTypes {
 		this.id = id;
 	}
 
-	@Column(name = "name")
+	// aripe length attribute added
+	@Column(name= "name", length = 100)
 	private String name;
 
 	public String getName() {

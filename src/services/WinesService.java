@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -84,6 +85,28 @@ public class WinesService {
         try
         {
         	if(wine.getId() != null) { wine.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = wine.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (wine.getName() != null && wine.getName().length() > maxColumnLength) {
+        		wine.setName( wine.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = wine.getClass().getDeclaredField("shortDescription").getAnnotation(Column.class).length();
+        	if (wine.getShortDescription() != null && wine.getShortDescription().length() > maxColumnLength) {
+        		wine.setShortDescription( wine.getShortDescription().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = wine.getClass().getDeclaredField("imageURL").getAnnotation(Column.class).length();
+        	if (wine.getImageURL() != null && wine.getImageURL().length() > maxColumnLength) {
+        		wine.setImageURL( wine.getImageURL().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
+        	maxColumnLength = wine.getClass().getDeclaredField("gtin").getAnnotation(Column.class).length();
+        	if (wine.getGtin() != null && wine.getGtin().length() > maxColumnLength) {
+        		wine.setGtin( wine.getGtin().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(wine);
         	em.flush();
         	return wine.getId();

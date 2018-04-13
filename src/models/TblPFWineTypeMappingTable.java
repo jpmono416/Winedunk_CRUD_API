@@ -22,7 +22,8 @@ public class TblPFWineTypeMappingTable {
 	@JoinColumn(name="wineTypeId")
 	tblWineTypes wineType;
 
-	@Column(name="mechantWineType")
+	// aripe length attribute added
+	@Column(name= "mechantWineType", length = 100)
 	String merchantWineType;
 
 	public TblPFWineTypeMappingTable(Integer id, tblWineTypes wineType, String merchantWineType) {

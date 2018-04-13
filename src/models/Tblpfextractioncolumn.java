@@ -18,9 +18,13 @@ public class Tblpfextractioncolumn implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
+	
+	// aripe annotation added
+	@Column(name= "columnName", length = 45)
 	private String columnName;
 
+	// aripe annotation added
+	@Column(name= "replaceRegularExpression", length = 200)
 	private String replaceRegularExpression;
 
 	//bi-directional many-to-one association to Tblpfmerchanthtmlparsing

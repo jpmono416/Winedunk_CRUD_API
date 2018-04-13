@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -47,6 +48,13 @@ public class ApellationsService {
         try
         {
         	if(apellation.getId() != null) { apellation.setId(null); }
+        	
+        	// aripe 2018-04-12
+        	Integer maxColumnLength = apellation.getClass().getDeclaredField("name").getAnnotation(Column.class).length();
+        	if (apellation.getName() != null && apellation.getName().length() > maxColumnLength) {
+        		apellation.setName( apellation.getName().substring(0, maxColumnLength - 3).concat("...") );
+        	}
+        	
         	em.persist(apellation);
         	em.flush();
         	return apellation.getId();

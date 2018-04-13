@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -118,6 +119,12 @@ public class PFProductsBlackListService {
 	public TblPFProductsBlackList addPFProductsBlackLis(TblPFProductsBlackList pfProductsBlackList) {
 		if (pfProductsBlackList != null) {
 			try {
+	        	
+	        	// aripe 2018-04-12
+	        	Integer maxColumnLength = pfProductsBlackList.getClass().getDeclaredField("partnerProductId").getAnnotation(Column.class).length();
+	        	if (pfProductsBlackList.getPartnerProductId() != null && pfProductsBlackList.getPartnerProductId().length() > maxColumnLength) {
+	        		pfProductsBlackList.setPartnerProductId( pfProductsBlackList.getPartnerProductId().substring(0, maxColumnLength - 3).concat("...") );
+	        	}
 				em.persist(pfProductsBlackList);
 				em.flush();
 				return pfProductsBlackList;				
