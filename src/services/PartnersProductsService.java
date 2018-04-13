@@ -45,10 +45,13 @@ public class PartnersProductsService {
         		product.setPartnerProductId( product.getPartnerProductId().substring(0, maxColumnLength - 3).concat("...") );
         	}
         	
-        	maxColumnLength = product.getClass().getDeclaredField("partnerDestinationURL").getAnnotation(Column.class).length();
-        	if (product.getPartnerDestinationUrl() != null && product.getPartnerDestinationUrl().length() > maxColumnLength) {
-        		product.setPartnerDestinationUrl( product.getPartnerDestinationUrl().substring(0, maxColumnLength - 3).concat("...") );
-        	}
+        	try {
+        		maxColumnLength = product.getClass().getDeclaredField("partnerDestinationURL").getAnnotation(Column.class).length();
+            	if (product.getPartnerDestinationUrl() != null && product.getPartnerDestinationUrl().length() > maxColumnLength) {
+            		product.setPartnerDestinationUrl( product.getPartnerDestinationUrl().substring(0, maxColumnLength - 3).concat("...") );
+            	}
+        	} catch (Exception e) {}
+        	
         	
         	maxColumnLength = product.getClass().getDeclaredField("partnerMerchantId").getAnnotation(Column.class).length();
         	if (product.getPartnerMerchantId() != null && product.getPartnerMerchantId().length() > maxColumnLength) {
