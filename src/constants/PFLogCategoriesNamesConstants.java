@@ -25,6 +25,8 @@ public class PFLogCategoriesNamesConstants {
 			this.logcategoryPROCESSFINISHEDname = generalSettingsConstants.getLogcategoryPROCESSFINISHEDname();
 			this.logcategoryPRODUCTSTANDARDIZATIONSTARTEDname = generalSettingsConstants.getLogcategoryPRODUCTSTANDARDIZATIONSTARTEDname();
 			this.logcategoryPRODUCTSTANDARDIZATIONFINISHEDname = generalSettingsConstants.getLogcategoryPRODUCTSTANDARDIZATIONFINISHEDname();
+			this.logcategorySPCALLEDname = generalSettingsConstants.getLogcategorySPCALLEDname();
+
 		}
 		catch (Exception e) {
 			this.logcategoryPROCESSSTARTEDname = "Process has started";
@@ -34,6 +36,7 @@ public class PFLogCategoriesNamesConstants {
 			this.logcategoryPROCESSFINISHEDname = "Process has finished";
 			this.logcategoryPRODUCTSTANDARDIZATIONSTARTEDname = "Product standardization has started";
 			this.logcategoryPRODUCTSTANDARDIZATIONFINISHEDname = "Product standardization has finished";
+			this.logcategorySPCALLEDname = "Stored Procedure called";
 		}
 		
 	}
@@ -65,5 +68,10 @@ public class PFLogCategoriesNamesConstants {
 	private String logcategoryPROCESSFINISHEDname;
 	public String getLogcategoryPROCESSFINISHEDname() { return logcategoryPROCESSFINISHEDname; }
 	public void setLogcategoryPROCESSFINISHEDname(String logcategoryPROCESSFINISHEDname) { this.logcategoryPROCESSFINISHEDname = logcategoryPROCESSFINISHEDname; }
+	
+	private String logcategorySPCALLEDname;
+	public String getLogcategorySPCALLEDname() { return logcategorySPCALLEDname; }
+	public void setLogcategorySPCALLEDname(String logcategorySPCALLEDname) { this.logcategorySPCALLEDname = logcategorySPCALLEDname; }
+	
 	
 }

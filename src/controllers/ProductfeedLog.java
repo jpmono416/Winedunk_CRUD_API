@@ -312,6 +312,19 @@ public class ProductfeedLog extends HttpServlet {
 						}
 						
 					}
+					
+					case "storedprocedureCalled" : {
+						
+						String spName = "";
+						try {
+							spName = request.getParameter("spName");
+							response.getWriter().print(pfLogService.StoredprocedureCalled(partner, spName));
+							break;
+						} catch (Exception e) {
+							response.getWriter().print("Exception while parsing partnerProductId");
+							break;
+						}
+					}
 				}
 				
 				return;

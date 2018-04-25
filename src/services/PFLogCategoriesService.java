@@ -97,4 +97,11 @@ public class PFLogCategoriesService {
     	return getOneByName(pfLogCategoriesNamesConstants.getLogcategoryPROCESSFINISHEDname());
     }
 
+    public TblPFLogCategories getLogcategorySPCALLED() {	
+
+		PFLogCategoriesNamesConstants pfLogCategoriesNamesConstants = new PFLogCategoriesNamesConstants();
+    	return getOneByName(pfLogCategoriesNamesConstants.getLogcategorySPCALLEDname());
+    }
+    
+
 }

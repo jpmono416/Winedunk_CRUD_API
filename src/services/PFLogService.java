@@ -324,6 +324,35 @@ public class PFLogService {
 		}
 
 	}
+
+	public TblPFLog StoredprocedureCalled(tblPartners partner, String spName) {
+
+		if (partner != null) {
+			TblPFLog pfLog = new TblPFLog();
+			try {
+				
+				pfLog.setPartner(partner);
+				pfLog.setLogProcess(pfLogProcessesService.getLogProcessProductsProcessor());
+				pfLog.setLogCategory(pfLogCategoriesService.getLogcategorySPCALLED());
+				pfLog.setLogType(pfLogTypesService.getLogTypeInformation());	    	
+				pfLog.setPartnerProductId("");
+				pfLog.setEntityName("");
+				pfLog.setEntityId(0);
+				pfLog.setDescription(spName.concat(" has been called"));
+				
+				return this.AddLogLine(pfLog);
+				
+			} catch (Exception e) {
+				System.out.println("Exception while executing CRUD / services / PFLogService / ProductProcessingBegin()");
+				return null;
+			}
+			
+		} else {
+			System.out.println("Attention! - CRUD / services / ProductProcessingBegin() - Log has NOT been inserted because some mandatory information is missinig in partner [" + partner + "]");
+			return null;
+		}
+
+	}
 	
 	private TblPFLog AddLogLine(TblPFLog pfLog) {
 		

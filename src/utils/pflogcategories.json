@@ -5,5 +5,6 @@
 	"logcategoryPRODUCTPROCESSINGname":"Product processing",
 	"logcategoryPRODUCTPROCESSINGFINISHEDname":"Product processing has finished",
 	"logcategoryPRODUCTSTANDARDIZATIONFINISHEDname":"Product standardization has finished",
-	"logcategoryPROCESSFINISHEDname":"Process has finished"
+	"logcategoryPROCESSFINISHEDname":"Process has finished",
+	"logcategorySPCALLEDname": "Stored Procedure called"
 }
