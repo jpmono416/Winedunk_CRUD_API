@@ -1,0 +1,5 @@
+{
+	"logtypeERRORname":"Error",
+	"logtypeWARNINGname":"Warning",
+	"logtypeINFORMATIONname":"Information"
+}

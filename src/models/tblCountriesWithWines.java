@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 
 
 @Entity
-@Table(name = "tblCountries")
+@Table(name = "tblCountriesWithWines")
 public class tblCountriesWithWines {
 
     @Transient

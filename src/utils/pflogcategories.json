@@ -1,0 +1,9 @@
+{
+	"logcategoryPROCESSSTARTEDname":"Process has started",
+	"logcategoryPRODUCTSTANDARDIZATIONSTARTEDname":"Product standardization has started",
+	"logcategoryPRODUCTPROCESSINGSTARTEDname":"Product processing has started",
+	"logcategoryPRODUCTPROCESSINGname":"Product processing",
+	"logcategoryPRODUCTPROCESSINGFINISHEDname":"Product processing has finished",
+	"logcategoryPRODUCTSTANDARDIZATIONFINISHEDname":"Product standardization has finished",
+	"logcategoryPROCESSFINISHEDname":"Process has finished"
+}

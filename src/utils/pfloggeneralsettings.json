@@ -1,0 +1,11 @@
+{
+	"rotateLogsDays":"30",
+	"productFeedsPocessorBeginDescription": "ProductFeedsPocessor has started",
+	"productFeedsPocessorEndDescription": "ProductFeedsPocessor has finished",
+	"productsProcessorBeginDescription": "ProductsProcessor has started",
+	"productsProcessorEndDescription": "ProductsProcessor has finished",
+	"processingProductBeginDescription": "Processing product has started",
+	"processingProductEndDescription": "Processing product has finished",
+	"standardizingProductBeginDescription": "Product standardization has started",
+	"standardizingProductEndDescription": "Product standardization has finished"
+}

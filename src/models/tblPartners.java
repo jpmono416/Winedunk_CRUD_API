@@ -75,7 +75,14 @@ public class tblPartners {
 	private List<tblPartnersMerchants> partnersMerchants;
 	public List<tblPartnersMerchants> getPartnersMerchants() { return partnersMerchants; }
 	public void setPartnersMerchants(List<tblPartnersMerchants> partnersMerchants) { this.partnersMerchants = partnersMerchants; }
-	
+
+	// aripe 2018-04-14
+	//bi-directional many-to-one association to Tblpflog
+	/*
+	@OneToMany(mappedBy="tblpartner")
+	private List<TblPFLog> tblPFLogs;
+	public List<TblPFLog> getPartnerLogs() { return tblPFLogs; }
+	*/
 
 	public tblPartners(Integer id) { this.id = id;}
     public tblPartners()

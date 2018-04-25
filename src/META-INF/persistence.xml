@@ -5,6 +5,10 @@
 	<persistence-unit name="Winedunk">
 		<!--  <jta-data-source><!- java:app/winedunk_main - java:app/jdbc/winedunk_UAT</jta-data-source> -->
 		<jta-data-source>java:app/jdbc/winedunk_UAT</jta-data-source>
+		<class>models.TblPFLogProcesses</class>
+		<class>models.TblPFLog</class>
+		<class>models.TblPFLogPK</class>
+		<class>models.TblPFLogTypes</class>
 		<properties>
 		    <property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/>
 		    <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />

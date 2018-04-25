@@ -61,7 +61,7 @@ public class Tblpf implements Serializable {
 	}
 
 	// aripe name and length attributes added
-	@Column(name= "downloadURL", length = 500, nullable = false)
+	@Column(name= "downloadURL", length = 600, nullable = false)
 	private String downloadURL;
 
 	public String getDownloadURL() {
