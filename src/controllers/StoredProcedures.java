@@ -2,8 +2,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -37,8 +34,7 @@ public class StoredProcedures extends HttpServlet {
 		switch(action) 
 		{
 
-			case "callSPUpdateMinPriceOntblWines" :
-			{
+			case "callSPUpdateMinPriceOntblWines" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -54,8 +50,7 @@ public class StoredProcedures extends HttpServlet {
 				break;
 			}
 		
-			case "callSPUpdateCountriesWithWines" :
-			{
+			case "callSPUpdateCountriesWithWines" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -71,8 +66,7 @@ public class StoredProcedures extends HttpServlet {
 				break;
 			}
 		
-			case "callSPUpdateRecommendedWines" :
-			{
+			case "callSPUpdateRecommendedWines" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -88,8 +82,7 @@ public class StoredProcedures extends HttpServlet {
 				break;
 			}
 		
-			case "callSPUpdateBestOffersbyCountry" :
-			{
+			case "callSPUpdateBestOffersbyCountry" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -105,8 +98,7 @@ public class StoredProcedures extends HttpServlet {
 				break;
 			}
 		
-			case "callSPUpdateBestOffersbyMerchants" :
-			{
+			case "callSPUpdateBestOffersbyMerchants" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -122,8 +114,7 @@ public class StoredProcedures extends HttpServlet {
 				break;
 			}
 		
-			case "callSPUpdateBestOffersbyWineType" :
-			{
+			case "callSPUpdateBestOffersbyWineType" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -131,6 +122,22 @@ public class StoredProcedures extends HttpServlet {
 			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		    	
 			    	boolean result = storedProcedures.callSPUpdateBestOffersbyWineType();
+					
+					response.setStatus(200);
+					response.getWriter().write("{\"result\" = \"" + result + "\"}");
+				} 
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+		
+			case "callSPFlaggingProductsAsDeleted" : {
+				try 
+				{ 
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	boolean result = storedProcedures.callSPFlaggingProductsAsDeleted();
 					
 					response.setStatus(200);
 					response.getWriter().write("{\"result\" = \"" + result + "\"}");

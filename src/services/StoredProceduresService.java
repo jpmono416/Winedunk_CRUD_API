@@ -91,5 +91,18 @@ public class StoredProceduresService {
             return false;
     	}
     }
+
+
+	public boolean callSPFlaggingProductsAsDeleted() {
+    	try {
+    		StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("spFlaggingProductsAsDeleted");
+            storedProcedure.execute();
+            return true;
+    	} catch (Exception e) {
+    		System.out.println("An exception occurred while calling stored procedure spFlaggingProductsAsDeleted()");
+    		e.printStackTrace();
+            return false;
+    	}
+    }
     
 }

@@ -11,7 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import models.tblPartnersProducts;
-import models.tblUsers;
 
 @Stateless
 @LocalBean
