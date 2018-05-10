@@ -85,6 +85,31 @@ public class GrapeVarieties extends HttpServlet {
 
 				return;
 			}
+			
+			case "getGrapeVarietyNameById" :
+			{
+				try 
+				{
+					if(!request.getParameterMap().containsKey("id")) { return; }
+					Integer id = Integer.parseInt(request.getParameter("id"));
+		    	
+					tblGrapeVarieties grapeVariety = grapeVarietyService.getGrapeVarietyById(id);
+					if ( (grapeVariety != null) && (grapeVariety.getId() == id) ) {
+						response.setStatus(200);
+						response.getWriter().write(grapeVariety.getName());
+					} else {
+						response.setStatus(204);
+						response.getWriter().write("");
+					}
+				}
+				catch (Exception e) { 
+					response.setStatus(500);
+					response.getWriter().write("");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
 		}
 	}
 

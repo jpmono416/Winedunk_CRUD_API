@@ -73,6 +73,31 @@ public class Colours extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			
+			case "getColourNameById" :
+			{
+				try 
+				{
+					if(!request.getParameterMap().containsKey("id")) { return; }
+					Integer id = Integer.parseInt(request.getParameter("id"));
+					
+					tblColours colour = colourService.getColourById(id);
+					if ( (colour != null) && (colour.getId() == id) ) {
+						response.setStatus(200);
+						response.getWriter().write(colour.getName());	
+					} else {
+						response.setStatus(204);
+						response.getWriter().write("");
+					}
+				}
+				catch (Exception e) { 
+					response.setStatus(500);
+					response.getWriter().write("");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
 			case "getByName":
 			{
 				if(!request.getParameterMap().containsKey("name"))

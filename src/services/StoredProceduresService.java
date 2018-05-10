@@ -14,6 +14,19 @@ public class StoredProceduresService {
 	@PersistenceContext(unitName = "Winedunk")
 	EntityManager em;
 
+	public boolean callSPUpdateDataAfterImporting() {
+    	try {
+            
+    		StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("spUpdateDataAfterImporting");
+            storedProcedure.execute();
+            return true;
+    	} catch (Exception e) {
+    		System.out.println("An exception occurred while calling stored procedure spUpdateDataAfterImporting()");
+    		e.printStackTrace();
+            return false;
+    	}
+    }
+	
     public boolean callSPUpdateMinPriceOntblWines() {
     	try {
             

@@ -41,7 +41,15 @@ public class BestOffersByWineTypeViewService {
 	
 	public List<viewBestOffersbyWineTypes> getSimplifiedBestOffersForWineType(Integer wineTypeId)
 	{
-		String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL` FROM `viewBestOffersbyWineTypes` WHERE `wineTypeId` =  ?1 ORDER BY `positionIndex`";
+		// aripe
+		// String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL` FROM `viewBestOffersbyWineTypes` WHERE `wineTypeId` =  ?1 ORDER BY `positionIndex`";
+		
+		String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL`, `wineMinimumPrice`"
+				   + ", `winePreviousMaxPrice`, `wineMoneySaving`, `winePercentageOff`, `wineMinimumPriceClicktag` "
+				   + "FROM `viewBestOffersbyWineTypes` "
+				   + "WHERE `wineTypeId` = ?1 "
+				   + "ORDER BY `winePercentageOff` desc";
+		
 		Query query = em.createNativeQuery(queryString, viewBestOffersbyWineTypes.class);
 		query.setParameter(1, wineTypeId);
 		

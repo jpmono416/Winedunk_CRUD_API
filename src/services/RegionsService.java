@@ -14,6 +14,7 @@ import models.tblRegions;
 @Stateless
 @LocalBean
 public class RegionsService {
+	
 	@PersistenceContext(unitName = "Winedunk")
 	EntityManager em;
 

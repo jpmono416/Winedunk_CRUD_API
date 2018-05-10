@@ -53,6 +53,8 @@ public class PFLogService {
 		}
 	}
 	
+	// TODO AQUI, (comprobar): la primera línea del log debe incrementar el executionNumber, ahora mismo mantiene el anterior - funciona bien solo si no hay ninguna (0)
+	
 	public TblPFLog ProductFeedsPocessorBegin(tblPartners partner, String pfName) {
 
 		// rotating log

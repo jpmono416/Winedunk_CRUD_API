@@ -41,7 +41,15 @@ public class BestOffersByMerchantViewService {
 	
 	public List<viewBestOffersbyMerchants> getSimplifiedBestOffersForMerchant(Integer merchantId)
 	{
-		String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL` FROM `viewBestOffersbyMerchants` WHERE `merchantId` =  ?1 ORDER BY `positionIndex`";
+		// aripe
+		// String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL` FROM `viewBestOffersbyMerchants` WHERE `merchantId` =  ?1 ORDER BY `positionIndex`";
+		
+		String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL`, `wineMinimumPrice`"
+						   + ", `winePreviousMaxPrice`, `wineMoneySaving`, `winePercentageOff`, `wineMinimumPriceClicktag` "
+						   + "FROM `viewBestOffersbyMerchants` "
+						   + "WHERE `merchantId` = ?1 "
+						   + "ORDER BY `winePercentageOff` desc";
+		
 		Query query = em.createNativeQuery(queryString, viewBestOffersbyMerchants.class);
 		query.setParameter(1, merchantId);
 		

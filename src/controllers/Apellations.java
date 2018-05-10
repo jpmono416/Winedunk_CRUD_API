@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblAppellations;
+import models.tblColours;
 import services.ApellationsService;
 import services.DefaultServiceClass;
 
@@ -81,6 +82,31 @@ public class Apellations extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				return;
 			}
+			
+			case "getAppellationNameById" :
+			{
+				try 
+				{
+					if(!request.getParameterMap().containsKey("id")) { return; }
+					Integer id = Integer.parseInt(request.getParameter("id"));
+					
+					tblAppellations appellation = apellationService.getApellationById(id);
+					if ( (appellation != null) && (appellation.getId() == id) ) {
+						response.setStatus(200);
+						response.getWriter().write(appellation.getName());	
+					} else {
+						response.setStatus(204);
+						response.getWriter().write("");
+					}
+				}
+				catch (Exception e) { 
+					response.setStatus(500);
+					response.getWriter().write("");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
 			case "getByName":
 				if(!request.getParameterMap().containsKey("name"))
 					return;

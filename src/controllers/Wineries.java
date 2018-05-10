@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import models.tblAppellations;
 import models.tblWineries;
 import services.WineriesService;
 
@@ -79,6 +80,31 @@ public class Wineries extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			
+			case "getWineryNameById" :
+			{
+				try 
+				{
+					if(!request.getParameterMap().containsKey("id")) { return; }
+					Integer id = Integer.parseInt(request.getParameter("id"));
+					
+					tblWineries winery = wineryService.getWineryById(id);
+					if ( (winery != null) && (winery.getId() == id) ) {
+						response.setStatus(200);
+						response.getWriter().write(winery.getName());	
+					} else {
+						response.setStatus(204);
+						response.getWriter().write("");
+					}
+				}
+				catch (Exception e) { 
+					response.setStatus(500);
+					response.getWriter().write("");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
 			case "getByName":
 			{				
 				if(!request.getParameterMap().containsKey("name"))

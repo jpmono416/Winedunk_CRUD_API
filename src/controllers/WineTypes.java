@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblWineTypes;
 import services.WineTypesService;
+import views.viewWineTypesWithBestOffers;
 
 /**
  * Servlet implementation class WineTypes
@@ -60,10 +61,10 @@ public class WineTypes extends HttpServlet {
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
 					Integer id = Integer.parseInt(request.getParameter("id"));
-
+					
 			    	//Set pretty printing of json
 					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
+
 					tblWineTypes wineType = wineTypeService.getWineTypeById(id);
 					String arrayToJson = this.mapper.writeValueAsString(wineType);
 					

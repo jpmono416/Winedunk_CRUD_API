@@ -97,14 +97,14 @@ public class WinesView extends HttpServlet {
 				if(parameterMap.containsKey("chosenClosure")) 	{ persistSearch.setClosureId(parameterMap.get("chosenClosure")[0]); }
 				if(parameterMap.containsKey("chosenType")) 		{ persistSearch.setTypeId(parameterMap.get("chosenType")[0]); }
 				if(parameterMap.containsKey("grapeVarietyId")) 	{ persistSearch.setGrapeVarietyId(parameterMap.get("grapeVarietyId")[0]); }
-				if(parameterMap.containsKey("order")) 			{ persistSearch.setSortingMethod(parameterMap.get("order")[0]); }
+				if(parameterMap.containsKey("order")) 			{ persistSearch.setOrderBy(parameterMap.get("order")[0]); }
 				if(parameterMap.containsKey("currentPage"))		{ persistSearch.setPageNumber(Integer.parseInt(parameterMap.get("currentPage")[0])); }
 				if(parameterMap.containsKey("merchant"))		{ persistSearch.setMerchantId(parameterMap.get("merchant")[0]); }
 				if(parameterMap.containsKey("ratingValue"))		{ persistSearch.setRatingValue(parameterMap.get("ratingValue")[0]);}
 				try 
 				{ 
 					persistSearch.getResults();
-					if(persistSearch.getJsonResult().length() <= 0) { return; }
+					if(persistSearch.getJsonResult().length() <= 0) { return; } 
 					
 					PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(
 						    response.getOutputStream(), StandardCharsets.UTF_8), true);
@@ -144,7 +144,7 @@ public class WinesView extends HttpServlet {
 				if(parameterMap.containsKey("chosenClosure")) 	{ persistSearch.setClosureId(parameterMap.get("chosenClosure")[0]); }
 				if(parameterMap.containsKey("chosenType")) 		{ persistSearch.setTypeId(parameterMap.get("chosenType")[0]); }
 				if(parameterMap.containsKey("grapeVarietyId")) 	{ persistSearch.setGrapeVarietyId(parameterMap.get("grapeVarietyId")[0]); }
-				if(parameterMap.containsKey("order")) 			{ persistSearch.setSortingMethod(parameterMap.get("order")[0]); }
+				if(parameterMap.containsKey("order")) 			{ persistSearch.setOrderBy(parameterMap.get("order")[0]); }
 				if(parameterMap.containsKey("currentPage"))		{ persistSearch.setPageNumber(Integer.parseInt(parameterMap.get("currentPage")[0])); }
 				if(parameterMap.containsKey("ratingValue"))		{ persistSearch.setRatingValue(parameterMap.get("ratingValue")[0]);}
 				

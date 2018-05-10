@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "tblWineTypes")
 @NamedQuery(name = "tblWineTypes.findByName", query = "SELECT t from tblWineTypes t WHERE t.name = :name")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+//  @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class tblWineTypes {
 
 	@Transient

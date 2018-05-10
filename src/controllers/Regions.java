@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblRegions;
+import models.tblWineries;
 import services.RegionsService;
 
 /**
@@ -73,6 +74,31 @@ public class Regions extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				return;
 			}
+			
+			case "getRegionNameById" :
+			{
+				try 
+				{
+					if(!request.getParameterMap().containsKey("id")) { return; }
+					Integer id = Integer.parseInt(request.getParameter("id"));
+					
+					tblRegions region = regionService.getRegionById(id);
+					if ( (region != null) && (region.getId() == id) ) {
+						response.setStatus(200);
+						response.getWriter().write(region.getName());	
+					} else {
+						response.setStatus(204);
+						response.getWriter().write("");
+					}
+				}
+				catch (Exception e) { 
+					response.setStatus(500);
+					response.getWriter().write("");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
 			case "getByName":
 			{
 				if(!request.getParameterMap().containsKey("name"))

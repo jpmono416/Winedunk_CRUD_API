@@ -45,10 +45,25 @@ public class viewRecommendedWines {
 	public Float getMinimumPrice() { return minimumPrice; }
 	public void setMinimumPrice(Float minimumPrice) { this.minimumPrice = minimumPrice; }
 	
-	@Column(name = "destinationURL")
-	private String destinationURL;
-	public String getDestinationURL() { return destinationURL; }
-	public void setDestinationURL(String destinationURL) { this.destinationURL = destinationURL; }
+	@Column(name = "previousMaxPrice")
+	private Float previousMaxPrice;
+	public Float getPreviousMaxPrice() { return previousMaxPrice; }
+	public void setPreviousMaxPrice(Float previousMaxPrice) { this.previousMaxPrice = previousMaxPrice; }
+	
+	@Column(name = "saving")
+	private Float saving;
+	public Float getSaving() { return saving; }
+	public void setSaving(Float saving) { this.saving = saving; }
+	
+	@Column(name = "percentageOff")
+	private Integer percentageOff;
+	public Integer getPercentageOff() { return percentageOff; }
+	public void setPercentageOff(Integer percentageOff) { this.percentageOff = percentageOff; }
+	
+	@Column(name = "minimumPriceClicktag")
+	private String minimumPriceClicktag;
+	public String getMinimumPriceClicktag() { return minimumPriceClicktag; }
+	public void setMinimumPriceClicktag(String minimumPriceClicktag) { this.minimumPriceClicktag = minimumPriceClicktag; }
 	
 	
 	public viewRecommendedWines() 
@@ -59,13 +74,20 @@ public class viewRecommendedWines {
         this.shortDescription = null;
         this.imageURL = null;
         this.minimumPrice = null;
-        this.destinationURL = null;
+        this.previousMaxPrice = null;
+        this.saving = null;
+        this.percentageOff = null;
+        this.minimumPriceClicktag = null;
     }
 	@Override
 	public String toString() {
 		return "{ \"id\" : \"" + id + "\", name\" : \"" + name + "\", defaultDescription\" : \"" + defaultDescription
 				+ "\", shortDescription\" : \"" + shortDescription + "\", imageURL\" : \"" + imageURL
-				+ "\", minimumPrice\" : \"" + minimumPrice + "\", destinationURL\" : \"" + destinationURL + "] }";
+				+ "\", minimumPrice\" : \"" + minimumPrice 
+				+ "\", previousMaxPrice\" : \"" + previousMaxPrice 
+				+ "\", saving\" : \"" + saving 
+				+ "\", percentageOff\" : \"" + percentageOff 
+				+ "\", minimumPriceClicktag\" : \"" + minimumPriceClicktag + "] }";
 	}
 	
 }

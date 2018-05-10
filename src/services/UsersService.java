@@ -6,6 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import models.tblUsers;
@@ -47,7 +48,14 @@ public class UsersService extends DefaultServiceClass {
     		viewUsers user = (viewUsers) query.getSingleResult();
     		
         	return user;
-    	} catch (Exception e) { e.printStackTrace();  return null; } 
+        	
+    	} catch (NoResultException nr) {
+    		return null;
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+    		return null;
+    	} 
     }
     
     public viewUsers getUserByAuth(String auth)

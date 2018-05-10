@@ -154,6 +154,26 @@ public class viewBestOffersbyMerchants extends Object {
 	public Float getWineMinimumPrice() { return wineMinimumPrice; }
 	public void setWineMinimumPrice(Float wineMinimumPrice) { this.wineMinimumPrice = wineMinimumPrice; }
 	
+	@Column(name = "winePreviousMaxPrice")
+	private Float winePreviousMaxPrice;
+	public Float getWinePreviousMaxPrice() { return winePreviousMaxPrice; }
+	public void setWinePreviousMaxPrice(Float winePreviousMaxPrice) { this.winePreviousMaxPrice = winePreviousMaxPrice; }
+	
+	@Column(name = "wineMoneySaving")
+	private Float wineMoneySaving;
+	public Float getWineMoneySaving() { return wineMoneySaving; }
+	public void setWineMoneySaving(Float wineMoneySaving) { this.wineMoneySaving = wineMoneySaving; }
+	
+	@Column(name = "winePercentageOff")
+	private Integer winePercentageOff;
+	public Integer getWinePercentageOff() { return winePercentageOff; }
+	public void setWinePercentageOff(Integer winePercentageOff) { this.winePercentageOff = winePercentageOff; }
+	
+	@Column(name = "wineMinimumPriceClicktag")
+	private String wineMinimumPriceClicktag;
+	public String getWineMinimumPriceClicktag() { return wineMinimumPriceClicktag; }
+	public void setWineMinimumPriceClicktag(String wineMinimumPriceClicktag) { this.wineMinimumPriceClicktag = wineMinimumPriceClicktag; }
+	
 	@Column(name = "wineDeleted")
     private Boolean wineDeleted;
 	public Boolean getWineDeleted() { return wineDeleted; }
@@ -191,6 +211,10 @@ public class viewBestOffersbyMerchants extends Object {
         this.wineClosureName = null;
         this.wineGtin = null;
         this.wineMinimumPrice = null;
+        this.winePreviousMaxPrice = null;
+        this.wineMoneySaving = null;
+        this.winePercentageOff = null;
+        this.wineMinimumPriceClicktag = null;
         this.wineDeleted = false;
     }
 	
@@ -209,6 +233,12 @@ public class viewBestOffersbyMerchants extends Object {
 				+ wineDefaultDescription + "\", wineBottleSize\" : \"" + wineBottleSize + "\", wineAbv\" : \"" + wineAbv
 				+ "\", wineImageURL\" : \"" + wineImageURL + "\", wineClosureId\" : \"" + wineClosureId
 				+ "\", wineClosureName\" : \"" + wineClosureName + "\", wineGtin\" : \"" + wineGtin
-				+ "\", wineMinimumPrice\" : \"" + wineMinimumPrice + "\", wineDeleted\" : \"" + wineDeleted + " }";
+				+ "\" , \"wineMinimumPrice\" : \"" + wineMinimumPrice
+				+ "\" , \"winePreviousMaxPrice\" : \"" + winePreviousMaxPrice
+				+ "\" , \"wineMoneySaving\" : \"" + wineMoneySaving
+				+ "\" , \"winePercentageOff\" : \"" + winePercentageOff
+				+ "\" , \"wineMinimumPriceClicktag\" : \"" + wineMinimumPriceClicktag
+				+ "\" , \"wineDeleted\" : \"" + wineDeleted
+				+ "\" }";
 	}
 }

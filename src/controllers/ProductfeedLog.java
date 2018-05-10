@@ -300,7 +300,11 @@ public class ProductfeedLog extends HttpServlet {
 							logtypeName = request.getParameter("logtypeName");
 							partnerProductId = request.getParameter("partnerProductId");
 							entityName = request.getParameter("entityName");
-							entityId = Integer.parseInt(request.getParameter("entityId"));
+							try {
+								entityId = Integer.parseInt(request.getParameter("entityId"));
+							} catch (Exception e) {
+								entityId = 0;
+							}
 							description = request.getParameter("description");
 
 							response.getWriter().print(pfLogService.ProductProcessing(partner, logtypeName, partnerProductId, entityName, entityId, description));

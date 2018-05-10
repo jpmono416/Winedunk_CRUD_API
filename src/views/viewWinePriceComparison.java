@@ -54,15 +54,30 @@ public class viewWinePriceComparison {
 	public String getDestinationURL() { return destinationURL; }
 	public void setDestinationURL(String destinationURL) { this.destinationURL = destinationURL; }
 	
+	@Column(name = "oldProductPrice")
+	private float oldProductPrice;
+	public float getOldProductPrice() { return oldProductPrice; }
+	public void setOldProductPrice(float oldProductPrice) { this.oldProductPrice = oldProductPrice; }
+	
 	@Column(name = "productPrice")
-	private Float productPrice;
-	public Float getProductPrice() { return productPrice; }
-	public void setProductPrice(Float productPrice) { this.productPrice = productPrice; }
+	private float productPrice;
+	public float getProductPrice() { return productPrice; }
+	public void setProductPrice(float productPrice) { this.productPrice = productPrice; }
+	
+	@Column(name = "moneySaving")
+	private float moneySaving;
+	public float getMoneySaving() { if (moneySaving < 0) { return 0; } else { return moneySaving; } }
+	public void setMoneySaving(float moneySaving) { this.moneySaving = moneySaving; }
+	
+	@Column(name = "percentageOff")
+	private int percentageOff;
+	public int getPercentageOff() { if (percentageOff < 0) { return 0; } else { return percentageOff; } }
+	public void setPercentageOff(int percentageOff) { this.percentageOff = percentageOff; }
 	
 	@Column(name = "deliveringCost")
-	private Float deliveringCost;
-	public Float getDeliveringCost() { return deliveringCost; }
-	public void setDeliveringCost(Float deliveringCost) { this.deliveringCost = deliveringCost; }
+	private float deliveringCost;
+	public float getDeliveringCost() { return deliveringCost; }
+	public void setDeliveringCost(float deliveringCost) { this.deliveringCost = deliveringCost; }
 	
 	@Column(name = "stock")
 	private Integer stock;
@@ -80,8 +95,11 @@ public class viewWinePriceComparison {
         this.partnerProductId = null;
         this.shopImageURL = null;
         this.destinationURL = null;
-        this.productPrice = null;
-        this.deliveringCost = null;
+        this.oldProductPrice = 0;
+        this.productPrice = 0;
+        this.moneySaving = 0;
+        this.percentageOff = 0;
+        this.deliveringCost = 0;
         this.stock = null;
     }
 }

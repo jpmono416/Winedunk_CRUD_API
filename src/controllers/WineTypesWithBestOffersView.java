@@ -52,15 +52,18 @@ public class WineTypesWithBestOffersView extends HttpServlet {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
-					Integer id = Integer.parseInt(request.getParameter("id"));
-					
-					ObjectMapper objectMapper = new ObjectMapper();
-			    	//Set pretty printing of json
-			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		    	
-			    	viewWineTypesWithBestOffers bestOffersByWineType = wineTypesWithBestOffersService.getWineTypesWithBestOfferBy(id);
-					String arrayToJson = objectMapper.writeValueAsString(bestOffersByWineType);
-					response.getWriter().write(arrayToJson);
+					try {
+						Integer id = Integer.parseInt(request.getParameter("id"));
+						ObjectMapper objectMapper = new ObjectMapper();
+				    	//Set pretty printing of json
+				    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+			    	
+				    	viewWineTypesWithBestOffers bestOffersByWineType = wineTypesWithBestOffersService.getWineTypesWithBestOfferBy(id);
+						String arrayToJson = objectMapper.writeValueAsString(bestOffersByWineType);
+						response.getWriter().write(arrayToJson);
+					} catch (Exception e) {
+						return;
+					}
 				}
 				catch (Exception e) { e.printStackTrace(); }
 			break;

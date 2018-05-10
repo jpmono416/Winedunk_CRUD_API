@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblCountries;
+import models.tblCountryBasicData;
 import services.CountriesService;
 
 /**
@@ -79,6 +80,29 @@ public class Countries extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			
+			case "getCountryBasicDataById" :
+			{
+				try 
+				{
+					if(!request.getParameterMap().containsKey("id")) { return; }
+					Integer id = Integer.parseInt(request.getParameter("id"));
+					
+					
+			    	//Set pretty printing of json
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+					tblCountryBasicData country = countryService.getCountryBasicDataById(id);
+					if(country!=null)
+					{
+						String arrayToJson = mapper.writeValueAsString(country);
+						response.getWriter().write(arrayToJson);
+					}
+				}
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+			
 			case "getByName":
 				if(!request.getParameterMap().containsKey("name"))
 				{

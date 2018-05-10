@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import models.tblCountries;
+import models.tblCountryBasicData;
 
 @Stateless
 @LocalBean
@@ -87,6 +88,11 @@ public class CountriesService {
         }
         return false;
     }
+
+	public tblCountryBasicData getCountryBasicDataById(Integer id) {
+    	try { return em.find(tblCountryBasicData.class, id); }
+    	catch (Exception e) { e.printStackTrace(); return null; }
+	}
     
      /*
     Countries

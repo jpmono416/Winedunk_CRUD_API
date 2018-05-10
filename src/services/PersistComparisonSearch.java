@@ -37,8 +37,17 @@ public class PersistComparisonSearch {
 	private String destinationURL;
 	public String getDestinationURL() { return destinationURL; }
 	
-	private String productPrice;
-	public String getProductPrice() { return productPrice; }
+	private float oldProductPrice;
+	public float getOldProductPrice() { return oldProductPrice; }
+	
+	private float productPrice;
+	public float getProductPrice() { return productPrice; }
+	
+	private float moneySaving;
+	public float getMoneySaving() { if (moneySaving < 0) { return 0; } else { return moneySaving; } }
+	
+	private int percentageOff;
+	public int getPercentageOff() { if (percentageOff < 0) { return 0; } else { return percentageOff; } }
 	
 	private String deliveringCost;
 	public String getDeliveringCost() { return deliveringCost; }
@@ -58,7 +67,10 @@ public class PersistComparisonSearch {
 	    + " `wpc`.`partnerId`,"
 	    + " `wpc`.`partnerProductId`,"
 	    + " `wpc`.`destinationURL`,"
+	    + " `wpc`.`oldProductPrice`,"
 	    + " `wpc`.`productPrice`,"
+	    + " `wpc`.`moneySaving`,"
+	    + " `wpc`.`percentageOff`,"
 	    + " `wpc`.`deliveringCost`,"
 	    + " `wpc`.`stock`"
     + " FROM `viewWinePriceComparison` AS `wpc`";

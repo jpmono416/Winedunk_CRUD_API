@@ -34,6 +34,22 @@ public class StoredProcedures extends HttpServlet {
 		switch(action) 
 		{
 
+			case "callSPUpdateDataAfterImporting": {
+				try 
+				{ 
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	boolean result = storedProcedures.callSPUpdateDataAfterImporting();
+					
+					response.setStatus(200);
+					response.getWriter().write("{\"result\" = \"" + result + "\"}");
+				} 
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+			
 			case "callSPUpdateMinPriceOntblWines" : {
 				try 
 				{ 

@@ -41,7 +41,15 @@ public class BestOffersByCountryViewService {
 	
 	public List<viewBestOffersbyCountries> getSimplifiedBestOffersForCountry(Integer merchantId)
 	{
-		String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL` FROM `viewBestOffersbyCountry` WHERE `countryId` =  ?1 ORDER BY `positionIndex`";
+		// aripe
+		// String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL` FROM `viewBestOffersbyCountry` WHERE `countryId` =  ?1 ORDER BY `positionIndex`";
+		
+		String queryString = "SELECT `id`, `wineId`, `wineName`, `wineShortDescription`, `wineImageURL`, `wineMinimumPrice`"
+				   + ", `winePreviousMaxPrice`, `wineMoneySaving`, `winePercentageOff`, `wineMinimumPriceClicktag` "
+				   + "FROM `viewBestOffersbyCountry` "
+				   + "WHERE `countryId` = ?1 "
+				   + "ORDER BY `winePercentageOff` desc";
+		
 		Query query = em.createNativeQuery(queryString, viewBestOffersbyCountries.class);
 		query.setParameter(1, merchantId);
 		
