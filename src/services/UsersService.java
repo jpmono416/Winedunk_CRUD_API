@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import models.tblUsers;
 import views.viewUsers;
 @Stateless
@@ -28,15 +30,23 @@ public class UsersService extends DefaultServiceClass {
         catch (Exception e) { e.printStackTrace(); return null; }
     }
 
-    public tblUsers getUserById(Integer id)
-    {
-    	try 
-    	{ 
-    		tblUsers user = entityManager.find(tblUsers.class, id);
-    		return user;
+    public tblUsers getUserById(Integer id) {
+
+    	if (id > 0) { 
+    		TypedQuery<tblUsers> typedQuery = em.createNamedQuery("tblUsers.findById", tblUsers.class);
+    		typedQuery.setParameter("userId", id);
+    		try {
+    			tblUsers singleResult = typedQuery.getSingleResult();
+    			return singleResult;
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    			return null;
+    		}
+    	} else {
+    		return null;
     	}
-    	catch (Exception e) { e.printStackTrace(); return null; }
-    }
+    	
+	}
 
     public viewUsers getUserByEmail(String email)
     {
@@ -44,7 +54,6 @@ public class UsersService extends DefaultServiceClass {
     	{
     		System.out.println("Email on class: " + email);
     		Query query = em.createQuery("SELECT u FROM viewUsers u WHERE u.loginEmail = :email", viewUsers.class).setParameter("email", email);
-    		System.out.println("Query: " + query.toString()); //TODO DEL
     		viewUsers user = (viewUsers) query.getSingleResult();
     		
         	return user;
@@ -64,7 +73,6 @@ public class UsersService extends DefaultServiceClass {
     	{
     		String queryString = "SELECT * FROM viewUsers WHERE loginToken = \"" + auth + "\"";
     		Query query = em.createNativeQuery(queryString, viewUsers.class);
-    		System.out.println("Query: " + query.toString());
     		viewUsers user = (viewUsers) query.getSingleResult();
     		return user;
     	} catch (Exception e) { e.printStackTrace(); return null; }

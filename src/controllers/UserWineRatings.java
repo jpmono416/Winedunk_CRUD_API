@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import models.tblUserWineReviews;
 import models.tblUserWinesRatings;
 import services.UserWineRatingsService;
 
@@ -76,6 +78,35 @@ public class UserWineRatings extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			
+			case "getRatingsForUser" : {
+				try 
+				{
+					if(!request.getParameterMap().containsKey("userId")) { return; }
+					Integer userId = Integer.parseInt(request.getParameter("userId"));
+					
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	List<tblUserWinesRatings> userWineReview = userWineRatingService.getRatingsForUser(userId);
+			    	if (userWineReview != null) {
+
+						String arrayToJson = objectMapper.writeValueAsString(userWineReview);
+						response.setStatus(200);
+						response.getWriter().write(arrayToJson);
+						
+			    	} else {
+
+						response.setStatus(204);
+						response.getWriter().write("");
+						
+			    	}
+				}
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+			
 		}
 	}
 
@@ -102,8 +133,8 @@ public class UserWineRatings extends HttpServlet {
 					tblUserWinesRatings userWineRating = new tblUserWinesRatings();
 					ObjectMapper mapper = new ObjectMapper();
 					userWineRating = mapper.readValue(content, tblUserWinesRatings.class);
-					System.out.println("Arriving and mapped : " + userWineRating.toString()); //TODO DELETE
-					if(userWineRatingService.addUserWineRating(userWineRating)) { response.getWriter().print("True"); }
+					
+					response.getWriter().print(userWineRatingService.addUserWineRating(userWineRating)); 
 				} catch (Exception e) { e.printStackTrace();return;}
 				break;
 			}
@@ -116,7 +147,7 @@ public class UserWineRatings extends HttpServlet {
 					ObjectMapper mapper = new ObjectMapper();
 					userWineRating = mapper.readValue(content, tblUserWinesRatings.class);
 					
-					if(userWineRatingService.updateUserWineRating(userWineRating)) { response.getWriter().print("True"); }
+					response.getWriter().print(userWineRatingService.updateUserWineRating(userWineRating));
 				} catch (Exception e) { return;}
 				break;
 			}
@@ -126,12 +157,12 @@ public class UserWineRatings extends HttpServlet {
 				try
 				{
 					Integer id = Integer.parseInt(content);
-					if(userWineRatingService.deleteUserWineRating(id)) { response.getWriter().print("True"); }
+					response.getWriter().print(userWineRatingService.deleteUserWineRating(id));
 				} catch (Exception e) { return; }
 				break;
 			}
 			
-			case "checkUserHasReviewed" :
+			case "checkUserHasRated" :
 			{
 				try
 				{
@@ -141,10 +172,93 @@ public class UserWineRatings extends HttpServlet {
 					Integer userId = Integer.parseInt(splittedContent.get(0));
 					Integer wineId = Integer.parseInt(splittedContent.get(1));
 					
-					if(userWineRatingService.userHasReviewed(userId, wineId)) { response.getWriter().print("True"); }
+					response.getWriter().print(userWineRatingService.userHasRated(userId, wineId));
 				} catch (Exception e) { return; }
 				break;
 			}
+			
+			case "getCountForWine" : {
+				try 
+				{
+					Integer wineId = Integer.parseInt(content);
+					if (wineId > 0) {
+						
+						Integer count = userWineRatingService.getAmountOfRatingForWine(wineId);
+						response.setStatus(200);
+						response.getWriter().print(count);
+						return;
+					} else {
+						response.setStatus(204);
+						response.getWriter().print("0");
+						return;
+					}
+				}
+				catch (Exception e) {
+
+					response.setStatus(204);
+					response.getWriter().print("0");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
+			case "getUserRatingValue": {
+				try 
+				{
+					List<String> splittedContent;					
+					splittedContent = new ArrayList<String>(Arrays.asList(content.split(",")));
+					
+					Integer userId = Integer.parseInt(splittedContent.get(0));
+					Integer wineId = Integer.parseInt(splittedContent.get(1));
+					
+					if ( (wineId != null) && (wineId > 0) && (userId != null) && (userId > 0)) {
+
+						Integer userRating = userWineRatingService.getUserRatingValue(userId, wineId);
+						response.setStatus(200);
+						response.getWriter().print(userRating);
+						return;
+						
+					} else {
+						response.setStatus(204);
+						response.getWriter().print("0");
+						return;
+					}
+				} catch (Exception e) {
+
+					response.setStatus(204);
+					response.getWriter().print("0");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
+			case "getAVGForWine" : {
+				try 
+				{
+					Integer wineId = Integer.parseInt(content);
+					if (wineId > 0) {
+						
+						double AVG = userWineRatingService.getAVGRatingForWine(wineId);
+				    	DecimalFormat df = new DecimalFormat();
+				    	df.setMaximumFractionDigits(1);
+				    	
+						response.setStatus(200);
+						response.getWriter().print(df.format(AVG));
+						
+					} else {
+						response.setStatus(204);
+						response.getWriter().print("0");
+					}
+				}
+				catch (Exception e) {
+
+					response.setStatus(204);
+					response.getWriter().print("0");
+					e.printStackTrace(); 
+				}
+				break;
+			}
+			
 		}
 	}
 

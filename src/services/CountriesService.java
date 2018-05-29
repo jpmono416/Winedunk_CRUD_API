@@ -9,9 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import models.tblCountries;
 import models.tblCountryBasicData;
+import models.viewCountriesWithWines;
 
 @Stateless
 @LocalBean
@@ -92,6 +94,17 @@ public class CountriesService {
 	public tblCountryBasicData getCountryBasicDataById(Integer id) {
     	try { return em.find(tblCountryBasicData.class, id); }
     	catch (Exception e) { e.printStackTrace(); return null; }
+	}
+
+	public List<viewCountriesWithWines> getCountriesWithWines() {
+        
+		TypedQuery<viewCountriesWithWines> typedQuery = em.createNamedQuery("viewCountriesWithWines.findAll", viewCountriesWithWines.class);
+		try {
+			return (List<viewCountriesWithWines>) typedQuery.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
     
      /*

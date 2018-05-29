@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,6 +25,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblUsers")
+@NamedQueries({
+	@NamedQuery(name="tblUsers.findById", query="SELECT x FROM tblUsers x WHERE x.id = :userId")
+})
 public class tblUsers {
 
     @Transient
@@ -64,7 +69,7 @@ public class tblUsers {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
- // aripe length attribute added
+    // aripe length attribute added
     @Column(name= "preferredEmail", length = 200, nullable = false)
     @NotNull
     private String preferredEmail;

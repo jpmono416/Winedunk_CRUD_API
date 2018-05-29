@@ -8,8 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import models.tblAppellations;
+import models.tblRegions;
+import models.viewAppellationsWithWines;
 
 @Stateless
 @LocalBean
@@ -79,4 +82,59 @@ public class ApellationsService {
         }
         return false;
     }
+
+	public List<tblAppellations> getAppellationsFilteredByCountryId(Integer countryId) {
+        
+		if ( (countryId != null) && (countryId > 0) ) {
+		
+			TypedQuery<tblAppellations> typedQuery = em.createNamedQuery("tblAppellations.findAllByCountryId", tblAppellations.class);
+			typedQuery.setParameter("countryId", countryId);
+			try {
+				return (List<tblAppellations>) typedQuery.getResultList();
+			} catch (Exception e) {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		
+	}
+
+	public List<viewAppellationsWithWines> getAppellationsByRegionId(Integer regionId) {
+        
+		if ( (regionId != null) && (regionId > 0) ) {
+		
+			TypedQuery<viewAppellationsWithWines> typedQuery = em.createNamedQuery("viewAppellationsWithWines.findAllByRegionId", viewAppellationsWithWines.class);
+			typedQuery.setParameter("regionId", regionId);
+			try {
+				return (List<viewAppellationsWithWines>) typedQuery.getResultList();
+			} catch (Exception e) {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		
+	}
+
+	public List<tblAppellations> getAppellationsFilteredByCountryIdAndRegionId(Integer countryId, Integer regionId) {
+        
+		if ( (countryId != null) && (countryId > 0) && (regionId != null) && (regionId > 0) ) {
+		
+			TypedQuery<tblAppellations> typedQuery = em.createNamedQuery("tblAppellations.findAllByCountryIdAndRegionId", tblAppellations.class);
+			typedQuery.setParameter("countryId", countryId);
+			typedQuery.setParameter("regionId", regionId);
+			try {
+				return (List<tblAppellations>) typedQuery.getResultList();
+			} catch (Exception e) {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		
+	}
 }

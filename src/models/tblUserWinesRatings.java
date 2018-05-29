@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,6 +17,10 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tblUsers_Wines_Ratings")
+@NamedQueries({
+	@NamedQuery(name="tblUserWinesRatings.findAll", query="SELECT x FROM tblUserWinesRatings x"),
+	@NamedQuery(name = "tblUserWinesRatings.findById", query = "SELECT x FROM tblUserWinesRatings x WHERE x.id = :id")
+})
 public class tblUserWinesRatings {
 
     @Transient
@@ -44,10 +50,9 @@ public class tblUserWinesRatings {
     public void setAddedDate(Date addedDate) { this.addedDate = addedDate; }
 
     @Column(name = "addedTimestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date addedTimestamp;
-    public Date getAddedTimestamp() { return addedTimestamp; }
-    public void setAddedTimestamp(Date addedTimestamp) { this.addedTimestamp = addedTimestamp; }
+    private long addedTimestamp;
+    public long getAddedTimestamp() { return addedTimestamp; }
+    public void setAddedTimestamp(long addedTimestamp) { this.addedTimestamp = addedTimestamp; }
 
     @Column(name = "rating")
     private Integer rating;
@@ -61,7 +66,7 @@ public class tblUserWinesRatings {
         this.userId = null;
         this.wineId = null;
         this.addedDate = null;
-        this.addedTimestamp = null;
+        this.addedTimestamp = 0;
         this.rating = null;
     }
     

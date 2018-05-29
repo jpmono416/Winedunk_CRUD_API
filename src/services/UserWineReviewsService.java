@@ -73,16 +73,18 @@ public class UserWineReviewsService {
     {
     	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `userId` = ?1 AND `wineId` = ?2 LIMIT 1", tblUserWineReviews.class);
     	query.setParameter(1, userId).setParameter(2, wineId);
-    	
-    	tblUserWineReviews review = (tblUserWineReviews) query.getSingleResult();
-    	if(review != null) { return true; }
-    	
-    	return false;
+    	tblUserWineReviews review = null;
+    	try {
+    		review = (tblUserWineReviews) query.getSingleResult();
+    	} catch (Exception e) {
+    		review = null;
+    	}
+    	return (review != null);
     }
     
     public List<tblUserWineReviews> getReviewsForWine(Integer wineId)
     {
-    	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `wineId` = ?1", tblUserWineReviews.class);
+    	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `wineId` = ?1 ORDER BY `addedTimestamp` DESC", tblUserWineReviews.class);
     	query.setParameter(1, wineId);
     	
     	@SuppressWarnings("unchecked")
@@ -91,4 +93,37 @@ public class UserWineReviewsService {
 		
     	return null;
     }
+
+	public List<tblUserWineReviews> getReviewsForUser(Integer userId) {
+		if ( (userId != null) && (userId > 0) ) {
+			
+			Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Reviews WHERE `userId` = ?1 ORDER BY `addedTimestamp` DESC", tblUserWineReviews.class);
+	    	query.setParameter(1, userId);
+	    	
+	    	@SuppressWarnings("unchecked")
+			List<tblUserWineReviews> reviews = query.getResultList();
+	    	return reviews;
+		} else {
+			return null;
+		}
+		
+	}
+
+	public Integer getAmountOfReviewsForWine(Integer wineId) {
+		if ( (wineId != null) && (wineId > 0) ) {
+			
+			String query = "SELECT count(*) FROM `tblUsers_Wines_Reviews` WHERE `wineId` = "+wineId;
+			Integer amountOfResults = 0;
+			try {
+				amountOfResults = Integer.valueOf(((Long) em.createNativeQuery(query).getSingleResult()).intValue());
+			} catch (Exception e) {
+				amountOfResults = 0;
+			}
+			
+	    	return amountOfResults;
+		} else {
+			return 0;
+		}
+		
+	}
 }

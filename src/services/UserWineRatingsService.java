@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import models.tblUserWineReviews;
 import models.tblUserWinesRatings;
 @Stateless
 @LocalBean
@@ -56,14 +57,83 @@ public class UserWineRatingsService {
         return false;
     }
     
-    public Boolean userHasReviewed(Integer userId, Integer wineId)
+    public Boolean userHasRated(Integer userId, Integer wineId)
     {
     	Query query = em.createNativeQuery("SELECT * FROM tblUsers_Wines_Ratings WHERE `userId` = ?1 AND `wineId` = ?2 LIMIT 1", tblUserWinesRatings.class);
     	query.setParameter(1, userId).setParameter(2, wineId);
-    	
-    	tblUserWinesRatings rating = (tblUserWinesRatings) query.getSingleResult();
-    	if(rating != null) { return true; }
-    	
-    	return false;
+    	tblUserWinesRatings rating = null;
+    	try {
+    		rating = (tblUserWinesRatings) query.getSingleResult();
+    	} catch (Exception e) {
+    		rating = null;
+    	}
+    	return (rating != null);
     }
+
+	public Integer getAmountOfRatingForWine(Integer wineId) {
+		if ( (wineId != null) && (wineId > 0) ) {
+			
+			String query = "SELECT count(*) FROM `tblUsers_Wines_Ratings` WHERE `wineId` = "+wineId;
+			Integer amountOfResults = 0;
+			try {
+				amountOfResults = Integer.valueOf(((Long) em.createNativeQuery(query).getSingleResult()).intValue());
+			} catch (Exception e) {
+				amountOfResults = 0;
+			}
+	    	return amountOfResults;
+		} else {
+			return 0;
+		}
+		
+	}
+
+	public List<tblUserWinesRatings> getRatingsForUser(Integer userId) {
+		if ( (userId != null) && (userId > 0) ) {
+			
+			Query query = em.createNativeQuery("SELECT * FROM `tblUsers_Wines_Ratings` WHERE `userId` = ?1", tblUserWinesRatings.class);
+	    	query.setParameter(1, userId);
+	    	
+	    	@SuppressWarnings("unchecked")
+			List<tblUserWinesRatings> reviews = query.getResultList();
+	    	return reviews;
+		} else {
+			return null;
+		}
+		
+	}
+
+	public Double getAVGRatingForWine(Integer wineId) {
+		if ( (wineId != null) && (wineId > 0) ) {
+			try {
+				String query = "SELECT avg(rating) FROM tblUsers_Wines_Ratings WHERE wineId = " + wineId;
+				Number singleResult = ((Number) em.createNativeQuery(query).getSingleResult());
+				
+				if (singleResult != null) { return singleResult.doubleValue(); } else { return (double) 0; }
+				
+			} catch (Exception e) {
+				return (double) 0;
+			}
+		} else {
+			return (double) 0;
+		}
+		
+	}
+
+	public Integer getUserRatingValue(Integer userId, Integer wineId) {
+		if ( (wineId != null) && (wineId > 0) && (userId != null) && (userId > 0)) {
+			
+			try {
+				String query = "SELECT `rating` FROM `tblUsers_Wines_Ratings` WHERE userId = "+userId+" AND wineId = " + wineId;
+				
+				return ((Integer) em.createNativeQuery(query).getSingleResult());
+				
+			} catch (Exception e) {
+				return 0;
+			}
+			
+		} else {
+			return 0;
+		}
+	}
+	
 }

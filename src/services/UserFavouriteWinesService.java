@@ -40,6 +40,7 @@ public class UserFavouriteWinesService {
         try
         {
         	if(userFavouriteWine.getId() != null) { userFavouriteWine.setId(null); }
+        	
         	em.persist(userFavouriteWine);
         	return true;
         } catch (Exception e) { return false; }

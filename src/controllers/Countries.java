@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblCountries;
 import models.tblCountryBasicData;
+import models.viewCountriesWithWines;
 import services.CountriesService;
 
 /**
@@ -104,6 +105,7 @@ public class Countries extends HttpServlet {
 			}
 			
 			case "getByName":
+			{
 				if(!request.getParameterMap().containsKey("name"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing name");
@@ -115,6 +117,25 @@ public class Countries extends HttpServlet {
 				if(country!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(country));
 				break;
+			}
+			
+			case "getCountryWithWines" : {
+				try 
+				{
+					//Set pretty printing of json
+					this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+					List<viewCountriesWithWines> countries = countryService.getCountriesWithWines();
+					String arrayToJson = this.mapper.writeValueAsString(countries);
+					
+					response.setStatus(200);
+					response.getWriter().write(arrayToJson);
+				}
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}	
+				
+				
 		}
 	}
 

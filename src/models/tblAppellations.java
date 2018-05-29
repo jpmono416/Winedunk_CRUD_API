@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +20,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tblAppellations")
-@NamedQuery(name="tblAppellations.findByName", query="SELECT t FROM tblAppellations t WHERE t.name = :name")
+@NamedQueries({
+	@NamedQuery(name="tblAppellations.findByName", query="SELECT t FROM tblAppellations t WHERE t.name = :name"),
+	@NamedQuery(name="tblAppellations.findAllByCountryId", query="SELECT t FROM tblAppellations t WHERE t.countryId.id = :countryId"),
+	@NamedQuery(name="tblAppellations.findAllByRegionId", query="SELECT t FROM tblAppellations t WHERE t.regionId.id = :regionId"),
+	@NamedQuery(name="tblAppellations.findAllByCountryIdAndRegionId", query="SELECT t FROM tblAppellations t WHERE t.countryId.id = :countryId AND t.regionId.id = :regionId")
+})
 public class tblAppellations {
 
     @Transient

@@ -16,6 +16,7 @@ import models.tblAppellations;
 import models.tblCountries;
 import models.tblRegions;
 import models.tblWineries;
+import models.viewWineriesWithWines;
 
 @Stateless
 @LocalBean
@@ -235,4 +236,23 @@ public class WineriesService {
         }
         return false;
     }
+
+	public List<viewWineriesWithWines> getWineriesByAppellationId(Integer appellationId) {
+        
+		if ( (appellationId != null) && (appellationId > 0) ) {
+		
+			TypedQuery<viewWineriesWithWines> typedQuery = em.createNamedQuery("viewWineriesWithWines.findAllByAppellationId", viewWineriesWithWines.class);
+			typedQuery.setParameter("appellationId", appellationId);
+			try {
+				return (List<viewWineriesWithWines>) typedQuery.getResultList();
+			} catch (Exception e) {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		
+	}
+	
 }

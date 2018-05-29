@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblAppellations;
 import models.tblWineries;
+import models.viewWineriesWithWines;
 import services.WineriesService;
 
 /**
@@ -133,6 +134,41 @@ public class Wineries extends HttpServlet {
 				return;
 							
 			}
+			
+			case "getWineriesByAppellationId": {
+				
+				if (request.getParameterMap().containsKey("appellationId")) {
+					try {
+						Integer appellationId = Integer.parseInt(request.getParameter("appellationId"));
+						if (appellationId > 0) {
+							
+							this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+					    	
+							List<viewWineriesWithWines> wineries = null;
+							wineries = wineryService.getWineriesByAppellationId(appellationId);	
+							
+							String arrayToJson = this.mapper.writeValueAsString(wineries);
+							response.setStatus(200);
+							response.getWriter().write(arrayToJson);
+							
+						} else {
+							response.setStatus(204);
+							response.getWriter().write("");
+						}
+							
+					} catch (Exception e) {
+						response.setStatus(500);
+						response.getWriter().write("");
+						e.printStackTrace(); 
+					}
+				} else {
+					response.setStatus(204);
+					response.getWriter().write("");
+				}
+				
+				return;
+			}
+			
 			default:
 			{
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action");

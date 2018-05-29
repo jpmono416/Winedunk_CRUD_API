@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblAppellations;
 import models.tblColours;
+import models.tblRegions;
+import models.viewAppellationsWithWines;
 import services.ApellationsService;
 import services.DefaultServiceClass;
 
@@ -108,6 +110,7 @@ public class Apellations extends HttpServlet {
 			}
 			
 			case "getByName":
+			{
 				if(!request.getParameterMap().containsKey("name"))
 					return;
 
@@ -117,6 +120,41 @@ public class Apellations extends HttpServlet {
 					response.getWriter().write(this.mapper.writeValueAsString(appellation));
 				
 				return;
+			}
+			
+			case "getAppellationsByRegionId": {
+				
+				if (request.getParameterMap().containsKey("regionId")) {
+					try {
+						Integer regionId = Integer.parseInt(request.getParameter("regionId"));
+						if (regionId > 0) {
+							
+							this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+					    	
+							List<viewAppellationsWithWines> appellations = null;
+							appellations = apellationService.getAppellationsByRegionId(regionId);	
+							
+							String arrayToJson = this.mapper.writeValueAsString(appellations);
+							response.setStatus(200);
+							response.getWriter().write(arrayToJson);
+							
+						} else {
+							response.setStatus(204);
+							response.getWriter().write("");
+						}
+							
+					} catch (Exception e) {
+						response.setStatus(500);
+						response.getWriter().write("");
+						e.printStackTrace(); 
+					}
+				} else {
+					response.setStatus(204);
+					response.getWriter().write("");
+				}
+				
+				return;
+			}
 		}
 	}
 

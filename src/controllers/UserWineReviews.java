@@ -76,6 +76,76 @@ public class UserWineReviews extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
+			
+			case "getReviewsForWine" : {
+				try 
+				{
+					if(!request.getParameterMap().containsKey("wineId")) { return; }
+					Integer wineId = Integer.parseInt(request.getParameter("wineId"));
+					
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	List<tblUserWineReviews> userWineReview = userWineReviewService.getReviewsForWine(wineId);
+			    	String arrayToJson = objectMapper.writeValueAsString(userWineReview);
+					
+					response.setStatus(200);
+					response.getWriter().write(arrayToJson);
+				}
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+			
+			case "getReviewsForUser" : {
+				try 
+				{
+					if(!request.getParameterMap().containsKey("userId")) { return; }
+					Integer userId = Integer.parseInt(request.getParameter("userId"));
+					
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	List<tblUserWineReviews> userWineReview = userWineReviewService.getReviewsForUser(userId);
+			    	if (userWineReview != null) {
+
+						String arrayToJson = objectMapper.writeValueAsString(userWineReview);
+						response.setStatus(200);
+						response.getWriter().write(arrayToJson);
+						
+			    	} else {
+
+						response.setStatus(204);
+						response.getWriter().write("");
+						
+			    	}
+				}
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+			
+			case "getAmountOfReviewsForWine" : {
+				try 
+				{
+					if(!request.getParameterMap().containsKey("wineId")) { return; }
+					Integer wineId = Integer.parseInt(request.getParameter("wineId"));
+					
+					ObjectMapper objectMapper = new ObjectMapper();
+			    	//Set pretty printing of json
+			    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		    	
+			    	Integer userWineReview = userWineReviewService.getAmountOfReviewsForWine(wineId);
+					
+					response.setStatus(200);
+					response.getWriter().print(userWineReview);
+				}
+				catch (Exception e) { e.printStackTrace(); }
+				break;
+			}
+			
+			
+			
 		}
 	}
 
@@ -102,7 +172,6 @@ public class UserWineReviews extends HttpServlet {
 					tblUserWineReviews userWineReview = new tblUserWineReviews();
 					ObjectMapper mapper = new ObjectMapper();
 					userWineReview = mapper.readValue(content, tblUserWineReviews.class);
-					System.out.println("Arriving and mapped : " + userWineReview.toString()); //TODO DELETE
 					if(userWineReviewService.addUserWineReview(userWineReview)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace();return;}
 				break;
@@ -140,20 +209,36 @@ public class UserWineReviews extends HttpServlet {
 					
 					Integer userId = Integer.parseInt(splittedContent.get(0));
 					Integer wineId = Integer.parseInt(splittedContent.get(1));
-					
-					if(userWineReviewService.userHasReviewed(userId, wineId)) { response.getWriter().print("True"); }
+					Boolean responseFromDB = userWineReviewService.userHasReviewed(userId, wineId);
+					response.getWriter().print(responseFromDB);
 				} catch (Exception e) { return; }
 				break;
 			}
 			
-			case "getReviewsForWine" :
-			{
+			case "getReviewsForWine" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);
 					List<tblUserWineReviews> reviews = userWineReviewService.getReviewsForWine(id);
 					
 					ObjectMapper mapper = new ObjectMapper();
+					//Set pretty printing of json
+					mapper.enable(SerializationFeature.INDENT_OUTPUT);
+					String jsonResult = "{ \"Reviews\" : " + mapper.writeValueAsString(reviews) + " }";
+					
+					response.getWriter().write(jsonResult);
+				} catch (Exception e) { return; }
+			}
+			
+			case "getReviewsForUser" : {
+				try
+				{
+					Integer id = Integer.parseInt(content);
+					List<tblUserWineReviews> reviews = userWineReviewService.getReviewsForUser(id);
+					
+					ObjectMapper mapper = new ObjectMapper();
+					//Set pretty printing of json
+					mapper.enable(SerializationFeature.INDENT_OUTPUT);
 					String jsonResult = "{ \"Reviews\" : " + mapper.writeValueAsString(reviews) + " }";
 					
 					response.getWriter().write(jsonResult);
@@ -161,5 +246,5 @@ public class UserWineReviews extends HttpServlet {
 			}
 		}
 	}
-
+	
 }

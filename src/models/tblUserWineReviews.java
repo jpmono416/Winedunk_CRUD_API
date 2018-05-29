@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,6 +18,10 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tblUsers_Wines_Reviews")
+@NamedQueries({
+	@NamedQuery(name="tblUserWineReviews.findAll", query="SELECT x FROM tblUserWineReviews x"),
+	@NamedQuery(name = "tblUserWineReviews.findById", query = "SELECT x FROM tblUserWineReviews x WHERE x.id = :id")
+})
 public class tblUserWineReviews {
 
     @Transient
@@ -61,11 +67,6 @@ public class tblUserWineReviews {
     private String comments;
     public String getComments() { return comments; }
     public void setComments(String comments) { this.comments = comments; }
-
-    @Transient
-    private Integer numericWineId;
-	public Integer getNumericWineId() { return numericWineId; }
-	public void setNumericWineId(Integer numericWineId) { this.numericWineId = numericWineId; }
 	
     public tblUserWineReviews(tblUsers id) {this.userId = id;}
     public tblUserWineReviews()
@@ -82,6 +83,6 @@ public class tblUserWineReviews {
 	public String toString() {
 		return "{ \"id\" : " + id + " , \"userId\" : " + userId + " , \"wineId\" : " + wineId
 				+ " , \"addedDate\" : \"" + addedDate + "\" , \"addedTimestamp\" : \"" + addedTimestamp
-				+ "\" , \"title\" : \"" + title + "\" , \"comments\" : \"" + comments + "\" , \"numericWineId\" : " + numericWineId + " }";
+				+ "\" , \"title\" : \"" + title + "\" , \"comments\" : \"" + comments + "\"}";
 	}
 }

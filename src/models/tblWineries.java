@@ -27,7 +27,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 	@NamedQuery(name="tblWineries.findOneByCountryAndRegionAndAppellationAndName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId AND x.appellationId = :appellationId AND x.name = :name"),
 	@NamedQuery(name="tblWineries.findOneByCountryAndRegionAndName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId AND x.name = :name"),
 	@NamedQuery(name="tblWineries.findOneByCountryAndName", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.name = :name"),
-	@NamedQuery(name="tblWineries.findOneByName", query="SELECT x FROM tblWineries x WHERE x.name = :name")
+	@NamedQuery(name="tblWineries.findOneByName", query="SELECT x FROM tblWineries x WHERE x.name = :name"),
+	@NamedQuery(name="tblWineries.findAllByCountryId", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId"),
+	@NamedQuery(name="tblWineries.findAllByAppellationId", query="SELECT x FROM tblWineries x WHERE x.appellationId = :appellationId"),
+	@NamedQuery(name="tblWineries.findAllByCountryIdAndAppellationId", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.appellationId = :appellationId"),
+	@NamedQuery(name="tblWineries.findAllByCountryIdAndRegionId", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId"),
+	@NamedQuery(name="tblWineries.findAllByCountryIdAndRegionIdAndAppellationId", query="SELECT x FROM tblWineries x WHERE x.tblCountry.id = :countryId AND x.regionId = :regionId AND x.appellationId = :appellationId")
 })
 public class tblWineries {
 

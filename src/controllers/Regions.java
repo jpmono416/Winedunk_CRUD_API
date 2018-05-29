@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblRegions;
 import models.tblWineries;
+import models.viewRegionsWithWines;
 import services.RegionsService;
 
 /**
@@ -96,7 +97,7 @@ public class Regions extends HttpServlet {
 					response.getWriter().write("");
 					e.printStackTrace(); 
 				}
-				break;
+				return;
 			}
 			
 			case "getByName":
@@ -109,6 +110,39 @@ public class Regions extends HttpServlet {
 				if(region!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(region));
 			}
+			
+			case "getRegionsByCountryId": {
+				
+				if (request.getParameterMap().containsKey("countryId")) {
+					try {
+						Integer countryId = Integer.parseInt(request.getParameter("countryId"));
+						if (countryId > 0) {
+							
+							this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+					    	
+							List<viewRegionsWithWines> regions = regionService.getRegionsFilteredByCountryId(countryId);
+							String arrayToJson = this.mapper.writeValueAsString(regions);
+							response.setStatus(200);
+							response.getWriter().write(arrayToJson);
+							
+						} else {
+							response.setStatus(204);
+							response.getWriter().write("");
+						}
+							
+					} catch (Exception e) {
+						response.setStatus(500);
+						response.getWriter().write("");
+						e.printStackTrace(); 
+					}
+				} else {
+					response.setStatus(204);
+					response.getWriter().write("");
+				}
+				
+				return;
+			}
+			
 		}
 	}
 

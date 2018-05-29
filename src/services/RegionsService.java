@@ -8,8 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import models.tblRegions;
+import models.viewRegionsWithWines;
 
 @Stateless
 @LocalBean
@@ -79,6 +81,24 @@ public class RegionsService {
         }
         return false;
     }
+
+	public List<viewRegionsWithWines> getRegionsFilteredByCountryId(Integer countryId) {
+        
+		if ( (countryId != null) && (countryId > 0) ) {
+		
+			TypedQuery<viewRegionsWithWines> typedQuery = em.createNamedQuery("viewRegionsWithWines.findAllByCountryId", viewRegionsWithWines.class);
+			typedQuery.setParameter("countryId", countryId);
+			try {
+				return (List<viewRegionsWithWines>) typedQuery.getResultList();
+			} catch (Exception e) {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		
+	}
     
      /*
     Regions
