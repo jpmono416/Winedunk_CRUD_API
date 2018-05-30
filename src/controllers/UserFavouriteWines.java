@@ -167,7 +167,6 @@ public class UserFavouriteWines extends HttpServlet {
 			case "getFavouriteWineForUser" :
 				try
 				{
-					System.out.println("Entered into the servlet"); //TODO DELETE
 					//Get IDs passed via POST in the format "userId,wineId"
 					List<String> IDsList = Arrays.asList(content.trim().split(","));
 					
@@ -175,7 +174,6 @@ public class UserFavouriteWines extends HttpServlet {
 					Integer wineId = Integer.parseInt(IDsList.get(1));
 					
 					tblUserFavouriteWines wine = userFavouriteWineService.getFavouriteWineByUser(userId, wineId);
-					System.out.println("Passed the method"); //TODO DELETE
 					if(wine == null) { return; }
 					
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -183,10 +181,56 @@ public class UserFavouriteWines extends HttpServlet {
 					objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 					
 					String wineToJson = objectMapper.writeValueAsString(wine);
-					System.out.println("Result: " + wineToJson); //TODO DELETE
 					response.getWriter().write(wineToJson);
 				} catch (Exception e) { e.printStackTrace(); return; }
 				break;
+				
+			case "isWineFlaggedAsFavouriteWineForUser" :
+				try
+				{
+					//Get IDs passed via POST in the format "userId,wineId"
+					List<String> IDsList = Arrays.asList(content.trim().split(","));
+					
+					Integer userId = Integer.parseInt(IDsList.get(0));
+					Integer wineId = Integer.parseInt(IDsList.get(1));
+					
+					tblUserFavouriteWines wine = userFavouriteWineService.getFavouriteWineByUser(userId, wineId);
+					Boolean isIt = (wine != null) && (wine.getWineId().getId().equals(wineId));
+					
+					response.setStatus(200);
+					response.getWriter().write(isIt.toString());
+					
+				} catch (Exception e) {
+					
+					response.setStatus(500);
+					response.getWriter().write("false");
+				}
+				break;
+				
+			case "getAmountOfForWine" : {
+				
+				try {
+					Integer wineId = Integer.parseInt(content);
+					if ( (wineId != null) && (wineId > 0) ) {
+					
+						Integer result = userFavouriteWineService.getAmountOfForWine(wineId);
+						
+						response.setStatus(200);
+						response.getWriter().write(result.toString());
+						
+					} else {
+						response.setStatus(204);
+						response.getWriter().write("0"); 
+					}
+					
+				} catch (Exception e) {
+					
+					response.setStatus(500);
+					response.getWriter().write("0");
+				}
+				break;	
+			}
+			
 		}
 	}
 

@@ -41,8 +41,23 @@ public class UserFavouriteWinesService {
         {
         	if(userFavouriteWine.getId() != null) { userFavouriteWine.setId(null); }
         	
-        	em.persist(userFavouriteWine);
-        	return true;
+        	if ( (userFavouriteWine.getId() == null) && 
+        		 (userFavouriteWine.getUserId() != null) && 
+        		 (userFavouriteWine.getUserId().getId() != null) && 
+        		 (userFavouriteWine.getWineId() != null) && 
+        		 (userFavouriteWine.getWineId().getId() != null) ) {
+        		
+        		tblUserFavouriteWines wine = this.getFavouriteWineByUser(userFavouriteWine.getUserId().getId(), userFavouriteWine.getWineId().getId());
+        		
+        		if (wine == null) { // does not exist
+        			em.persist(userFavouriteWine);
+        		}
+        	
+        		return true;
+        		
+        	} else {
+        		return false;
+        	}
         } catch (Exception e) { return false; }
     }
 
@@ -82,11 +97,28 @@ public class UserFavouriteWinesService {
     	{
     		Query query = em.createNativeQuery("SELECT * FROM tblUsers_Favourite_Wines WHERE userId = ?1 AND wineId = ?2", tblUserFavouriteWines.class);
     		query.setParameter(1, userId).setParameter(2, wineId);
-    		System.out.println(query.toString()); //TODO DELETE
     		
     		tblUserFavouriteWines wine = (tblUserFavouriteWines) query.getSingleResult();
     		
     		return wine;
     	} catch (Exception e) { e.printStackTrace(); return null; }
     }
+
+	public Integer getAmountOfForWine(Integer wineId) {
+		if ( (wineId != null) && (wineId > 0) ) {
+			
+			String query = "SELECT count(*) FROM `tblUsers_Favourite_Wines` WHERE `wineId` = "+wineId;
+			Integer amountOfResults = 0;
+			try {
+				amountOfResults = Integer.valueOf(((Long) em.createNativeQuery(query).getSingleResult()).intValue());
+			} catch (Exception e) {
+				amountOfResults = 0;
+			}
+	    	return amountOfResults;
+		} else {
+			return 0;
+		}
+		
+	}
+    
 }
