@@ -38,9 +38,8 @@ public class Users extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getUsers" :
+		switch(action) {
+			case "getUsers" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -55,8 +54,9 @@ public class Users extends HttpServlet {
 				} 
 				catch (Exception e) { e.printStackTrace(); }
 				break;
+			}
 			
-			case "getUser" :
+			case "getUser" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -74,8 +74,9 @@ public class Users extends HttpServlet {
 				}
 				catch (Exception e) { e.printStackTrace(); }
 				break;
+			}
 			
-			case "getAuth" :
+			case "getAuth" : {
 				try
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -89,6 +90,9 @@ public class Users extends HttpServlet {
 					String password = user.getLoginPassword();
 					response.getWriter().write(password);
 				}catch (Exception e) { e.printStackTrace(); }
+
+				break;
+			}
 		}
 	}
 
@@ -105,10 +109,9 @@ public class Users extends HttpServlet {
 
 	    String content = sb.toString().replaceFirst("\n", "");
 		String action = request.getParameter("action");
-		switch (action) 
-		{
+		switch (action) {
 		
-			case "addUser" :
+			case "addUser" : {
 				try
 				{
 					tblUsers user = new tblUsers();
@@ -121,9 +124,10 @@ public class Users extends HttpServlet {
 						 response.getWriter().print(userId);
 					 } catch (Exception e) {e.printStackTrace(); return;} 
 				} catch (Exception e) {e.printStackTrace(); return;}
-			break;
+				break;
+			}
 			
-			case "updateUser" :
+			case "updateUser" : {
 				try
 				{
 					tblUsers user = new tblUsers();
@@ -133,17 +137,19 @@ public class Users extends HttpServlet {
 					
 					if(userService.updateUser(user)) { response.getWriter().print("True"); }
 				} catch (Exception e) {e.printStackTrace(); return;}
-			break;
+				break;
+			}
 			
-			case "deleteUser" :
+			case "deleteUser" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);
 					if(userService.deleteUser(id)) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
-			break;
+				break;
+			}
 			
-			case "getUserByEmail" :
+			case "getUserByEmail" : {
 			    try
 			    {
 					String email = content;
@@ -157,9 +163,10 @@ public class Users extends HttpServlet {
 					
 					response.getWriter().write(arrayToJson);
 			    } catch (Exception e) { return; }
-			break;
+			    break;
+			}
 			
-			case "getUserByAuth" :
+			case "getUserByAuth" : {
 				try
 				{
 					
@@ -175,9 +182,10 @@ public class Users extends HttpServlet {
 					response.getWriter().write(arrayToJson);
 					
 				} catch (Exception e) { e.printStackTrace(); }
-			break;
+				break;
+			}
 				
-			case "changePassword" :
+			case "changePassword" :{
 				try
 				{ 
 					List<String> splittedContent;					
@@ -191,9 +199,10 @@ public class Users extends HttpServlet {
 					
 					if(userService.updateUser(user)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); }
-			break;
+				break;
+			}
 			
-			case "setRecoveryToken" :
+			case "setRecoveryToken" : {
 				try
 				{
 					List<String> splittedContent;					
@@ -203,8 +212,11 @@ public class Users extends HttpServlet {
 					
 					if(userService.updatePasswordRecoveryToken(userId, token)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); }
-				
-			case "deleteTokenAndSaveUser" :
+
+				break;
+			}
+			
+			case "deleteTokenAndSaveUser" : {
 				try
 				{
 					List<String> splittedContent;					
@@ -222,6 +234,9 @@ public class Users extends HttpServlet {
 					user.setLoginPassword(newEncryptedPassword);
 					if(userService.persistUserAndRefresh(user)) { response.getWriter().print("True"); }
 				} catch (Exception e) { e.printStackTrace(); }
+
+				break;
+			}
 		}
 	}
 

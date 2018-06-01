@@ -36,10 +36,9 @@ public class Wines extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getWines" :
-			{
+		switch(action) {
+		
+			case "getWines" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -56,8 +55,7 @@ public class Wines extends HttpServlet {
 				break;
 			}
 			
-			case "getWine" :
-			{
+			case "getWine" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -76,8 +74,8 @@ public class Wines extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
-			case "getByGtin":
-			{
+			
+			case "getByGtin": {
 				if(!request.getParameterMap().containsKey("gtin")) 
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing Gtin");
@@ -89,8 +87,8 @@ public class Wines extends HttpServlet {
 				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
 				break;
 			}
-			case "getByNameBottleAndVintage":
-			{
+			
+			case "getByNameBottleAndVintage": {
 				for(String parameter : new String[] {"name", "bottleSize", "vintage"})
 				{
 					if(!request.getParameterMap().containsKey(parameter))
@@ -106,6 +104,7 @@ public class Wines extends HttpServlet {
 				response.getWriter().write(new ObjectMapper().writeValueAsString(wine));
 				break;
 			}
+			
 		}
 	}
 
@@ -125,8 +124,7 @@ public class Wines extends HttpServlet {
 		String action = request.getParameter("action");
 		switch (action) 
 		{
-			case "addWine" :
-			{
+			case "addWine" : {
 				try
 				{
 					tblWines wine = new tblWines();
@@ -139,8 +137,7 @@ public class Wines extends HttpServlet {
 				break;
 			}
 			
-			case "updateWine" :
-			{
+			case "updateWine" : {
 				try
 				{
 					tblWines wine = new tblWines();
@@ -152,8 +149,7 @@ public class Wines extends HttpServlet {
 				break;
 			}
 			
-			case "deleteWine" :
-			{
+			case "deleteWine" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);

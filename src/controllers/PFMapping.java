@@ -31,16 +31,14 @@ public class PFMapping extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		if (!request.getParameterMap().containsKey("action"))
-		{
+		if (!request.getParameterMap().containsKey("action")) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter action missing");
 			return;
 		}
 		
-		switch (request.getParameter("action"))
-		{
-			case "getByPFId":
-			{
+		switch (request.getParameter("action")) {
+		
+			case "getByPFId": {
 				if (!request.getParameterMap().containsKey("id"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter id missing");
@@ -48,6 +46,8 @@ public class PFMapping extends HttpServlet {
 				}
 				response.getWriter().write(this.mapper
 						.writeValueAsString(this.mappingService.findByPFId(Integer.valueOf(request.getParameter("id")))));
+
+				break;
 			}
 		}
 	}

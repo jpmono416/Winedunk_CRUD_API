@@ -34,10 +34,8 @@ public class Languages extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getLanguages" :
-			{
+		switch(action) {
+			case "getLanguages" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -54,8 +52,7 @@ public class Languages extends HttpServlet {
 				break;
 			}
 			
-			case "getLanguage" :
-			{
+			case "getLanguage" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -91,10 +88,8 @@ public class Languages extends HttpServlet {
 	    String content = sb.toString().replaceFirst("\n", "");
 	    
 		String action = request.getParameter("action");
-		switch (action) 
-		{
-			case "addLanguage" :
-			{
+		switch (action) {
+			case "addLanguage" : {
 				try
 				{
 					tblLanguages language = new tblLanguages();
@@ -106,8 +101,7 @@ public class Languages extends HttpServlet {
 				break;
 			}
 			
-			case "updateLanguage" :
-			{
+			case "updateLanguage" : {
 				try
 				{
 					tblLanguages language = new tblLanguages();
@@ -119,8 +113,7 @@ public class Languages extends HttpServlet {
 				break;
 			}
 			
-			case "deleteLanguage" :
-			{
+			case "deleteLanguage" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);

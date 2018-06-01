@@ -34,10 +34,8 @@ public class Currencies extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getCurrencies" :
-			{
+		switch(action) {
+			case "getCurrencies" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -54,8 +52,7 @@ public class Currencies extends HttpServlet {
 				break;
 			}
 			
-			case "getCurrency" :
-			{
+			case "getCurrency" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -91,10 +88,8 @@ public class Currencies extends HttpServlet {
 	    String content = sb.toString().replaceFirst("\n", "");
 	    
 		String action = request.getParameter("action");
-		switch (action) 
-		{
-			case "addCurrency" :
-			{
+		switch (action) {
+			case "addCurrency" : {
 				try
 				{
 					tblCurrencies currency = new tblCurrencies();
@@ -106,8 +101,7 @@ public class Currencies extends HttpServlet {
 				break;
 			}
 			
-			case "updateCurrency" :
-			{
+			case "updateCurrency" : {
 				try
 				{
 					tblCurrencies currency = new tblCurrencies();
@@ -119,8 +113,7 @@ public class Currencies extends HttpServlet {
 				break;
 			}
 			
-			case "deleteCurrency" :
-			{
+			case "deleteCurrency" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);

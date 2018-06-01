@@ -37,10 +37,8 @@ public class Closures extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getByName":
-			{
+		switch(action)  {
+			case "getByName": {
 				if(!request.getParameterMap().containsKey("name"))
 					return;
 	
@@ -49,7 +47,7 @@ public class Closures extends HttpServlet {
 				if(closure!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(closure));
 
-				return;
+				break;
 			}
 		}
 		//TODO 
@@ -106,18 +104,16 @@ public class Closures extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 
 		JsonNode json = this.mapper.readTree(request.getInputStream());
-		switch (request.getParameter("action")) 
-		{
-			case "addClosure" :
-			{
+		switch (request.getParameter("action")) {
+			case "addClosure" : {
 				tblClosures closure = this.mapper.treeToValue(json, tblClosures.class);
 				Integer id = this.closureService.addClosure(closure);
 				if(id!=null)
 					response.getWriter().print(id);
 				else
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong while inserting a closure "+closure.getName());
-				
-				return;
+
+				break;
 			}
 		}
 	}

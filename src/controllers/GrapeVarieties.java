@@ -41,10 +41,8 @@ public class GrapeVarieties extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getGrapeVarieties" :
-			{
+		switch(action)  {
+			case "getGrapeVarieties" : {
 				try 
 				{		    	
 					List<tblGrapeVarieties> grapeVarieties = grapeVarietyService.getGrapeVarieties();
@@ -57,8 +55,7 @@ public class GrapeVarieties extends HttpServlet {
 				break;
 			}
 			
-			case "getGrapeVariety" :
-			{
+			case "getGrapeVariety" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -73,8 +70,7 @@ public class GrapeVarieties extends HttpServlet {
 				catch (Exception e) { e.printStackTrace(); }
 				break;
 			}
-			case "getByName":
-			{
+			case "getByName": {
 				if(!request.getParameterMap().containsKey("name"))
 					return;
 
@@ -83,11 +79,10 @@ public class GrapeVarieties extends HttpServlet {
 				if(variety!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(variety));
 
-				return;
+				break;
 			}
 			
-			case "getGrapeVarietyNameById" :
-			{
+			case "getGrapeVarietyNameById" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -127,10 +122,8 @@ public class GrapeVarieties extends HttpServlet {
 	    String content = sb.toString().replaceFirst("\n", "");
 	    
 		String action = request.getParameter("action");
-		switch (action) 
-		{
-			case "addGrapeVariety" :
-			{
+		switch (action) {
+			case "addGrapeVariety" : {
 				try
 				{
 					tblGrapeVarieties grapeVariety = new tblGrapeVarieties();
@@ -144,8 +137,7 @@ public class GrapeVarieties extends HttpServlet {
 				break;
 			}
 			
-			case "updateGrapeVariety" :
-			{
+			case "updateGrapeVariety" : {
 				try
 				{
 					tblGrapeVarieties grapeVariety = new tblGrapeVarieties();
@@ -157,8 +149,7 @@ public class GrapeVarieties extends HttpServlet {
 				break;
 			}
 			
-			case "deleteGrapeVariety" :
-			{
+			case "deleteGrapeVariety" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);

@@ -43,8 +43,7 @@ public class Countries extends HttpServlet {
 		String action = request.getParameter("action");
 		switch(action) 
 		{
-			case "getCountries" :
-			{
+			case "getCountries" : {
 				try 
 				{ 
 			    	//Set pretty printing of json
@@ -60,8 +59,7 @@ public class Countries extends HttpServlet {
 				break;
 			}
 			
-			case "getCountry" :
-			{
+			case "getCountry" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -82,8 +80,7 @@ public class Countries extends HttpServlet {
 				break;
 			}
 			
-			case "getCountryBasicDataById" :
-			{
+			case "getCountryBasicDataById" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -104,8 +101,7 @@ public class Countries extends HttpServlet {
 				break;
 			}
 			
-			case "getByName":
-			{
+			case "getByName": {
 				if(!request.getParameterMap().containsKey("name"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing name");
@@ -153,10 +149,8 @@ public class Countries extends HttpServlet {
 	    String content = sb.toString().replaceFirst("\n", "");
 	    
 		String action = request.getParameter("action");
-		switch (action) 
-		{
-			case "addCountry" :
-			{
+		switch (action)  {
+			case "addCountry" : {
 				try
 				{
 					tblCountries country = new tblCountries();
@@ -168,8 +162,7 @@ public class Countries extends HttpServlet {
 				break;
 			}
 			
-			case "updateCountry" :
-			{
+			case "updateCountry" : {
 				try
 				{
 					tblCountries country = new tblCountries();
@@ -180,8 +173,7 @@ public class Countries extends HttpServlet {
 				break;
 			}
 			
-			case "deleteCountry" :
-			{
+			case "deleteCountry" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);

@@ -46,8 +46,7 @@ public class Apellations extends HttpServlet {
 		String action = request.getParameter("action");
 		switch(action) 
 		{
-			case "getAppellations" :
-			{
+			case "getAppellations" :{
 				try 
 				{ 
 					//Set pretty printing of json
@@ -60,11 +59,10 @@ public class Apellations extends HttpServlet {
 					response.getWriter().write(arrayToJson);
 				} 
 				catch (Exception e) { e.printStackTrace(); }
-				return;
+				break;
 			}
 			
-			case "getAppellation" :
-			{
+			case "getAppellation" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -82,11 +80,10 @@ public class Apellations extends HttpServlet {
 					}
 				}
 				catch (Exception e) { e.printStackTrace(); }
-				return;
+				break;
 			}
 			
-			case "getAppellationNameById" :
-			{
+			case "getAppellationNameById" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -109,8 +106,7 @@ public class Apellations extends HttpServlet {
 				break;
 			}
 			
-			case "getByName":
-			{
+			case "getByName": {
 				if(!request.getParameterMap().containsKey("name"))
 					return;
 
@@ -118,8 +114,8 @@ public class Apellations extends HttpServlet {
 
 				if(appellation!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(appellation));
-				
-				return;
+
+				break;
 			}
 			
 			case "getAppellationsByRegionId": {
@@ -152,8 +148,8 @@ public class Apellations extends HttpServlet {
 					response.setStatus(204);
 					response.getWriter().write("");
 				}
-				
-				return;
+
+				break;
 			}
 		}
 	}
@@ -163,8 +159,7 @@ public class Apellations extends HttpServlet {
 
 		switch (request.getParameter("action")) 
 		{
-			case "addAppellation" :
-			{
+			case "addAppellation" : {
 				try
 				{
 					StringBuilder sb = new StringBuilder();
@@ -183,23 +178,22 @@ public class Apellations extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-					 
-				return;
+
+				break;
 			}
 			
-			case "updateAppellation" :
-			{
+			case "updateAppellation" : {
 				try
 				{
 					tblAppellations apellation = this.mapper.readValue(request.getInputStream(), tblAppellations.class);
 					
 					if(apellationService.updateApellation(apellation)) { response.getWriter().print("True"); }
 				} catch (Exception e) {e.printStackTrace();}
-				return;
+
+				break;
 			}
 			
-			case "deleteAppellation" :
-			{
+			case "deleteAppellation" : {
 				try
 				{
 					JsonNode json = this.mapper.readTree(request.getInputStream());

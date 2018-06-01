@@ -33,10 +33,8 @@ public class Partners extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getPartners" :
-			{
+		switch(action)  {
+			case "getPartners" : {
 				try 
 				{ 
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -53,8 +51,7 @@ public class Partners extends HttpServlet {
 				break;
 			}
 			
-			case "getPartner" :
-			{
+			case "getPartner" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -90,10 +87,8 @@ public class Partners extends HttpServlet {
 	    String content = sb.toString().replaceFirst("\n", "");
 	    
 		String action = request.getParameter("action");
-		switch (action) 
-		{
-			case "addPartner" :
-			{
+		switch (action) {
+			case "addPartner" : {
 				try
 				{
 					tblPartners partner = new tblPartners();
@@ -105,8 +100,7 @@ public class Partners extends HttpServlet {
 				break;
 			}
 			
-			case "updatePartner" :
-			{
+			case "updatePartner" : {
 				try
 				{
 					tblPartners partner = new tblPartners();
@@ -118,8 +112,7 @@ public class Partners extends HttpServlet {
 				break;
 			}
 			
-			case "deletePartner" :
-			{
+			case "deletePartner" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);

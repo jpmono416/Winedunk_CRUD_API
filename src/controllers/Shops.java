@@ -38,10 +38,8 @@ public class Shops extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getShops" :
-			{
+		switch(action) {
+			case "getShops" : {
 				try 
 				{
 					List<tblShops> shops = shopService.getShops();
@@ -53,8 +51,7 @@ public class Shops extends HttpServlet {
 				break;
 			}
 			
-			case "getShop" :
-			{
+			case "getShop" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -69,16 +66,20 @@ public class Shops extends HttpServlet {
 				break;
 			}
 			case "getByName":
+			{
 				if(!request.getParameterMap().containsKey("name")) { return; }
 
 				tblShops shop = shopService.getByName(request.getParameter("name"));
 				response.getWriter().write(this.mapper.writeValueAsString(shop));
 				break;
+			}
 			default:
 			{
 				System.out.println("Unrecognized GET request "+action);
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unrecognized action "+request.getParameter("action"));
+				break;
 			}
+
 		}
 	}
 
@@ -86,10 +87,8 @@ public class Shops extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 
 		JsonNode json = this.mapper.readTree(request.getInputStream());
-		switch (request.getParameter("action")) 
-		{
-			case "addShop" :
-			{
+		switch (request.getParameter("action")) {
+			case "addShop" : {
 				try
 				{
 					tblShops shop = new tblShops();
@@ -100,8 +99,7 @@ public class Shops extends HttpServlet {
 				break;
 			}
 			
-			case "updateShop" :
-			{
+			case "updateShop" : {
 				try
 				{
 					tblShops shop = new tblShops();
@@ -112,18 +110,19 @@ public class Shops extends HttpServlet {
 				break;
 			}
 			
-			case "deleteShop" :
-			{
+			case "deleteShop" : {
 				try
 				{
 					if(shopService.deleteShop(json.get("id").asInt())) { response.getWriter().print("True"); }
 				} catch (Exception e) { return; }
 				break;
 			}
-			default:
-			{
+			
+			default: {
 				System.out.println("Unrecognized GET request "+request.getParameter("action"));
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unrecognized action "+request.getParameter("action"));
+
+				break;
 			}
 		}
 	}

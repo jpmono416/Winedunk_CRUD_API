@@ -35,10 +35,8 @@ public class Colours extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getColours" :
-			{
+		switch(action)  {
+			case "getColours" : {
 				try 
 				{ 
 					//Set pretty printing of json
@@ -54,8 +52,7 @@ public class Colours extends HttpServlet {
 				break;
 			}
 			
-			case "getColour" :
-			{
+			case "getColour" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -74,8 +71,7 @@ public class Colours extends HttpServlet {
 				break;
 			}
 			
-			case "getColourNameById" :
-			{
+			case "getColourNameById" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -98,8 +94,7 @@ public class Colours extends HttpServlet {
 				break;
 			}
 			
-			case "getByName":
-			{
+			case "getByName": {
 				if(!request.getParameterMap().containsKey("name"))
 					return;
 
@@ -107,7 +102,8 @@ public class Colours extends HttpServlet {
 
 				if(colour!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(colour));
-				return;
+
+				break;
 			}
 		}
 	}
@@ -116,10 +112,8 @@ public class Colours extends HttpServlet {
 		if(!request.getParameterMap().containsKey("action")) { return; }
 		
 		JsonNode json = this.mapper.readTree(request.getInputStream());
-		switch (request.getParameter("action")) 
-		{
-			case "addColour" :
-			{
+		switch (request.getParameter("action")) {
+			case "addColour" : {
 				try
 				{
 					tblColours colour = this.mapper.treeToValue(json, tblColours.class);
@@ -130,8 +124,7 @@ public class Colours extends HttpServlet {
 				break;
 			}
 			
-			case "updateColour" :
-			{
+			case "updateColour" : {
 				try
 				{
 					tblColours colour = new tblColours();
@@ -142,8 +135,7 @@ public class Colours extends HttpServlet {
 				break;
 			}
 			
-			case "deleteColour" :
-			{
+			case "deleteColour" : {
 				try
 				{
 					if(colourService.deleteColour(json.get("id").asInt())) { response.getWriter().print("True"); }

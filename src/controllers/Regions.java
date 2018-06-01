@@ -39,8 +39,7 @@ public class Regions extends HttpServlet {
 		String action = request.getParameter("action");
 		switch(action) 
 		{
-			case "getRegions" :
-			{
+			case "getRegions" : {
 				try 
 				{ 
 			    	//Set pretty printing of json
@@ -53,7 +52,7 @@ public class Regions extends HttpServlet {
 					response.getWriter().write(arrayToJson);
 				} 
 				catch (Exception e) { e.printStackTrace(); }
-				return;
+				break;
 			}
 			
 			case "getRegion" :
@@ -73,7 +72,7 @@ public class Regions extends HttpServlet {
 					response.getWriter().write(arrayToJson);
 				}
 				catch (Exception e) { e.printStackTrace(); }
-				return;
+				break;
 			}
 			
 			case "getRegionNameById" :
@@ -97,7 +96,7 @@ public class Regions extends HttpServlet {
 					response.getWriter().write("");
 					e.printStackTrace(); 
 				}
-				return;
+				break;
 			}
 			
 			case "getByName":
@@ -107,8 +106,17 @@ public class Regions extends HttpServlet {
 
 				tblRegions region = this.regionService.getRegionByName(request.getParameter("name"));
 
-				if(region!=null)
+				if ( region!=null ) {
+					
 					response.getWriter().write(this.mapper.writeValueAsString(region));
+					
+				} else {
+
+					response.getWriter().write("");
+					
+				}
+				break;
+
 			}
 			
 			case "getRegionsByCountryId": {
@@ -139,8 +147,7 @@ public class Regions extends HttpServlet {
 					response.setStatus(204);
 					response.getWriter().write("");
 				}
-				
-				return;
+				break;
 			}
 			
 		}
@@ -162,8 +169,7 @@ public class Regions extends HttpServlet {
 		String action = request.getParameter("action");
 		switch (action) 
 		{
-			case "addRegion" :
-			{
+			case "addRegion" : {
 				try
 				{
 					tblRegions region = this.mapper.readValue(content, tblRegions.class);
@@ -174,8 +180,7 @@ public class Regions extends HttpServlet {
 				break;
 			}
 			
-			case "updateRegion" :
-			{
+			case "updateRegion" : {
 				try
 				{
 					tblRegions region = new tblRegions();
@@ -186,8 +191,7 @@ public class Regions extends HttpServlet {
 				break;
 			}
 			
-			case "deleteRegion" :
-			{
+			case "deleteRegion" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);

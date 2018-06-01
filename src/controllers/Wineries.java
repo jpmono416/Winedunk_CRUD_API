@@ -41,10 +41,8 @@ public class Wineries extends HttpServlet {
 		}
 		
 		String action = request.getParameter("action");
-		switch(action) 
-		{
-			case "getWineries" :
-			{
+		switch(action) {
+			case "getWineries" : {
 				try 
 				{ 
 					//Set pretty printing of json
@@ -60,8 +58,7 @@ public class Wineries extends HttpServlet {
 				break;
 			}
 			
-			case "getWinery" :
-			{
+			case "getWinery" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -82,8 +79,7 @@ public class Wineries extends HttpServlet {
 				break;
 			}
 			
-			case "getWineryNameById" :
-			{
+			case "getWineryNameById" : {
 				try 
 				{
 					if(!request.getParameterMap().containsKey("id")) { return; }
@@ -106,8 +102,7 @@ public class Wineries extends HttpServlet {
 				break;
 			}
 			
-			case "getByName":
-			{				
+			case "getByName": {				
 				if(!request.getParameterMap().containsKey("name"))
 				{
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing 'name' parameter");
@@ -131,7 +126,7 @@ public class Wineries extends HttpServlet {
 				if(winery!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(winery));
 
-				return;
+				break;
 							
 			}
 			
@@ -165,13 +160,14 @@ public class Wineries extends HttpServlet {
 					response.setStatus(204);
 					response.getWriter().write("");
 				}
-				
-				return;
+
+				break;
 			}
 			
-			default:
-			{
+			default: {
+				
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action");
+				break;
 			}
 		}
 	}
@@ -190,10 +186,8 @@ public class Wineries extends HttpServlet {
 	    String content = sb.toString().replaceFirst("\n", "");
 	    
 		String action = request.getParameter("action");
-		switch (action) 
-		{
-			case "addWinery" :
-			{
+		switch (action) {
+			case "addWinery" : {
 				try
 				{
 					tblWineries winery = new tblWineries();
@@ -205,8 +199,7 @@ public class Wineries extends HttpServlet {
 				break;
 			}
 			
-			case "updateWinery" :
-			{
+			case "updateWinery" : {
 				try
 				{
 					tblWineries winery = new tblWineries();
@@ -217,8 +210,7 @@ public class Wineries extends HttpServlet {
 				break;
 			}
 			
-			case "deleteWinery" :
-			{
+			case "deleteWinery" : {
 				try
 				{
 					Integer id = Integer.parseInt(content);
