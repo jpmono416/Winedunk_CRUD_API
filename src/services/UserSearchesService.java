@@ -63,7 +63,6 @@ public class UserSearchesService {
         tblUserSearches userSearch = getUserSearchById(id);
         if(userSearch != null)
         {
-        	System.out.println(userSearch);
             em.remove(userSearch);;
             return true;
         }

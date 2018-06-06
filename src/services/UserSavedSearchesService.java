@@ -76,7 +76,6 @@ public class UserSavedSearchesService {
         tblUserSavedSearches userSavedSearch = getUserSavedSearchById(id);
         if(userSavedSearch != null)
         {
-        	System.out.println(userSavedSearch);
             em.remove(userSavedSearch);;
             return true;
         }

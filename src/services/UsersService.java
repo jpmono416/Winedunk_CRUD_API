@@ -52,7 +52,6 @@ public class UsersService extends DefaultServiceClass {
     {
     	try 
     	{
-    		System.out.println("Email on class: " + email);
     		Query query = em.createQuery("SELECT u FROM viewUsers u WHERE u.loginEmail = :email", viewUsers.class).setParameter("email", email);
     		viewUsers user = (viewUsers) query.getSingleResult();
     		

@@ -80,7 +80,7 @@ public class PartnersMerchants extends HttpServlet {
 				
 			default:
 			{
-				System.out.println("Unrecognized GET request "+action);
+				System.out.println("Exception: Unrecognized GET request "+action);
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unrecognized action "+request.getParameter("action"));
 			}
 		}

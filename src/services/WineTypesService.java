@@ -46,7 +46,6 @@ public class WineTypesService {
         	
         	em.persist(wineType);
         	em.flush();
-        	System.out.println("Wine type id = "+wineType.getId());
         	return wineType.getId();
         } catch (Exception e) { e.printStackTrace(); return null; }
     }

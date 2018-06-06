@@ -65,7 +65,6 @@ public class UserEmailsService {
         tblUserEmails userEmail = getUserEmailById(id);
         if(userEmail != null)
         {
-        	System.out.println(userEmail);
             em.remove(userEmail);;
             return true;
         }

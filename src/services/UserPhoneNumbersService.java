@@ -65,7 +65,6 @@ public class UserPhoneNumbersService {
         tblUserPhoneNumbers userPhoneNumber = getUserPhoneNumberById(id);
         if(userPhoneNumber != null)
         {
-        	System.out.println(userPhoneNumber);
             em.remove(userPhoneNumber);
             return true;
         }

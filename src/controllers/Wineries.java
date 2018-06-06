@@ -115,13 +115,7 @@ public class Wineries extends HttpServlet {
 				final String regionName = request.getParameterMap().containsKey("regionName") ? request.getParameter("regionName") : "";
 				final String appellationName = request.getParameterMap().containsKey("appellationName") ? request.getParameter("appellationName") : "";
 
-				System.out.println(countryName);
-				System.out.println(regionName);
-				System.out.println(appellationName);
-
 				tblWineries winery = this.wineryService.getByName(countryName, regionName, appellationName, name);
-
-				System.out.println(winery);
 
 				if(winery!=null)
 					response.getWriter().write(this.mapper.writeValueAsString(winery));

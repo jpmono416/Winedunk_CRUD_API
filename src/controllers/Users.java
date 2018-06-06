@@ -117,7 +117,6 @@ public class Users extends HttpServlet {
 					tblUsers user = new tblUsers();
 					ObjectMapper mapper = new ObjectMapper();
 					user = mapper.readValue(content, tblUsers.class);
-					System.out.println("User before persisting:" + user.toString());
 					 try 
 					 { 
 						 Integer userId = userService.addUser(user);

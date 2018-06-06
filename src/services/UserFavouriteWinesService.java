@@ -73,7 +73,6 @@ public class UserFavouriteWinesService {
         tblUserFavouriteWines userFavouriteWine = getUserFavouriteWineById(id);
         if(userFavouriteWine != null)
         {
-        	System.out.println(userFavouriteWine);
             em.remove(userFavouriteWine);;
             return true;
         }

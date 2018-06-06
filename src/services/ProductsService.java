@@ -43,8 +43,7 @@ public class ProductsService {
 					 .setParameter("merchantProductId", merchantProductId) 
 					 .setParameter("partnerProductId", partnerProductId) 
 					 .getSingleResult(); 
-		} catch (NoResultException noResExc) { 
-			System.out.println("Couldn't find already existing product"); 
+		} catch (NoResultException noResExc) {  
 			return new Tblpfproduct(); 
 		} 
 	} 
@@ -57,7 +56,6 @@ public class ProductsService {
 					 .setParameter("partnerProductId", partnerProductId) 
 					 .getSingleResult(); 
 		} catch (NoResultException noResExc) { 
-			System.out.println("Couldn't find already existing product"); 
 			return new Tblpfproduct(); 
 		} 
 	} 

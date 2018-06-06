@@ -33,7 +33,7 @@ public class TblPfMerchantsHTMLParsing extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameterMap().containsKey("action"))
 		{
-			System.out.println("Missing action on /TblPfMerchantsHTMLParsing#doPost");
+			System.out.println("Exception: Missing action on /TblPfMerchantsHTMLParsing#doPost");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action");
 			return;
 		}
@@ -50,7 +50,7 @@ public class TblPfMerchantsHTMLParsing extends HttpServlet {
 					response.getWriter().write(merchantParsingJson);
 					return;
 				default:
-					System.out.println("Action "+request.getParameter("action")+" not recognised");
+					System.out.println("Exception: Action "+request.getParameter("action")+" not recognised");
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action "+request.getParameter("action")+" not recognised");
 					return;
 			}
