@@ -36,6 +36,11 @@
         <!-- <property name="Password" value="mySQLAdminP4$$"/> --> 
         <property name="Password" value="mySQLUatP4$$"/>
         <property name="serverName" value="127.0.0.1"/>
+        
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="characterSetResults" value="UTF-8"/>
+        <property name="useUnicode" value="true"/>
+        
     </jdbc-connection-pool>
     <!--  <jdbc-resource enabled="true" jndi-name="java:app/jdbc/winedunk_main" object-type="user" pool-name="java:app/jdbc/winedunk_main"/> -->
     <jdbc-resource enabled="true" jndi-name="java:app/jdbc/winedunk_UAT" object-type="user" pool-name="java:app/jdbc/winedunk_UAT"/>

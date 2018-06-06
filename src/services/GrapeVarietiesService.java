@@ -50,17 +50,34 @@ public class GrapeVarietiesService {
         } catch (Exception e) { return null; }
     }
 
-    public tblGrapeVarieties getByName(String varietyName)
-    {
+    public tblGrapeVarieties getByDefaultName() {
     	try {
     		return em.createNamedQuery("tblGrapeVarieties.findByName", tblGrapeVarieties.class)
-		    		 .setParameter("name", varietyName)
+		    		 .setParameter("name", "No Grape Variety")
 		    		 .getSingleResult();
     	} catch(Exception e) {
     		if(!e.getClass().equals(NoResultException.class))
     			e.printStackTrace();
 			return new tblGrapeVarieties();
     	}
+    }
+
+    public tblGrapeVarieties getByName(String varietyName) {
+    	tblGrapeVarieties grapeVariety = new tblGrapeVarieties();
+    	try {
+    		
+    		grapeVariety = em.createNamedQuery("tblGrapeVarieties.findByName", tblGrapeVarieties.class)
+		    		 .setParameter("name", varietyName)
+		    		 .getSingleResult();
+    		if ( (grapeVariety != null) && (grapeVariety.getId() != null) ) {
+    			return grapeVariety;
+    		} else {
+				return getByDefaultName();
+			} 
+    	} catch (Exception e) {
+			e.printStackTrace();
+			return getByDefaultName();	
+		}
     }
 
     public Boolean updateGrapeVariety(tblGrapeVarieties grapeVariety)

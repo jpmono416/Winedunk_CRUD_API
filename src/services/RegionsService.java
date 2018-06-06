@@ -39,8 +39,6 @@ public class RegionsService {
     {
     	try {
     		
-    		System.out.println("==================== looking for region by name=|"+regionName+"|");
-    		
     		return em.createNamedQuery("tblRegions.findByName", tblRegions.class)
    		    	 	 .setParameter("name", regionName)
    		    	 	 .getSingleResult();

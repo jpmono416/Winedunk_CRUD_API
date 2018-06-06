@@ -70,15 +70,42 @@ public class WineTypesService {
         return false;
     }
 
-	public tblWineTypes getByName(String wineTypeName) {
+	public tblWineTypes getByDefaultName() {
+		
+		tblWineTypes wineType = new tblWineTypes();
 		try {
-			return em.createNamedQuery("tblWineTypes.findByName", tblWineTypes.class)
-				     .setParameter("name", wineTypeName)
-				     .getSingleResult();
+			
+			wineType = em.createNamedQuery("tblWineTypes.findByName", tblWineTypes.class)
+			     	.setParameter("name", "Other")
+			     	.getSingleResult();
+			
+			return wineType;
+			
 		} catch (Exception e) {
-			if(!e.getClass().equals(NoResultException.class))
-				e.printStackTrace();
+			
+			e.printStackTrace();
 			return new tblWineTypes();
+		}
+	}
+
+	public tblWineTypes getByName(String wineTypeName) {
+		
+		tblWineTypes wineType = new tblWineTypes();
+		try {
+			
+			wineType = em.createNamedQuery("tblWineTypes.findByName", tblWineTypes.class)
+				     	.setParameter("name", wineTypeName)
+				     	.getSingleResult();
+			if ( (wineType != null) && (wineType.getId() != null) ) { return wineType; } else {
+				
+				return getByDefaultName();
+			}
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return getByDefaultName();
+			
 		}
 	}
 }

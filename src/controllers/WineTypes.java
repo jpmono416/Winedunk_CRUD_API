@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import models.tblWineTypes;
 import services.WineTypesService;
-import views.viewWineTypesWithBestOffers;
 
 /**
  * Servlet implementation class WineTypes
@@ -80,9 +79,8 @@ public class WineTypes extends HttpServlet {
 					return;
 
 				tblWineTypes wineType = this.wineTypeService.getByName(request.getParameter("name"));
-				
 				response.getWriter().write(this.mapper.writeValueAsString(wineType));
-				return;
+				break;
 			}
 		}
 	}
